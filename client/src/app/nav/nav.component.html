@@ -1,10 +1,16 @@
-<div class="nav-container mb-3">
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
-      <div class="container">
-        <div class="navbar-brand logo"></div>
-        <app-nav-main></app-nav-main>
-        <app-login-button *ngIf="(auth.isAuthenticated$ | async) === false"></app-login-button>
-        <app-logout-button *ngIf="(auth.isAuthenticated$ | async)"></app-logout-button>
+<nav class="navbar navbar-expand-md navbar-light fixed-top" style="background-color: #869fdb;">
+  <div class="container">
+      <a class="navbar-brand" href="#">ProPharmacy</a>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/profile">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Users</a>
+          </li>
+        </ul>
+        <form class="d-inline mt-2 mt-md-0">
+          <app-login-button *ngIf="(auth.isAuthenticated$ | async) === false"></app-login-button>
+        </form>
       </div>
-    </nav>
-  </div>
+</nav>
