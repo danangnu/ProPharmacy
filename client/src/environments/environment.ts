@@ -11,6 +11,7 @@ export const environment = {
     clientId,
     redirectUri: window.location.origin,
     audience,
+    useRefreshTokens: true,
   },
   dev: {
     apiUrl,

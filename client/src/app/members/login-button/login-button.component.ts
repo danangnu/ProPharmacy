@@ -9,8 +9,7 @@ import { AccountService } from 'src/app/_services/account.service';
   styleUrls: ['./login-button.component.css']
 })
 export class LoginButtonComponent implements OnInit {
-  user: any;
-
+  
   constructor(public auth: AuthService, private accountService: AccountService) { }
 
   ngOnInit(): void {
