@@ -5,6 +5,7 @@
 import { domain, clientId, audience, apiUrl } from '../../auth_config.json';
 export const environment = {
   production: false,
+  backendUrl: 'https://localhost:5001/api/',
   auth: {
     domain,
     clientId,

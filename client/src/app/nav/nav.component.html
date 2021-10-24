@@ -9,6 +9,16 @@
             <a class="nav-link" href="#">Users</a>
           </li>
         </ul>
+
+        <div class="dropdown" *ngIf="auth.user$ | async as user" dropdown>
+          <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.name}}</a>
+          <div class="dropdown-menu mt-3" *dropdownMenu>
+              <a class="dropdown-item">Profit & Loss Calculator</a>
+              <a class="dropdown-item" (click)="getToken()">Token</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" (click)="logout()">Logout</a>
+          </div>
+        </div>
         <form class="d-inline mt-2 mt-md-0">
           <app-login-button *ngIf="(auth.isAuthenticated$ | async) === false"></app-login-button>
         </form>

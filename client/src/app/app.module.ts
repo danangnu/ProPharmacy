@@ -14,6 +14,8 @@ import { NavMainComponent } from './nav-main/nav-main.component';
 import { LogoutButtonComponent } from './members/logout-button/logout-button.component';
 import { ProfileComponent } from './members/profile/profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { AccesstokenInterceptor } from './_interceptors/accesstoken.interceptor';
 
 @NgModule({
   declarations: [
@@ -34,14 +36,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         allowedList: ['${env.dev.apiUrl}/api/'],
       },
     }),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    BsDropdownModule.forRoot()
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthHttpInterceptor,
-      multi: true,
-    },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: AccesstokenInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })
