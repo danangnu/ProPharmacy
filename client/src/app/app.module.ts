@@ -14,9 +14,15 @@ import { NavMainComponent } from './nav-main/nav-main.component';
 import { LogoutButtonComponent } from './members/logout-button/logout-button.component';
 import { ProfileComponent } from './members/profile/profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { AccesstokenInterceptor } from './_interceptors/accesstoken.interceptor';
 import { HomeComponent } from './home/home.component';
+import { SharedModule } from './_modules/shared.module';
+import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
+import { ErrorInterceptor } from './_interceptors/error.interceptor';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -26,7 +32,10 @@ import { HomeComponent } from './home/home.component';
     NavMainComponent,
     LogoutButtonComponent,
     ProfileComponent,
-    HomeComponent
+    HomeComponent,
+    TestErrorsComponent,
+    NotFoundComponent,
+    ServerErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -39,11 +48,14 @@ import { HomeComponent } from './home/home.component';
       },
     }),
     BrowserAnimationsModule,
-    BsDropdownModule.forRoot()
+    NgxSpinnerModule,
+    SharedModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: AccesstokenInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

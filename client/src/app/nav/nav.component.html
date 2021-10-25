@@ -1,12 +1,14 @@
 <nav class="navbar navbar-expand-md navbar-light fixed-top" style="background-color:lightsteelblue;">
   <div class="container">
       <a class="navbar-brand" href="#">ProPharmacy</a>
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto" >
+          <ng-container *ngIf="(auth.isAuthenticated$ | async)">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/profile">Profile</a>
+            </li>
+          </ng-container>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/profile">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Users</a>
+            <a class="nav-link" routerLink="/errors">Errors</a>
           </li>
         </ul>
 

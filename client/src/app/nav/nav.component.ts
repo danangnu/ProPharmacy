@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
+import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -13,7 +14,10 @@ export class NavComponent implements OnInit {
   user: any;
   token: string;
 
-  constructor(public auth: AuthService, @Inject(DOCUMENT) private doc: Document, private accountService: AccountService) { }
+  constructor(public auth: AuthService,
+    @Inject(DOCUMENT) private doc: Document,
+    private accountService: AccountService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.auth.user$.subscribe(
@@ -43,8 +47,6 @@ export class NavComponent implements OnInit {
     if (await this.user !== 'undefined') {
       this.accountService.register(this.user).subscribe((response) => {
         console.log(response);
-      }, error => {
-        console.log(error);
       });
     }
   }
