@@ -16,6 +16,7 @@ import { ProfileComponent } from './members/profile/profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { AccesstokenInterceptor } from './_interceptors/accesstoken.interceptor';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AccesstokenInterceptor } from './_interceptors/accesstoken.interceptor'
     NavComponent,
     NavMainComponent,
     LogoutButtonComponent,
-    ProfileComponent
+    ProfileComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

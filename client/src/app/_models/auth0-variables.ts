@@ -4,8 +4,8 @@ interface AuthConfig {
     callbackURL: string;
     apiUrl: string;
   }
-  
-  export const AUTH_CONFIG: AuthConfig = {
+
+export const AUTH_CONFIG: AuthConfig = {
     clientID: '',
     domain: '',
     callbackURL: 'http://localhost:4200/callback',

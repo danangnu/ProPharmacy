@@ -6,10 +6,6 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthService } from '@auth0/auth0-angular';
-import { Token } from '@angular/compiler/src/ml_parser/lexer';
-import { Tokem } from '../_models/tokem';
-import { map } from 'rxjs/operators';
 import { AccountService } from '../_services/account.service';
 
 @Injectable()
@@ -19,16 +15,16 @@ export class AccesstokenInterceptor implements HttpInterceptor {
   constructor(private accountService: AccountService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-   this.accountService.getToken().subscribe((response) =>{
+   this.accountService.getToken().subscribe((response) => {
       this.token = response;
    });
-    
-    request = request.clone({
+
+   request = request.clone({
       setHeaders: {
         Authorization: `Bearer ${this.token}`
       }
-    }); 
-    return next.handle(request);
-  }  
+    });
+   return next.handle(request);
+  }
 }
 
