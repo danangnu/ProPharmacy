@@ -12,7 +12,7 @@ export class AccountService {
   baseUrl = environment.backendUrl;
 
   constructor(private http: HttpClient,
-      private auth: AuthService) { }
+              private auth: AuthService) { }
 
   getUser(id: number) {
     return this.http.get<User>(this.baseUrl + 'users/' + id);
@@ -29,8 +29,8 @@ export class AccountService {
   getToken() {
     return this.auth.getAccessTokenSilently().pipe(
       map((response: string) => {
-        const user = response;
-        return user;
+        const token = response;
+        return token;
       })
     );
   }

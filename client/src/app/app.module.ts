@@ -23,6 +23,7 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+import { PlcMainComponent } from './PLC/plc-main/plc-main.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
     HomeComponent,
     TestErrorsComponent,
     NotFoundComponent,
-    ServerErrorComponent
+    ServerErrorComponent,
+    PlcMainComponent
   ],
   imports: [
     BrowserModule,

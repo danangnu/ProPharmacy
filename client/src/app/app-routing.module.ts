@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { PlcMainComponent } from './PLC/plc-main/plc-main.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -14,7 +15,8 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
-      { path: 'profile', component: ProfileComponent }
+      { path: 'profile', component: ProfileComponent },
+      {path: 'plc-main', component: PlcMainComponent}
     ]
   },
   {path: 'errors', component: TestErrorsComponent},

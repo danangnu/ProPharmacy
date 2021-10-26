@@ -1,0 +1,19 @@
+<div class="center">
+        <div class="form-inline mt-1" style="border-bottom: solid; border-bottom-color: lightgray;margin: 0px;" *ngFor="let file of files">
+            <div class="mb-3" style="vertical-align: middle;">
+                <img src="../../../assets/img/folder-vector-icon.png" width="45px" alt="file">
+            </div>           
+            <div class="info ml-3">
+                <h5 class="name">
+                    {{file.name}}
+                </h5>
+                <p style="font-size: 12px;vertical-align: text-bottom;">{{file.date}}</p>
+            </div>           
+
+            <div style="margin-left: auto;"> 
+                <a (click)="removeItem()">
+                    <img src="../../../assets/img/icons8-delete-bin-24.png" width="20px" alt="file">
+                </a>   
+            </div>         
+    </div>
+</div>
