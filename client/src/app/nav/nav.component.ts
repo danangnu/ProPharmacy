@@ -21,7 +21,6 @@ export class NavComponent implements OnInit {
     this.auth.user$.subscribe(
       (profile) => (this.profileJson = JSON.stringify(profile, null, 2))
     );
-    this.getToken();
   }
 
   logout() {
