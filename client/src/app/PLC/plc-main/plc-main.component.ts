@@ -30,6 +30,7 @@ export class PlcMainComponent implements OnInit {
         const filev = [];
         for (const version of this.member.versionCreated) {
           filev.push({
+            id: version?.id,
             versionName: version?.versionName,
             created: version?.created
           });
