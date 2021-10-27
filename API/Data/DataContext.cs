@@ -11,5 +11,6 @@ namespace API.Data
 
         public DbSet<AppUser> Users { get; set; }
         public DbSet<FilesVersion> FilesVersion { get; set; }
+        public DbSet<Docs> Documents { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace API.Entities
 {
@@ -8,5 +9,7 @@ namespace API.Entities
         public string VersionName { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
         public AppUser Creator { get; set; }
+        public int AppUserId { get; set; }
+        public ICollection<Docs> Documents { get; set; }
     }
 }
