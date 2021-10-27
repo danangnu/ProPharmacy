@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { map } from 'rxjs/operators';
@@ -14,23 +14,14 @@ export class AccountService {
   constructor(private http: HttpClient,
               private auth: AuthService) { }
 
-  getUser(id: number) {
-    return this.http.get<User>(this.baseUrl + 'users/' + id);
+  getUser(email: string, headers: HttpHeaders) {
+    return this.http.get<User>(this.baseUrl + 'users/' + email, {headers: headers});
   }
 
-  register(model: any) {
-    return this.http.post(this.baseUrl + 'account/register', model).pipe(
+  register(model: any, headers: HttpHeaders) {
+    return this.http.post(this.baseUrl + 'account/register', model, {headers: headers}).pipe(
       map((user: User) => {
 
-      })
-    );
-  }
-
-  getToken() {
-    return this.auth.getAccessTokenSilently().pipe(
-      map((response: string) => {
-        const token = response;
-        return token;
       })
     );
   }

@@ -15,16 +15,12 @@ export class AccesstokenInterceptor implements HttpInterceptor {
   constructor(private accountService: AccountService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-   this.accountService.getToken().subscribe((response) => {
-      this.token = response;
-   });
-
-   request = request.clone({
+    request = request.clone({
       setHeaders: {
         Authorization: `Bearer ${this.token}`
       }
     });
-   return next.handle(request);
+    return next.handle(request);
   }
 }
 

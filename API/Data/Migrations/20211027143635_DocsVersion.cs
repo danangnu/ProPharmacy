@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Data.Migrations
 {
-    public partial class DocVersions : Migration
+    public partial class DocsVersion : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

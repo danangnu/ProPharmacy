@@ -55,7 +55,6 @@ import { PlcMainComponent } from './PLC/plc-main/plc-main.component';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true},
-    { provide: HTTP_INTERCEPTORS, useClass: AccesstokenInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
   ],

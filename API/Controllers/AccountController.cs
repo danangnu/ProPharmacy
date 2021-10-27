@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {   
+    [Authorize]
     public class AccountController : BaseApiController
     {
         private readonly DataContext _context;
