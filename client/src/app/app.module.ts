@@ -5,6 +5,7 @@ import { environment as env } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,7 +15,6 @@ import { NavMainComponent } from './nav-main/nav-main.component';
 import { LogoutButtonComponent } from './members/logout-button/logout-button.component';
 import { ProfileComponent } from './members/profile/profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AccesstokenInterceptor } from './_interceptors/accesstoken.interceptor';
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from './_modules/shared.module';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
@@ -24,6 +24,8 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { PlcMainComponent } from './PLC/plc-main/plc-main.component';
+import { PlcVersionComponent } from './PLC/plc-version/plc-version.component';
+import { TextInputComponent } from './_forms/text-input/text-input.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { PlcMainComponent } from './PLC/plc-main/plc-main.component';
     TestErrorsComponent,
     NotFoundComponent,
     ServerErrorComponent,
-    PlcMainComponent
+    PlcMainComponent,
+    PlcVersionComponent,
+    TextInputComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +55,8 @@ import { PlcMainComponent } from './PLC/plc-main/plc-main.component';
     }),
     BrowserAnimationsModule,
     NgxSpinnerModule,
+    FormsModule,
+    ReactiveFormsModule,
     SharedModule
   ],
   providers: [

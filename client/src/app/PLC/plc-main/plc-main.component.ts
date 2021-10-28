@@ -1,6 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FileVersion } from 'src/app/_models/fileVersion';
 import { User } from 'src/app/_models/user';
 import { MembersService } from 'src/app/_services/members.service';
@@ -13,9 +14,12 @@ import { MembersService } from 'src/app/_services/members.service';
 export class PlcMainComponent implements OnInit {
   member: User;
   files: FileVersion[] = [];
+  bsModalRef: BsModalRef;
+  message: string;
 
   constructor(private memberService: MembersService,
-              private auth: AuthService) {
+              private auth: AuthService,
+              private modalService: BsModalService) {
    }
 
   ngOnInit(): void {
@@ -47,9 +51,17 @@ export class PlcMainComponent implements OnInit {
   removeItem() {
 
   }
-}
 
-interface Filedet {
-  name: string;
-  date: string;
+  receiveMessage($event) {
+    this.message = $event;
+    this.modalService.hide(1);
+  }
+
+  closeModal(modalId?: number){
+    this.modalService.hide(modalId);
+  }
+
+  postToggle(template: TemplateRef<any>) {
+    this.bsModalRef = this.modalService.show(template, { id: 1, class: 'modal-lg' });
+  }
 }

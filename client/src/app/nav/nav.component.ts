@@ -46,7 +46,8 @@ export class NavComponent implements OnInit {
             firstName: response.given_name?.toString()};
           const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
           if (bar !== 'undefined') {
-              this.accountService.register(bar, headers);
+              this.accountService.register(bar, headers).subscribe(() => {
+              });
             }
         }
         i++;

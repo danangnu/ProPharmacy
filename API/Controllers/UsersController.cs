@@ -37,6 +37,24 @@ namespace API.Controllers
             return await _userRepository.GetMemberAsync(email);            
         }
 
+        [HttpPost("add-version")]
+        public async Task<ActionResult<FilesVersionDto>> AddVersion(AddFilesVersionDto addFilesVersionDto)
+        {
+            var user = await _userRepository.GetUserByEmailAsync(addFilesVersionDto.Email);
+
+            var version = new FilesVersion
+            {
+                VersionName = addFilesVersionDto.VersionName,
+                AppUserId = user.Id
+            };
+
+            user.VersionCreated.Add(version);
+
+            if (await _userRepository.SaveAllAsync()) return _mapper.Map<FilesVersionDto>(version);
+
+            return BadRequest("Cannot add new version");
+        }
+
         public ActionResult Private()
         {
             return BadRequest("Hello from a private endpoint! You need to be authenticated to see this.");
