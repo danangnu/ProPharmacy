@@ -20,23 +20,7 @@ export class NavComponent implements OnInit {
               private accountService: AccountService) { }
 
   ngOnInit(): void {
-    let i =0;
-    this.auth.getAccessTokenSilently().subscribe(token => {
-      this.auth.idTokenClaims$.subscribe(response => {
-        if (i===1) {
-          const bar: any = {email: response.email?.toString(),
-            lastName: response.family_name?.toString(),
-            firstName: response.given_name?.toString()};
-            const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-            if (bar !== 'undefined') {
-              this.accountService.register(bar, headers).subscribe((response) => {
-                console.log(response);
-              });
-            }
-        }
-        i++;
-      });
-    });
+    this.saveUsers();
   }
 
   logout() {
@@ -50,27 +34,24 @@ export class NavComponent implements OnInit {
         console.log(response);
       });
     });
-    
   }
 
   async saveUsers() {
-    if (await this.auth.isAuthenticated$) {
+    let i = 0;
+    this.auth.getAccessTokenSilently().subscribe(token => {
       this.auth.idTokenClaims$.subscribe(response => {
-        const bar: any = {email: response.email?.toString(),
-          lastName: response.family_name?.toString(),
-          firstName: response.given_name?.toString()};
-        this.user = bar;
-      });
-  
-      await this.auth.getAccessTokenSilently().subscribe(token => {
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        if (this.user !== 'undefined') {
-          this.accountService.register(this.user, headers).subscribe((response) => {
-            console.log(response);
-          });
+        if (i === 0) {
+          const bar: any = {email: response.email?.toString(),
+            lastName: response.family_name?.toString(),
+            firstName: response.given_name?.toString()};
+          const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+          if (bar !== 'undefined') {
+              this.accountService.register(bar, headers);
+            }
         }
+        i++;
       });
-    }
+    });
   }
 }
 

@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { FileVersion } from 'src/app/_models/fileVersion';
@@ -23,19 +24,22 @@ export class PlcMainComponent implements OnInit {
 
   loadMember() {
     let email = '';
-    this.auth.idTokenClaims$.subscribe(response => {
-      email = response.email?.toString();
-      this.memberService.getMember(email).subscribe(response => {
-        this.member = response;
-        const filev = [];
-        for (const version of this.member.versionCreated) {
-          filev.push({
-            id: version?.id,
-            versionName: version?.versionName,
-            created: version?.created
-          });
-        }
-        this.files = filev.slice().reverse();
+    this.auth.getAccessTokenSilently().subscribe(token => {
+      this.auth.idTokenClaims$.subscribe(response => {
+        email = response.email?.toString();
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        this.memberService.getMember(email, headers).subscribe(response => {
+          this.member = response;
+          const filev = [];
+          for (const version of this.member.versionCreated) {
+            filev.push({
+              id: version?.id,
+              versionName: version?.versionName,
+              created: version?.created
+            });
+          }
+          this.files = filev.slice().reverse();
+        });
       });
     });
   }
