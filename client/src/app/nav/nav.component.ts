@@ -2,7 +2,6 @@ import { DOCUMENT } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { delay } from 'rxjs/operators';
 import { AccountService } from '../_services/account.service';
 
 @Component({
