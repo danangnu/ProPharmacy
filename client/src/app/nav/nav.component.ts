@@ -41,8 +41,7 @@ export class NavComponent implements OnInit {
       this.auth.idTokenClaims$.subscribe(response => {
         if (i === 0) {
           const bar: any = {email: response.email?.toString(),
-            lastName: response.family_name?.toString(),
-            firstName: response.given_name?.toString()};
+            name: response.name?.toString()};
           const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
           if (bar !== 'undefined') {
               this.accountService.register(bar, headers).subscribe(() => {

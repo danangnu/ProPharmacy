@@ -25,8 +25,7 @@ namespace API.Controllers
             var user = new AppUser
             {
                 Email = registerDto.Email.ToLower(),
-                LastName = registerDto.LastName,
-                FirstName = registerDto.FirstName
+                Name = registerDto.Name
             };
 
             _context.Users.Add(user);

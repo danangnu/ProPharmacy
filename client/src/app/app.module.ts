@@ -26,6 +26,8 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { PlcMainComponent } from './PLC/plc-main/plc-main.component';
 import { PlcVersionComponent } from './PLC/plc-version/plc-version.component';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
+import { PlcReportComponent } from './plc/plc-report/plc-report.component';
+import { FileManagerComponent } from './plc/file-manager/file-manager.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { TextInputComponent } from './_forms/text-input/text-input.component';
     ServerErrorComponent,
     PlcMainComponent,
     PlcVersionComponent,
-    TextInputComponent
+    TextInputComponent,
+    PlcReportComponent,
+    FileManagerComponent
   ],
   imports: [
     BrowserModule,

@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
-
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [],
@@ -13,12 +14,16 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     }),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    TabsModule.forRoot(),
+    FileUploadModule
   ],
   exports: [
     BsDropdownModule,
     ToastrModule,
-    ModalModule
+    ModalModule,
+    TabsModule,
+    FileUploadModule
   ]
 })
 export class SharedModule { }
