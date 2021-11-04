@@ -10,6 +10,7 @@ namespace API.Helpers
         {
             CreateMap<AppUser, MemberDto>();
             CreateMap<FilesVersion, FilesVersionDto>();
+            CreateMap<Docs, DocsDto>();
         }
     }
 }

@@ -14,11 +14,13 @@ namespace API.Controllers
     [Authorize]
     public class UsersController : BaseApiController
     {
-        
+        private readonly IVersionRepository _versionRepository;
+
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public UsersController(IUserRepository userRepository, IMapper mapper)
+        public UsersController(IUserRepository userRepository, IMapper mapper, IVersionRepository versionRepository)
         {
+            _versionRepository = versionRepository;
             _mapper = mapper;
             _userRepository = userRepository;
         }
@@ -34,7 +36,7 @@ namespace API.Controllers
         [HttpGet("{email}")]
         public async Task<ActionResult<MemberDto>> GetUser(string email)
         {
-            return await _userRepository.GetMemberAsync(email);            
+            return await _userRepository.GetMemberAsync(email);
         }
 
         [HttpPost("add-version")]
@@ -53,6 +55,27 @@ namespace API.Controllers
             if (await _userRepository.SaveAllAsync()) return _mapper.Map<FilesVersionDto>(version);
 
             return BadRequest("Cannot add new version");
+        }
+
+        [HttpPost("add-docs")]
+        public async Task<ActionResult<DocsDto>> AddDocs(AddDocsDto addDocsDto)
+        {
+            var user = await _userRepository.GetUserByEmailAsync(addDocsDto.Email);
+
+            var version = await _versionRepository.GetVersionByUserIdAsync(user.Id);
+
+            var doc = new Docs
+            {
+                FileName = addDocsDto.FileName,
+                FilePath = addDocsDto.FilePath,
+                FilesVersionId = version.Id
+            };
+
+            version.Documents.Add(doc);
+
+            if (await _userRepository.SaveAllAsync()) return _mapper.Map<DocsDto>(doc);
+
+            return BadRequest("Cannot add new file");
         }
 
         public ActionResult Private()
