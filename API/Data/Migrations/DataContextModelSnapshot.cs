@@ -83,6 +83,38 @@ namespace API.Data.Migrations
                     b.ToTable("FilesVersion");
                 });
 
+            modelBuilder.Entity("API.Entities.Prescriptions", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Dispensing_Month")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FilesVersionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Form_Number")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Fragment_Id")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Item_Number")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OCS_Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FilesVersionId");
+
+                    b.ToTable("Prescriptions");
+                });
+
             modelBuilder.Entity("API.Entities.Docs", b =>
                 {
                     b.HasOne("API.Entities.FilesVersion", "Version")
@@ -105,6 +137,17 @@ namespace API.Data.Migrations
                     b.Navigation("Creator");
                 });
 
+            modelBuilder.Entity("API.Entities.Prescriptions", b =>
+                {
+                    b.HasOne("API.Entities.FilesVersion", "Version")
+                        .WithMany("Prescription")
+                        .HasForeignKey("FilesVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Version");
+                });
+
             modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
                     b.Navigation("VersionCreated");
@@ -113,6 +156,8 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.FilesVersion", b =>
                 {
                     b.Navigation("Documents");
+
+                    b.Navigation("Prescription");
                 });
 #pragma warning restore 612, 618
         }

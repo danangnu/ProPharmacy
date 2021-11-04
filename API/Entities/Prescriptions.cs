@@ -8,7 +8,7 @@ namespace API.Entities
 	    public string Fragment_Id { get; set; }
 	    public string Form_Number { get; set; }
 	    public string Item_Number { get; set; }
-	    public string Element_Id { get; set; }
+	    /*public string Element_Id { get; set; }
 	    public string Form_Type { get; set; }
 	    public string Prescriber_Code { get; set; }
 	    public string Group_Type_Declared { get; set; }
@@ -75,6 +75,8 @@ namespace API.Entities
 	    public string SSP_Vat_Value { get; set; }
 	    public string SSP_Fee_Value { get; set; }
 	    public string VMPPID { get; set; }
-	    public double PurchasePrice { get; set; }
+	    public double PurchasePrice { get; set; }*/
+		public FilesVersion Version { get; set; }
+        public int FilesVersionId { get; set; }
     }
 }

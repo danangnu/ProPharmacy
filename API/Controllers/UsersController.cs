@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
@@ -6,6 +7,7 @@ using API.Entities;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -55,27 +57,6 @@ namespace API.Controllers
             if (await _userRepository.SaveAllAsync()) return _mapper.Map<FilesVersionDto>(version);
 
             return BadRequest("Cannot add new version");
-        }
-
-        [HttpPost("add-docs")]
-        public async Task<ActionResult<DocsDto>> AddDocs(AddDocsDto addDocsDto)
-        {
-            var user = await _userRepository.GetUserByEmailAsync(addDocsDto.Email);
-
-            var version = await _versionRepository.GetVersionByUserIdAsync(user.Id);
-
-            var doc = new Docs
-            {
-                FileName = addDocsDto.FileName,
-                FilePath = addDocsDto.FilePath,
-                FilesVersionId = version.Id
-            };
-
-            version.Documents.Add(doc);
-
-            if (await _userRepository.SaveAllAsync()) return _mapper.Map<DocsDto>(doc);
-
-            return BadRequest("Cannot add new file");
         }
 
         public ActionResult Private()

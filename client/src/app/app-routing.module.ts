@@ -20,7 +20,7 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent },
       { path: 'plc-main', component: PlcMainComponent },
       { path: 'plc-version', component: PlcVersionComponent },
-      { path: 'plc-report', component: PlcReportComponent }
+      { path: 'plc-report/:id', component: PlcReportComponent }
     ]
   },
   {path: 'errors', component: TestErrorsComponent},

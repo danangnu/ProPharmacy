@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { FileUploader } from 'ng2-file-upload';
+import { NgxSpinnerService, Spinner } from 'ngx-spinner';
 import { take } from 'rxjs/operators';
 import { Docs } from 'src/app/_models/docs';
 import { FileVersion } from 'src/app/_models/fileVersion';
@@ -21,7 +22,8 @@ export class FileManagerComponent implements OnInit {
   user: User;
   
   constructor(private route: ActivatedRoute,
-              private auth: AuthService) { }
+              private auth: AuthService,
+              private spinnerService: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.initializeUploader();
@@ -32,33 +34,25 @@ export class FileManagerComponent implements OnInit {
   }
 
   initializeUploader() {
-    this.auth.getAccessTokenSilently().pipe(take(1)).subscribe(response => {
-      //console.log(this.uploader.getIndexOfItem[0])
-      //const bar: any = {fileName: this.uploader.uploadItem.,
-      //name: response.name?.toString()};
-      this.uploader = new FileUploader({
-        isHTML5: true,
-        allowedFileType: ['image'],
-        removeAfterUpload: true,
-        autoUpload: false
-      });
+    this.auth.getAccessTokenSilently().pipe(take(1)).subscribe(token => {
+        this.spinnerService.show();
+        this.uploader = new FileUploader({
+          url: this.baseUrl + 'versions/add-docs/' + + this.route.snapshot.paramMap.get('id'),
+          authToken: 'Bearer ' + token,
+          isHTML5: true,
+          allowedFileType: ['xls'],
+          removeAfterUpload: true,
+          autoUpload: false
+        });
+  
+        this.uploader.onAfterAddingFile = (file) => {
+          file.withCredentials = false;
+        };
+  
+        this.uploader.onCompleteItem = (item: any, status: any) => {
+          this.spinnerService.hide();
+          console.log('Uploaded File Details:', item?.file?.name);
+        };
     });
-    this.uploader.onAfterAddingFile = (file) => {
-      file.withCredentials = false;
-    };
-
-    this.uploader.onSuccessItem = (item, response, status, headers) => {
-      if (response) {
-        const doc: Docs = JSON.parse(response);
-        this.fileVersion.documents.push(doc);
-      }
-
-      if (item) {
-        const fileReader = new FileReader();
-        fileReader.onload = (e) => {
-        console.log(fileReader.result);
-    };
-      }
-    };
   }
 }
