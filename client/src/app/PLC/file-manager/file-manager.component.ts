@@ -45,7 +45,11 @@ export class FileManagerComponent implements OnInit {
         });
 
         this.uploader.onProgressAll = () => {
-          this.spinnerService.show();
+          this.spinnerService.show(undefined, {
+            type: 'line-scale-party',
+            bdColor: 'rgba(255,255,255,0)',
+            color: '#333333'
+          });
         };
   
         this.uploader.onAfterAddingFile = (file) => {

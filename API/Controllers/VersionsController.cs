@@ -127,8 +127,6 @@ namespace API.Controllers
                             };
                             version.Prescription.Add(prescription);
                             await _versionRepository.SaveAllAsync();
-
-                            if (i == 200) break;
                         }
                         i++;
                     }
