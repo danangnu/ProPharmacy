@@ -35,7 +35,6 @@ export class FileManagerComponent implements OnInit {
 
   initializeUploader() {
     this.auth.getAccessTokenSilently().pipe(take(1)).subscribe(token => {
-        this.spinnerService.show();
         this.uploader = new FileUploader({
           url: this.baseUrl + 'versions/add-docs/' + + this.route.snapshot.paramMap.get('id'),
           authToken: 'Bearer ' + token,
@@ -44,6 +43,10 @@ export class FileManagerComponent implements OnInit {
           removeAfterUpload: true,
           autoUpload: false
         });
+
+        this.uploader.onProgressAll = () => {
+          this.spinnerService.show();
+        };
   
         this.uploader.onAfterAddingFile = (file) => {
           file.withCredentials = false;
