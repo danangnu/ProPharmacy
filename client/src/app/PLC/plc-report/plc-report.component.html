@@ -4,6 +4,24 @@
             <app-file-manager [fileVersion]="fileVersion"></app-file-manager>
         </tab>
         <tab heading='Prescriptions'>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Annual Prescription<br> 
+                        Items 2020/2021
+                    </th>
+                      <th>Average Item</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let prescription of prescriptionReport">
+                        <td>{{prescription.month}}</td>
+                        <td>{{prescription.annualSum}}</td>
+                        <td>{{prescription.annualAvg}}</td>
+                    </tr>
+                  </tbody>
+            </table>
         </tab>
         <tab heading='Sales'>
         </tab>

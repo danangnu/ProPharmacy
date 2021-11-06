@@ -153,6 +153,34 @@ namespace API.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PriceListHistory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PriceListsID = table.Column<int>(type: "int", nullable: false),
+                    SupplierCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Product = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Size = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    PIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AMPPID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VMPPID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateAdd = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FilesVersionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PriceListHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PriceListHistory_FilesVersion_FilesVersionId",
+                        column: x => x.FilesVersionId,
+                        principalTable: "FilesVersion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Documents_FilesVersionId",
                 table: "Documents",
@@ -167,6 +195,11 @@ namespace API.Data.Migrations
                 name: "IX_Prescriptions_FilesVersionId",
                 table: "Prescriptions",
                 column: "FilesVersionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PriceListHistory_FilesVersionId",
+                table: "PriceListHistory",
+                column: "FilesVersionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -176,6 +209,9 @@ namespace API.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Prescriptions");
+
+            migrationBuilder.DropTable(
+                name: "PriceListHistory");
 
             migrationBuilder.DropTable(
                 name: "FilesVersion");

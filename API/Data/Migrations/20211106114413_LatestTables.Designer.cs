@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211105040942_LatestTables")]
+    [Migration("20211106114413_LatestTables")]
     partial class LatestTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -315,6 +315,50 @@ namespace API.Data.Migrations
                     b.ToTable("Prescriptions");
                 });
 
+            modelBuilder.Entity("API.Entities.PriceListHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AMPPID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAdd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FilesVersionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PIP")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("PriceListsID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Product")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Size")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SupplierCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VMPPID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FilesVersionId");
+
+                    b.ToTable("PriceListHistory");
+                });
+
             modelBuilder.Entity("API.Entities.Docs", b =>
                 {
                     b.HasOne("API.Entities.FilesVersion", "Version")
@@ -341,6 +385,17 @@ namespace API.Data.Migrations
                 {
                     b.HasOne("API.Entities.FilesVersion", "Version")
                         .WithMany("Prescription")
+                        .HasForeignKey("FilesVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Version");
+                });
+
+            modelBuilder.Entity("API.Entities.PriceListHistory", b =>
+                {
+                    b.HasOne("API.Entities.FilesVersion", "Version")
+                        .WithMany()
                         .HasForeignKey("FilesVersionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -57,7 +57,7 @@ namespace API.Controllers
                                 Dispensing_Month = rows[1].ToString(),
                                 Fragment_Id = rows[2].ToString(),
                                 Form_Number = rows[3].ToString(),
-                                Item_Number = rows[4].ToString(),
+                                Item_Number = int.Parse(rows[4].ToString()),
                                 Element_Id = rows[5].ToString(),
                                 Form_Type = rows[6].ToString(),
                                 Prescriber_Code = rows[7].ToString(),
@@ -126,10 +126,12 @@ namespace API.Controllers
                                 SSP_Fee_Value = rows[70].ToString()
                             };
                             version.Prescription.Add(prescription);
-                            await _versionRepository.SaveAllAsync();
                         }
                         i++;
+
+                        if (i == 200) break;
                     }
+                    await _versionRepository.SaveAllAsync();
                 }
             }
 

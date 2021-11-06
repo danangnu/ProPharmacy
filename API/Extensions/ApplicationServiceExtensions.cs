@@ -13,6 +13,7 @@ namespace API.Extensions
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IVersionRepository, VersionRepository>();
+            services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(options =>
             {

@@ -7,7 +7,7 @@ namespace API.Entities
 	    public string Dispensing_Month { get; set; }
 	    public string Fragment_Id { get; set; }
 	    public string Form_Number { get; set; }
-	    public string Item_Number { get; set; }
+	    public int Item_Number { get; set; }
 	    public string Element_Id { get; set; }
 	    public string Form_Type { get; set; }
 	    public string Prescriber_Code { get; set; }
