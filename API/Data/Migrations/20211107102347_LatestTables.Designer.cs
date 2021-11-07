@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211106114413_LatestTables")]
+    [Migration("20211107102347_LatestTables")]
     partial class LatestTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,7 +49,7 @@ namespace API.Data.Migrations
                     b.Property<string>("FileName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("FileType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FilesVersionId")
@@ -122,6 +122,9 @@ namespace API.Data.Migrations
                     b.Property<string>("Dispensing_UID")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DocsId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ED_Unlicensed_Meds_Fee_Value")
                         .HasColumnType("nvarchar(max)");
 
@@ -136,9 +139,6 @@ namespace API.Data.Migrations
 
                     b.Property<string>("Expensive_Item_Fee_Value")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FilesVersionId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Form_Number")
                         .HasColumnType("nvarchar(max)");
@@ -167,8 +167,8 @@ namespace API.Data.Migrations
                     b.Property<string>("IP_Value")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Item_Number")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Item_Number")
+                        .HasColumnType("int");
 
                     b.Property<string>("LB")
                         .HasColumnType("nvarchar(max)");
@@ -310,7 +310,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FilesVersionId");
+                    b.HasIndex("DocsId");
 
                     b.ToTable("Prescriptions");
                 });
@@ -328,7 +328,7 @@ namespace API.Data.Migrations
                     b.Property<DateTime>("DateAdd")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FilesVersionId")
+                    b.Property<int>("DocsId")
                         .HasColumnType("int");
 
                     b.Property<string>("PIP")
@@ -354,9 +354,32 @@ namespace API.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FilesVersionId");
+                    b.HasIndex("DocsId");
 
                     b.ToTable("PriceListHistory");
+                });
+
+            modelBuilder.Entity("API.Entities.ScheduleOfPayment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Dispensing_Month")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DocsId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("NHS_Sales")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocsId");
+
+                    b.ToTable("ScheduleOfPayments");
                 });
 
             modelBuilder.Entity("API.Entities.Docs", b =>
@@ -383,24 +406,35 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Prescriptions", b =>
                 {
-                    b.HasOne("API.Entities.FilesVersion", "Version")
-                        .WithMany("Prescription")
-                        .HasForeignKey("FilesVersionId")
+                    b.HasOne("API.Entities.Docs", "Document")
+                        .WithMany("Prescriptions")
+                        .HasForeignKey("DocsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Version");
+                    b.Navigation("Document");
                 });
 
             modelBuilder.Entity("API.Entities.PriceListHistory", b =>
                 {
-                    b.HasOne("API.Entities.FilesVersion", "Version")
-                        .WithMany()
-                        .HasForeignKey("FilesVersionId")
+                    b.HasOne("API.Entities.Docs", "Document")
+                        .WithMany("PriceListHistory")
+                        .HasForeignKey("DocsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Version");
+                    b.Navigation("Document");
+                });
+
+            modelBuilder.Entity("API.Entities.ScheduleOfPayment", b =>
+                {
+                    b.HasOne("API.Entities.Docs", "Document")
+                        .WithMany("ScheduleOfPayment")
+                        .HasForeignKey("DocsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
                 });
 
             modelBuilder.Entity("API.Entities.AppUser", b =>
@@ -408,11 +442,18 @@ namespace API.Data.Migrations
                     b.Navigation("VersionCreated");
                 });
 
+            modelBuilder.Entity("API.Entities.Docs", b =>
+                {
+                    b.Navigation("Prescriptions");
+
+                    b.Navigation("PriceListHistory");
+
+                    b.Navigation("ScheduleOfPayment");
+                });
+
             modelBuilder.Entity("API.Entities.FilesVersion", b =>
                 {
                     b.Navigation("Documents");
-
-                    b.Navigation("Prescription");
                 });
 #pragma warning restore 612, 618
         }

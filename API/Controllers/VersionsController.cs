@@ -1,10 +1,15 @@
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using AutoMapper;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas.Parser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,8 +21,10 @@ namespace API.Controllers
     {
         private readonly IVersionRepository _versionRepository;
         private readonly IMapper _mapper;
-        public VersionsController(IVersionRepository versionRepository, IMapper mapper)
+        private readonly IDocRepository _docRepository;
+        public VersionsController(IVersionRepository versionRepository, IDocRepository docRepository, IMapper mapper)
         {
+            _docRepository = docRepository;
             _mapper = mapper;
             _versionRepository = versionRepository;
         }
@@ -38,7 +45,7 @@ namespace API.Controllers
         public async Task<ActionResult> DeleteVersion(int id)
         {
             var version = await _versionRepository.GetVersionByUserIdAsync(id);
-            
+
             _versionRepository.DeleteVersion(version);
 
             if (await _versionRepository.SaveAllAsync()) return Ok();
@@ -51,9 +58,22 @@ namespace API.Controllers
         {
             var version = await _versionRepository.GetVersionByUserIdAsync(id);
 
+            var doc = new Docs
+            {
+                FileName = file.FileName,
+                FileType = file.ContentType,
+                FilesVersionId = version.Id
+            };
+
+            version.Documents.Add(doc);
+
+            await _versionRepository.SaveAllAsync();
+            int docOut = doc.Id;
+
             var path = string.Empty;
             if (file.FileName.EndsWith(".csv"))
             {
+                var document = await _docRepository.GetPresDocByIdAsync(docOut);
                 using (var sreader = new StreamReader(file.OpenReadStream()))
                 {
                     var i = 0;
@@ -135,26 +155,62 @@ namespace API.Controllers
                                 Dispensing_UID = rows[67].ToString(),
                                 NHS_Patient_Number = rows[68].ToString(),
                                 SSP_Vat_Value = rows[69].ToString(),
-                                SSP_Fee_Value = rows[70].ToString()
+                                SSP_Fee_Value = rows[70].ToString(),
+                                DocsId = docOut
                             };
-                            //version.Prescription.Add(prescription);
+                            document.Prescriptions.Add(prescription);
                         }
                         i++;
 
-                        if (i == 200) break;
+                        //if (i == 5000) break;
                     }
-                    await _versionRepository.SaveAllAsync();
                 }
-            }
-
-            var doc = new Docs
+            } else if (file.FileName.EndsWith(".pdf"))
             {
-                FileName = file.FileName,
-                FileType = file.ContentType,
-                FilesVersionId = version.Id
-            };
+                var document = await _docRepository.GetPayDocByIdAsync(docOut);
+                StringBuilder result = new StringBuilder();
+                PdfDocument pdfDoc = new PdfDocument(new PdfReader(file.OpenReadStream()));
+                int PageNum = pdfDoc.GetNumberOfPages();  
+                string[] words;
+                double sales = 0;
+                string dmonth = string.Empty;
+                for (int i = 1; i <= PageNum; i++)  
+                {
+                    if (i == 1)
+                    {
+                        var text = PdfTextExtractor.GetTextFromPage(pdfDoc.GetPage(i)); 
+                        
+                        words = text.Split('\n');
+                        for (int j = 0, len = words.Length; j < len; j++)
+                        {
+                            var line = Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(words[j]));                          
+                            if (line.ToLower().StartsWith("net payment made") )
+                            {
+                                string[] res = line.Split(' ');
+                                var sale = res[res.Length - 1].TrimStart().Replace(",", "");
+                                sale = sale.Replace(".", ",");
+                                sales = Math.Round(double.Parse(sale),2,MidpointRounding.AwayFromZero);
+                            }
 
-            version.Documents.Add(doc);
+                            if (line.ToLower().StartsWith("dispensing month") )
+                            {
+                                string[] res = line.Split(' ');
+                                var m = DateTime.ParseExact(res[res.Length - 2].TrimStart(), "MMM", CultureInfo.CurrentCulture ).Month;
+                                if (m < 10) 
+                                    dmonth = res[res.Length - 1].TrimStart() + "0" + m.ToString();
+                                else dmonth = res[res.Length - 1].TrimStart() + m.ToString();
+                            }
+                        }
+                    }   
+                }     
+                var pay = new ScheduleOfPayment
+                {
+                    Dispensing_Month = dmonth,
+                    NHS_Sales = sales,
+                    DocsId = docOut
+                };
+                document.ScheduleOfPayment.Add(pay);               
+            }
 
             if (await _versionRepository.SaveAllAsync()) return _mapper.Map<DocsDto>(doc);
 

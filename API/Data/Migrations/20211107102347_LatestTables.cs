@@ -49,7 +49,7 @@ namespace API.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FileType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FilesVersionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -73,7 +73,7 @@ namespace API.Data.Migrations
                     Dispensing_Month = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Fragment_Id = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Form_Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Item_Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Item_Number = table.Column<int>(type: "int", nullable: false),
                     Element_Id = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Form_Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Prescriber_Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -140,15 +140,15 @@ namespace API.Data.Migrations
                     NHS_Patient_Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SSP_Vat_Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SSP_Fee_Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FilesVersionId = table.Column<int>(type: "int", nullable: false)
+                    DocsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Prescriptions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Prescriptions_FilesVersion_FilesVersionId",
-                        column: x => x.FilesVersionId,
-                        principalTable: "FilesVersion",
+                        name: "FK_Prescriptions_Documents_DocsId",
+                        column: x => x.DocsId,
+                        principalTable: "Documents",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -168,15 +168,36 @@ namespace API.Data.Migrations
                     AMPPID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VMPPID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateAdd = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FilesVersionId = table.Column<int>(type: "int", nullable: false)
+                    DocsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PriceListHistory", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PriceListHistory_FilesVersion_FilesVersionId",
-                        column: x => x.FilesVersionId,
-                        principalTable: "FilesVersion",
+                        name: "FK_PriceListHistory_Documents_DocsId",
+                        column: x => x.DocsId,
+                        principalTable: "Documents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ScheduleOfPayments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Dispensing_Month = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NHS_Sales = table.Column<double>(type: "float", nullable: false),
+                    DocsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ScheduleOfPayments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ScheduleOfPayments_Documents_DocsId",
+                        column: x => x.DocsId,
+                        principalTable: "Documents",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -192,26 +213,34 @@ namespace API.Data.Migrations
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Prescriptions_FilesVersionId",
+                name: "IX_Prescriptions_DocsId",
                 table: "Prescriptions",
-                column: "FilesVersionId");
+                column: "DocsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PriceListHistory_FilesVersionId",
+                name: "IX_PriceListHistory_DocsId",
                 table: "PriceListHistory",
-                column: "FilesVersionId");
+                column: "DocsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ScheduleOfPayments_DocsId",
+                table: "ScheduleOfPayments",
+                column: "DocsId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Documents");
-
-            migrationBuilder.DropTable(
                 name: "Prescriptions");
 
             migrationBuilder.DropTable(
                 name: "PriceListHistory");
+
+            migrationBuilder.DropTable(
+                name: "ScheduleOfPayments");
+
+            migrationBuilder.DropTable(
+                name: "Documents");
 
             migrationBuilder.DropTable(
                 name: "FilesVersion");

@@ -39,7 +39,7 @@ export class FileManagerComponent implements OnInit {
           url: this.baseUrl + 'versions/add-docs/' + + this.route.snapshot.paramMap.get('id'),
           authToken: 'Bearer ' + token,
           isHTML5: true,
-          allowedFileType: ['xls'],
+          allowedFileType: ['xls','pdf'],
           removeAfterUpload: true,
           autoUpload: false
         });
