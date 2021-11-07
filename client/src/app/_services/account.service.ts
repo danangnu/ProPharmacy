@@ -19,7 +19,7 @@ export class AccountService {
   register(model: any, headers: HttpHeaders) {
     return this.http.post(this.baseUrl + 'account/register', model, {headers}).pipe(
       map((user: User) => {
-
+        return user;
       })
     );
   }

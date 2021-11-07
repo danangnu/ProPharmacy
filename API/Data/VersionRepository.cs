@@ -18,7 +18,6 @@ namespace API.Data
         {
             return await _context.FilesVersion
                 .Include(d => d.Documents)
-                .Include(d => d.Prescription)
                 .FirstOrDefaultAsync(v => v.Id == Id);
         }
 
@@ -26,8 +25,12 @@ namespace API.Data
         {
             return await _context.FilesVersion
                 .Include(d => d.Documents)
-                .Include(d => d.Prescription)
                 .ToListAsync();
+        }
+
+        public void DeleteVersion(FilesVersion filesVersion)
+        {
+            _context.FilesVersion.Remove(filesVersion);
         }
 
         public async Task<bool> SaveAllAsync()

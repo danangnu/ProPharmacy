@@ -35,4 +35,8 @@ export class MembersService {
       })
     );
   }
+
+  deleteMessage(id: number, headers: HttpHeaders) {
+    return this.http.delete(this.baseUrl + 'versions/' + id, {headers});
+  }
 }

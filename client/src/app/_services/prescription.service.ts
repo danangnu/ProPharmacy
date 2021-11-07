@@ -9,7 +9,6 @@ import { PrescriptionReport } from '../_models/prescriptionReport';
 })
 export class PrescriptionService {
   baseUrl = environment.backendUrl;
-  prescriptionReport: PrescriptionReport[] = [];
 
   constructor(private http: HttpClient) { }
 

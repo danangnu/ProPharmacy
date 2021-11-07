@@ -14,7 +14,7 @@ namespace API.Entities
 	    public string AMPPID { get; set; }
 	    public string VMPPID { get; set; }
 	    public DateTime DateAdd { get; set; } = DateTime.Now;
-		public FilesVersion Version { get; set; }
-        public int FilesVersionId { get; set; }
+		public Docs Document { get; set; }
+        public int DocsId { get; set; }
     }
 }

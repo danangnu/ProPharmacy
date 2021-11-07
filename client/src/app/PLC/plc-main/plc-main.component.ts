@@ -1,7 +1,9 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { take } from 'rxjs/operators';
 import { FileVersion } from 'src/app/_models/fileVersion';
 import { User } from 'src/app/_models/user';
 import { MembersService } from 'src/app/_services/members.service';
@@ -19,7 +21,8 @@ export class PlcMainComponent implements OnInit {
 
   constructor(private memberService: MembersService,
               private auth: AuthService,
-              private modalService: BsModalService) {
+              private modalService: BsModalService,
+              private router: Router) {
    }
 
   ngOnInit(): void {
@@ -28,7 +31,7 @@ export class PlcMainComponent implements OnInit {
 
   loadMember() {
     let email = '';
-    this.auth.getAccessTokenSilently().subscribe(token => {
+    this.auth.getAccessTokenSilently().pipe(take(1)).subscribe(token => {
       this.auth.idTokenClaims$.subscribe(response => {
         email = response.email?.toString();
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -48,8 +51,13 @@ export class PlcMainComponent implements OnInit {
     });
   }
 
-  removeItem() {
-
+  removeItem(files: FileVersion) {
+    this.auth.getAccessTokenSilently().pipe(take(1)).subscribe(token => {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      this.memberService.deleteMessage(files.id, headers).subscribe(() => {
+        this.files.splice(this.files.findIndex(m => m.id === files.id), 1);
+      });
+    });
   }
 
   receiveMessage($event) {

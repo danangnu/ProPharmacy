@@ -34,6 +34,18 @@ namespace API.Controllers
             return Ok(await _versionRepository.GetVersionByUserIdAsync(id));
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteVersion(int id)
+        {
+            var version = await _versionRepository.GetVersionByUserIdAsync(id);
+            
+            _versionRepository.DeleteVersion(version);
+
+            if (await _versionRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Error Deleting Version");
+        }
+
         [HttpPost("add-docs/{id}")]
         public async Task<ActionResult<DocsDto>> AddDocs(int id, IFormFile file)
         {
@@ -125,7 +137,7 @@ namespace API.Controllers
                                 SSP_Vat_Value = rows[69].ToString(),
                                 SSP_Fee_Value = rows[70].ToString()
                             };
-                            version.Prescription.Add(prescription);
+                            //version.Prescription.Add(prescription);
                         }
                         i++;
 
@@ -138,7 +150,7 @@ namespace API.Controllers
             var doc = new Docs
             {
                 FileName = file.FileName,
-                FilePath = file.ContentType,
+                FileType = file.ContentType,
                 FilesVersionId = version.Id
             };
 

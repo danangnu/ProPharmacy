@@ -13,7 +13,7 @@ import { PrescriptionService } from 'src/app/_services/prescription.service';
 })
 export class PlcReportComponent implements OnInit {
   fileVersion: FileVersion;
-  prescriptionReport: PrescriptionReport[];
+  prescriptionReport: PrescriptionReport[] = [];
   
   constructor(private auth: AuthService,
               private prescriptionService: PrescriptionService) { }

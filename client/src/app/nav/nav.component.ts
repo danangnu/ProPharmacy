@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
+import { take } from 'rxjs/operators';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -26,18 +27,9 @@ export class NavComponent implements OnInit {
     this.auth.logout({returnTo: this.doc.location.origin });
   }
 
-  async getToken() {
-    await this.auth.getAccessTokenSilently().subscribe(token => {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      this.accountService.getUser('nattesc82@gmail.com', headers).subscribe((response) => {
-        console.log(response);
-      });
-    });
-  }
-
   async saveUsers() {
     let i = 0;
-    this.auth.getAccessTokenSilently().subscribe(token => {
+    this.auth.getAccessTokenSilently().pipe(take(1)).subscribe(token => {
       this.auth.idTokenClaims$.subscribe(response => {
         if (i === 0) {
           const bar: any = {email: response.email?.toString(),

@@ -74,7 +74,7 @@ namespace API.Entities
 	    public string NHS_Patient_Number { get; set; }
 	    public string SSP_Vat_Value { get; set; }
 	    public string SSP_Fee_Value { get; set; }
-		public FilesVersion Version { get; set; }
-        public int FilesVersionId { get; set; }
+		public Docs Document { get; set; }
+        public int DocsId { get; set; }
     }
 }
