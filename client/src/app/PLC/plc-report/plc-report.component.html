@@ -24,6 +24,20 @@
             </table>
         </tab>
         <tab heading='Sales'>
+          <table class="table table-condensed">
+            <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>NHS Sales 2020/2021</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let sched of schedulePaymentReports">
+                    <td>{{sched.month}}</td>
+                    <td>{{sched.nhS_SalesSum | currency:'GBP'}}</td>
+                </tr>
+              </tbody>
+        </table>
         </tab>
         <tab heading='Gross Profit'>
         </tab>
