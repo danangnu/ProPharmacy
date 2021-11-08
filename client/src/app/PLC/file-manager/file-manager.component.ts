@@ -4,7 +4,6 @@ import { AuthService } from '@auth0/auth0-angular';
 import { FileUploader } from 'ng2-file-upload';
 import { NgxSpinnerService, Spinner } from 'ngx-spinner';
 import { take } from 'rxjs/operators';
-import { Docs } from 'src/app/_models/docs';
 import { FileVersion } from 'src/app/_models/fileVersion';
 import { User } from 'src/app/_models/user';
 import { environment } from 'src/environments/environment';
