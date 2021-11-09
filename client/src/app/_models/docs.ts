@@ -1,5 +1,5 @@
 export interface Docs {
     id: number;
     fileName: string;
-    filePath: string;
+    fileType: string;
 }

@@ -1,4 +1,4 @@
-import { Docs } from "./docs";
+import { Docs } from './docs';
 
 export interface FileVersion {
     id: number;
