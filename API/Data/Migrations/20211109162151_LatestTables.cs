@@ -187,8 +187,26 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    OCS_Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Net_Payment_Made = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Dispensing_Month = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NHS_Sales = table.Column<double>(type: "float", nullable: false),
+                    Net_Payment = table.Column<double>(type: "float", nullable: false),
+                    Total_Drug = table.Column<double>(type: "float", nullable: false),
+                    Total_Fees = table.Column<double>(type: "float", nullable: false),
+                    Total_Costs = table.Column<double>(type: "float", nullable: false),
+                    Total_Charges = table.Column<double>(type: "float", nullable: false),
+                    Total_Account = table.Column<double>(type: "float", nullable: false),
+                    Recovery_Adv_Payment = table.Column<double>(type: "float", nullable: false),
+                    Recovery_Adv_Payment_Late_Registered = table.Column<double>(type: "float", nullable: false),
+                    Balance_Due_Month = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Balance_Due = table.Column<double>(type: "float", nullable: false),
+                    Account_Number = table.Column<int>(type: "int", nullable: false),
+                    Account_Item = table.Column<int>(type: "int", nullable: false),
+                    Payment_Account = table.Column<double>(type: "float", nullable: false),
+                    Adv_Payment_Late = table.Column<double>(type: "float", nullable: false),
+                    Total_Authorised = table.Column<double>(type: "float", nullable: false),
+                    Total_Authorised_LPP = table.Column<double>(type: "float", nullable: false),
+                    Total_Other = table.Column<double>(type: "float", nullable: false),
                     DocsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

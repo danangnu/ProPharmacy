@@ -26,7 +26,7 @@ namespace API.Data
                     Month = CultureInfo.InvariantCulture.DateTimeFormat.GetMonthName(int.Parse(
                         x.Key.Substring(x.Key.Length - 1, 2))),
                     Year = x.Key.Substring(0, 4),
-                    NHS_SalesSum = x.Sum(t => t.NHS_Sales)
+                    NHS_SalesSum = x.Sum(t => t.Net_Payment)
                 }).ToListAsync();
         }
     }

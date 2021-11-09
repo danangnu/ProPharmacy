@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
@@ -174,6 +175,24 @@ namespace API.Controllers
                 string[] words;
                 double sales = 0;
                 string dmonth = string.Empty;
+                string ocs_code = string.Empty;
+                DateTime net_pay = new DateTime();
+                double total_drug = 0;
+                double total_fees = 0;
+                double total_costs = 0;
+                double total_charges = 0;
+                double total_account = 0;
+                double recover_adv_payment = 0;
+                double recover_adv_payment_late = 0;
+                string balance_due_month = string.Empty;
+                double balance_due = 0;
+                int account_number = 0;
+                int account_item = 0;
+                double payment_account = 0;
+                double adv_payment_late = 0;
+                double total_authorised = 0;
+                double total_authorised_lpp = 0;
+                double total_other = 0;
                 for (int i = 1; i <= PageNum; i++)  
                 {
                     if (i == 1)
@@ -183,16 +202,29 @@ namespace API.Controllers
                         words = text.Split('\n');
                         for (int j = 0, len = words.Length; j < len; j++)
                         {
-                            var line = Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(words[j]));                          
-                            if (line.ToLower().StartsWith("net payment made") )
+                            var line = Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(words[j]));     
+                            if (line.ToLower().StartsWith("ocs code"))
                             {
+                                string[] res = line.Split(' ');
+                                var ocs = res[res.Length - 1].TrimStart();
+                                ocs_code = ocs;
+                            }                     
+                            if (line.ToLower().StartsWith("net payment made"))
+                            {
+                                Regex regex = new Regex(@"\d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\ \d{4}");
+                                Match m = regex.Match(line);
+                                if(m.Success)
+                                {
+                                    DateTime dt = DateTime.ParseExact(m.Value, "dd MMM yyyy", CultureInfo.InvariantCulture);
+                                    net_pay = dt;
+                                }
                                 string[] res = line.Split(' ');
                                 var sale = res[res.Length - 1].TrimStart().Replace(",", "");
                                 sale = sale.Replace(".", ",");
                                 sales = Math.Round(double.Parse(sale),2,MidpointRounding.AwayFromZero);
                             }
 
-                            if (line.ToLower().StartsWith("dispensing month") )
+                            if (line.ToLower().StartsWith("dispensing month"))
                             {
                                 string[] res = line.Split(' ');
                                 var m = DateTime.ParseExact(res[res.Length - 2].TrimStart(), "MMM", CultureInfo.CurrentCulture ).Month;
@@ -200,13 +232,146 @@ namespace API.Controllers
                                     dmonth = res[res.Length - 1].TrimStart() + "0" + m.ToString();
                                 else dmonth = res[res.Length - 1].TrimStart() + m.ToString();
                             }
+                            if (line.ToLower().StartsWith("total of drug and appliance costs"))
+                            {
+                                string[] res = line.Split(' ');
+                                var total_drugs = res[res.Length - 1].TrimStart().Replace(",", "");
+                                total_drugs = total_drugs.Replace(".", ",");
+                                total_drug = Math.Round(double.Parse(total_drugs),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("total of all fees"))
+                            {
+                                string[] res = line.Split(' ');
+                                var total_fee = res[res.Length - 1].TrimStart().Replace(",", "");
+                                total_fee = total_fee.Replace(".", ",");
+                                total_fees = Math.Round(double.Parse(total_fee),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("total of drug and appliance costs plus fees"))
+                            {
+                                string[] res = line.Split(' ');
+                                var total_cost = res[res.Length - 1].TrimStart().Replace(",", "");
+                                total_cost = total_cost.Replace(".", ",");
+                                total_costs = Math.Round(double.Parse(total_cost),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("total of charges (including fp57 refunds)"))
+                            {
+                                string[] res = line.Split(' ');
+                                var total_charge = res[res.Length - 1].TrimStart().Replace(",", "");
+                                total_charge = total_charge.Replace(".", ",");
+                                total_charges = Math.Round(double.Parse(total_charge),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("total of account"))
+                            {
+                                string[] res = line.Split(' ');
+                                var total_accounts = res[res.Length - 1].TrimStart().Replace(",", "");
+                                total_accounts = total_accounts.Replace(".", ",");
+                                total_account = Math.Round(double.Parse(total_accounts),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("recovery of advance payment"))
+                            {
+                                if (line.ToLower().StartsWith("recovery of advance payment in respect of a late registered batch"))
+                                {
+                                    string[] rs = line.Split(' ');
+                                    var recover_adv_payment_late_reg = rs[rs.Length - 1].TrimStart().Replace(",", "");
+                                    recover_adv_payment_late_reg = recover_adv_payment_late_reg.Replace(".", ",");
+                                    recover_adv_payment_late = Math.Round(double.Parse(recover_adv_payment_late_reg),2,MidpointRounding.AwayFromZero);
+                                } else {
+                                    string[] res = line.Split(' ');
+                                    var recovery_adv_payment = res[res.Length - 1].TrimStart().Replace(",", "");
+                                    recovery_adv_payment = recovery_adv_payment.Replace(".", ",");
+                                    recover_adv_payment = Math.Round(double.Parse(recovery_adv_payment),2,MidpointRounding.AwayFromZero);
+                                }
+                            }
+                            if (line.ToLower().StartsWith("balance due in respect of"))
+                            {
+                                Regex regex = new Regex(@"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\ \d{4}");
+                                Match m = regex.Match(line);
+                                if(m.Success)
+                                {
+                                    string[] res = m.Value.Split(' ');
+                                    var due = DateTime.ParseExact(res[0], "MMM", CultureInfo.CurrentCulture ).Month;
+                                    if (due < 10) 
+                                        balance_due_month = res[1].TrimStart() + "0" + due.ToString();
+                                    else balance_due_month = res[1].TrimStart() + due.ToString();
+                                }
+                                string[] rs = line.Split(' ');
+                                var balance_dues = rs[rs.Length - 1].TrimStart().Replace(",", "");
+                                balance_dues = balance_dues.Replace(".", ",");
+                                balance_due = Math.Round(double.Parse(balance_dues),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("payment on account for"))
+                            {
+                                string output = line.Split('(', ')')[1];
+                                string[] rs = output.Split(' ');
+                                for (var k = 0; k < rs.Length - 1;k++)
+                                {
+                                    int n;
+                                    if (int.TryParse(rs[k], out n))
+                                    {
+                                        if (k == 1)
+                                            account_number = int.Parse(rs[k]);
+                                        else
+                                            account_item = int.Parse(rs[k]);
+                                    }
+                                }
+                                string[] res = line.Split(' ');
+                                var payment_accounts = res[res.Length - 1].TrimStart().Replace(",", "");
+                                payment_accounts = payment_accounts.Replace(".", ",");
+                                payment_account = Math.Round(double.Parse(payment_accounts),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("advance payment in respect of a late registered batch"))
+                            {
+                                string[] res = line.Split(' ');
+                                var adv_payment_late_reg = res[res.Length - 1].TrimStart().Replace(",", "");
+                                adv_payment_late_reg = adv_payment_late_reg.Replace(".", ",");
+                                adv_payment_late = Math.Round(double.Parse(adv_payment_late_reg),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("total amount authorised by nhsbsa"))
+                            {
+                                string[] res = line.Split(' ');
+                                var total_authorise = res[res.Length - 1].TrimStart().Replace(",", "");
+                                total_authorise = total_authorise.Replace(".", ",");
+                                total_authorised = Math.Round(double.Parse(total_authorise),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("total amount authorised by lpp"))
+                            {
+                                string[] res = line.Split(' ');
+                                var total_authorise_lpp = res[res.Length - 1].TrimStart().Replace(",", "");
+                                total_authorise_lpp = total_authorise_lpp.Replace(".", ",");
+                                total_authorised_lpp = Math.Round(double.Parse(total_authorise_lpp),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("total of other amounts authorised"))
+                            {
+                                string[] res = line.Split(' ');
+                                var total_others = res[res.Length - 1].TrimStart().Replace(",", "");
+                                total_others = total_others.Replace(".", ",");
+                                total_other = Math.Round(double.Parse(total_others),2,MidpointRounding.AwayFromZero);
+                            }
                         }
                     }   
                 }     
                 var pay = new ScheduleOfPayment
                 {
+                    OCS_Code = ocs_code,
+                    Net_Payment_Made = net_pay,
                     Dispensing_Month = dmonth,
-                    NHS_Sales = sales,
+                    Net_Payment = sales,
+                    Total_Drug = total_drug,
+                    Total_Fees = total_fees,
+                    Total_Costs = total_costs,
+                    Total_Charges = total_charges,
+                    Total_Account = total_account,
+                    Recovery_Adv_Payment = recover_adv_payment,
+                    Recovery_Adv_Payment_Late_Registered = recover_adv_payment_late,
+                    Balance_Due_Month = balance_due_month,
+                    Balance_Due = balance_due,
+                    Account_Number = account_number,
+                    Account_Item = account_item,
+                    Payment_Account = payment_account,
+                    Adv_Payment_Late = adv_payment_late,
+                    Total_Authorised = total_authorised,
+                    Total_Authorised_LPP = total_authorised_lpp,
+                    Total_Other = total_other,
                     DocsId = docOut
                 };
                 document.ScheduleOfPayment.Add(pay);               

@@ -364,13 +364,67 @@ namespace API.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Account_Item")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Account_Number")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Adv_Payment_Late")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Balance_Due")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Balance_Due_Month")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Dispensing_Month")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DocsId")
                         .HasColumnType("int");
 
-                    b.Property<double>("NHS_Sales")
+                    b.Property<double>("Net_Payment")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("Net_Payment_Made")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OCS_Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Payment_Account")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Recovery_Adv_Payment")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Recovery_Adv_Payment_Late_Registered")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Total_Account")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Total_Authorised")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Total_Authorised_LPP")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Total_Charges")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Total_Costs")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Total_Drug")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Total_Fees")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Total_Other")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
