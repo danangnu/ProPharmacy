@@ -179,7 +179,7 @@ namespace API.Controllers
                 DateTime net_pay = new DateTime();
                 double total_drug = 0;
                 double total_fees = 0;
-                double total_costs = 0;
+                double total_costs_fee = 0;
                 double total_charges = 0;
                 double total_account = 0;
                 double recover_adv_payment = 0;
@@ -251,7 +251,7 @@ namespace API.Controllers
                                 string[] res = line.Split(' ');
                                 var total_cost = res[res.Length - 1].TrimStart().Replace(",", "");
                                 total_cost = total_cost.Replace(".", ",");
-                                total_costs = Math.Round(double.Parse(total_cost),2,MidpointRounding.AwayFromZero);
+                                total_costs_fee = Math.Round(double.Parse(total_cost),2,MidpointRounding.AwayFromZero);
                             }
                             if (line.ToLower().StartsWith("total of charges (including fp57 refunds)"))
                             {
@@ -358,7 +358,7 @@ namespace API.Controllers
                     Net_Payment = sales,
                     Total_Drug = total_drug,
                     Total_Fees = total_fees,
-                    Total_Costs = total_costs,
+                    Total_Costs_wFees = total_costs_fee,
                     Total_Charges = total_charges,
                     Total_Account = total_account,
                     Recovery_Adv_Payment = recover_adv_payment,
