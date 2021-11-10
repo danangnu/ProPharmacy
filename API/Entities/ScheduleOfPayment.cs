@@ -41,6 +41,51 @@ namespace API.Entities
         public double Presc_AddFee_2B_Appliance_Measure { get; set; }
         public double Presc_AddFee_2B_Appliance_Home { get; set; }
         public double Presc_AddFee_2E_Controlled { get; set; }
+        public double Presc_AddFee_Methadone_Pay { get; set; }
+        public double Presc_AddFee_2F_Expensive_Fees { get; set; }
+        public double Presc_AddFee_Manual_Price { get; set; }
+        public double Transitional_Pay { get; set; }
+        public double Sub_Total_Presc_Fee { get; set; }
+        public double Other_Fee_Medicine { get; set; }
+        public double Other_Fee_Appliance_Patient { get; set; }
+        public double Other_Fee_Appliance_Premise { get; set; }
+        public double Other_Fee_Stoma_Custom { get; set; }
+        public double Other_Fee_Medicine_Service { get; set; }
+        public double Total_All_Fees { get; set; }
+        public double Charges_Collected_Excl_Hosiery_1 { get; set; }
+        public double Charges_Collected_Excl_Hosiery_2 { get; set; }
+        public double Charges_Collected_Elastic_Hosiery { get; set; }
+        public double Charges_FP57_Refund { get; set; }
+        public double Local_Scheme { get; set; }
+        public double LPC_Statutory_Levy { get; set; }
+        public double COVID_Premises_Refrigeration { get; set; }
+        public double Reimbursement_Covid_Costs { get; set; }
+        public int Total_Forms_Received { get; set; }
+        public int Total_Electronic_Prescription_Received { get; set; }
+        public int Total_Electronic_Prescription_Items { get; set; }
+        public int Items_Zero_Disc { get; set; }
+        public int Items_Standard_Disc { get; set; }
+        public int Total_Paid_Fee_Items { get; set; }
+        public double Avg_Item_Value { get; set; }
+        public int Referred_Back_Items { get; set; }
+        public int Referred_Back_Forms { get; set; }
+        public int Medicines_Reviews_Declared { get; set; }
+        public int YTD_MUR_Declaration { get; set; }
+        public int FP57_Declared { get; set; }
+        public int Appliance_Reviews_Carried_Patients_Home { get; set; }
+        public int Appliance_Reviews_Carried_Premises { get; set; }
+        public int New_Medicine_Service_Undertaken { get; set; }
+        public int New_Medicine_Service_Items { get; set; }
+        public int Exempt_Chargeable { get; set; }
+        public int Exempt_Chargeable_Old_Rate { get; set; }
+        public int Chargeable_Exempt { get; set; }
+        public int Chargeable_Old_Rate_Exempt { get; set; }
+        public int Items_Over_100 { get; set; }
+        public double Items_Over_100_Basic_Price { get; set; }
+        public int Items_Over_300 { get; set; }
+        public double Items_Over_300_Basic_Price { get; set; }
+        public int Total_Items_Over_100 { get; set; }
+        public double Total_Items_Over_100_Basic_Price { get; set; }
         public Docs Document { get; set; }
         public int DocsId { get; set; }
     }

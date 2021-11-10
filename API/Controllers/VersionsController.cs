@@ -193,6 +193,7 @@ namespace API.Controllers
                 double total_authorised = 0;
                 double total_authorised_lpp = 0;
                 double total_other = 0;
+                double total_price_standrt_disc = 0;
                 for (int i = 1; i <= PageNum; i++)  
                 {
                     if (i == 1)
@@ -347,6 +348,20 @@ namespace API.Controllers
                                 total_others = total_others.Replace(".", ",");
                                 total_other = Math.Round(double.Parse(total_others),2,MidpointRounding.AwayFromZero);
                             }
+                            if (line.ToLower().StartsWith("total of basic prices at standard discount rate"))
+                            {
+                                string[] res = line.Split(' ');
+                                var total_price_standrt_discount = res[res.Length - 1].TrimStart().Replace(",", "");
+                                total_price_standrt_discount = total_price_standrt_discount.Replace(".", ",");
+                                total_price_standrt_disc = Math.Round(double.Parse(total_price_standrt_discount),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("discount"))
+                            {
+                                string[] res = line.Split(' ');
+                                var total_price_standrt_discount = res[res.Length - 1].TrimStart().Replace(",", "");
+                                total_price_standrt_discount = total_price_standrt_discount.Replace(".", ",");
+                                total_price_standrt_disc = Math.Round(double.Parse(total_price_standrt_discount),2,MidpointRounding.AwayFromZero);
+                            }
                         }
                     }   
                 }     
@@ -372,6 +387,7 @@ namespace API.Controllers
                     Total_Authorised = total_authorised,
                     Total_Authorised_LPP = total_authorised_lpp,
                     Total_Other = total_other,
+                    Total_Price_Standrt_Disc = total_price_standrt_disc,
                     DocsId = docOut
                 };
                 document.ScheduleOfPayment.Add(pay);               
