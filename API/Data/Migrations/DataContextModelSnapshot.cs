@@ -373,10 +373,58 @@ namespace API.Data.Migrations
                     b.Property<double>("Adv_Payment_Late")
                         .HasColumnType("float");
 
+                    b.Property<int>("Appliance_Reviews_Carried_Patients_Home")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Appliance_Reviews_Carried_Premises")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Avg_Item_Value")
+                        .HasColumnType("float");
+
                     b.Property<double>("Balance_Due")
                         .HasColumnType("float");
 
                     b.Property<string>("Balance_Due_Month")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("COVID_Premises_Refrigeration")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Chargeable_Exempt")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Chargeable_Old_Rate_Exempt")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Charges_Collected_Elastic_Hosiery")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Charges_Collected_Excl_Hosiery_1")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Charges_Collected_Excl_Hosiery_1_Items")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Charges_Collected_Excl_Hosiery_1_Per_Item")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Charges_Collected_Excl_Hosiery_2")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Charges_Collected_Excl_Hosiery_2_Items")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Charges_Collected_Excl_Hosiery_2_Per_Item")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Charges_FP57_Refund")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Discount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Discount_Percent")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Dispensing_Month")
@@ -385,16 +433,115 @@ namespace API.Data.Migrations
                     b.Property<int>("DocsId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Exempt_Chargeable")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Exempt_Chargeable_Old_Rate")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FP57_Declared")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Items_Over_100")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Items_Over_100_Basic_Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Items_Over_300")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Items_Over_300_Basic_Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Items_Standard_Disc")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Items_Zero_Disc")
+                        .HasColumnType("int");
+
+                    b.Property<double>("LPC_Statutory_Levy")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Local_Scheme")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Medicines_Reviews_Declared")
+                        .HasColumnType("int");
+
                     b.Property<double>("Net_Payment")
                         .HasColumnType("float");
 
                     b.Property<DateTime>("Net_Payment_Made")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("New_Medicine_Service_Items")
+                        .HasColumnType("int");
+
+                    b.Property<int>("New_Medicine_Service_Undertaken")
+                        .HasColumnType("int");
+
                     b.Property<string>("OCS_Code")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Other_Fee_Appliance_Patient")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Other_Fee_Appliance_Premise")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Other_Fee_Medicine")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Other_Fee_Medicine_Service")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Other_Fee_Stoma_Custom")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Out_Pocket_Expenses")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Pay_Consumable")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Pay_Consumable_Per_Item")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Pay_Container")
+                        .HasColumnType("float");
+
                     b.Property<double>("Payment_Account")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Presc_Activity_Pay")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Presc_Activity_Pay_Per_Item")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Presc_AddFee_2A_Unlicensed_Meds")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Presc_AddFee_2B_Appliance_Home")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Presc_AddFee_2B_Appliance_Measure")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Presc_AddFee_2E_Controlled")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Presc_AddFee_2F_Expensive_Fee_Item")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Presc_AddFee_2F_Expensive_Fees")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Presc_AddFee_Manual_Price")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Presc_AddFee_Methadone_Pay")
                         .HasColumnType("float");
 
                     b.Property<double>("Recovery_Adv_Payment")
@@ -403,7 +550,25 @@ namespace API.Data.Migrations
                     b.Property<double>("Recovery_Adv_Payment_Late_Registered")
                         .HasColumnType("float");
 
+                    b.Property<int>("Referred_Back_Forms")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Referred_Back_Items")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Reimbursement_Covid_Costs")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Sub_Total_Presc_Fee")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Sub_Total_Price")
+                        .HasColumnType("float");
+
                     b.Property<double>("Total_Account")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Total_All_Fees")
                         .HasColumnType("float");
 
                     b.Property<double>("Total_Authorised")
@@ -418,14 +583,47 @@ namespace API.Data.Migrations
                     b.Property<double>("Total_Costs")
                         .HasColumnType("float");
 
+                    b.Property<double>("Total_Costs_wFees")
+                        .HasColumnType("float");
+
                     b.Property<double>("Total_Drug")
                         .HasColumnType("float");
+
+                    b.Property<int>("Total_Electronic_Prescription_Items")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Total_Electronic_Prescription_Received")
+                        .HasColumnType("int");
 
                     b.Property<double>("Total_Fees")
                         .HasColumnType("float");
 
+                    b.Property<int>("Total_Forms_Received")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Total_Items_Over_100")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Total_Items_Over_100_Basic_Price")
+                        .HasColumnType("float");
+
                     b.Property<double>("Total_Other")
                         .HasColumnType("float");
+
+                    b.Property<int>("Total_Paid_Fee_Items")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Total_Price_Standrt_Disc")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Total_Price_Zero_Disc")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Transitional_Pay")
+                        .HasColumnType("float");
+
+                    b.Property<int>("YTD_MUR_Declaration")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

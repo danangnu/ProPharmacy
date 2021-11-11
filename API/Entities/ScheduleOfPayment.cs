@@ -43,6 +43,7 @@ namespace API.Entities
         public double Presc_AddFee_2E_Controlled { get; set; }
         public double Presc_AddFee_Methadone_Pay { get; set; }
         public double Presc_AddFee_2F_Expensive_Fees { get; set; }
+        public int Presc_AddFee_2F_Expensive_Fee_Item { get; set; }
         public double Presc_AddFee_Manual_Price { get; set; }
         public double Transitional_Pay { get; set; }
         public double Sub_Total_Presc_Fee { get; set; }
@@ -53,7 +54,11 @@ namespace API.Entities
         public double Other_Fee_Medicine_Service { get; set; }
         public double Total_All_Fees { get; set; }
         public double Charges_Collected_Excl_Hosiery_1 { get; set; }
+        public int Charges_Collected_Excl_Hosiery_1_Items { get; set; }
+        public double Charges_Collected_Excl_Hosiery_1_Per_Item { get; set; }
         public double Charges_Collected_Excl_Hosiery_2 { get; set; }
+        public int Charges_Collected_Excl_Hosiery_2_Items { get; set; }
+        public double Charges_Collected_Excl_Hosiery_2_Per_Item { get; set; }
         public double Charges_Collected_Elastic_Hosiery { get; set; }
         public double Charges_FP57_Refund { get; set; }
         public double Local_Scheme { get; set; }

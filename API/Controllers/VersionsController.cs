@@ -194,13 +194,80 @@ namespace API.Controllers
                 double total_authorised_lpp = 0;
                 double total_other = 0;
                 double total_price_standrt_disc = 0;
+                string discount_percent = string.Empty;
+                double discount = 0;
+                double total_price_zero_disc = 0;
+                double sub_total_price = 0;
+                double out_pocket_expenses = 0;
+                double pay_consumable_per_item = 0;
+                double pay_consumable = 0;
+                double pay_container = 0;
+                double total_costs = 0;
+                double presc_activity_pay_per_item = 0;
+                double presc_activity_pay = 0;
+                double presc_addfee_2a_unlicensed_meds = 0;
+                double presc_addfee_2b_appliance_measure = 0;
+                double presc_addfee_2b_appliance_home = 0;
+                double presc_addfee_2e_controlled = 0;
+                double presc_addfee_methadone_pay = 0;
+                double presc_addfee_2f_expensive_fees = 0;
+                int presc_addfee_2f_expensive_fee_item = 0;
+                double presc_addfee_manual_price = 0;
+                double transitional_pay = 0;
+                double sub_total_presc_fee = 0;
+                double other_fee_medicine = 0;
+                double other_fee_appliance_patient = 0;
+                double other_fee_appliance_premise = 0;
+                double other_fee_stoma_custom = 0;
+                double other_fee_medicine_service = 0;
+                double total_all_fees = 0;
+                int charges_collected_excl_hosiery_1_items = 0;
+                double charges_collected_excl_hosiery_1_per_item = 0;
+                double charges_collected_excl_hosiery_1 = 0;
+                int charges_collected_excl_hosiery_2_items = 0;
+                double charges_collected_excl_hosiery_2_per_item = 0;
+                double charges_collected_excl_hosiery_2 = 0;
+                double charges_collected_elastic_hosiery = 0;
+                double charges_fp57_refund = 0;
+                double local_scheme = 0;
+                double lpc_statutory_levy = 0;
+                double covid_premises_refrigeration = 0;
+                double reimbursement_covid_costs = 0;
+                int total_forms_received = 0;
+                int total_electronic_prescription_received = 0;
+                int total_electronic_prescription_items = 0;
+                int items_zero_disc = 0;
+                int items_standard_disc = 0;
+                int total_paid_fee_items = 0;
+                double avg_item_value = 0;
+                int referred_back_items = 0;
+                int referred_back_forms = 0;
+                int medicines_reviews_declared = 0;
+                int ytd_mur_declaration = 0;
+                int fp57_declared = 0;
+                int appliance_reviews_carried_patients_home = 0;
+                int appliance_reviews_carried_premises = 0;
+                int new_medicine_service_undertaken = 0;
+                int new_medicine_service_items = 0;
+                int exempt_chargeable = 0;
+                int exempt_chargeable_old_rate = 0;
+                int chargeable_exempt = 0;
+                int chargeable_old_rate_exempt = 0;
+                int items_over_100 = 0;
+                double items_over_100_basic_price = 0;
+                int items_over_300 = 0;
+                double items_over_300_basic_price = 0;
+                int total_items_over_100 = 0;
+                double total_items_over_100_basic_price = 0;
+                
                 for (int i = 1; i <= PageNum; i++)  
                 {
+                    var text = PdfTextExtractor.GetTextFromPage(pdfDoc.GetPage(i)); 
+                        
+                    words = text.Split('\n');
+
                     if (i == 1)
                     {
-                        var text = PdfTextExtractor.GetTextFromPage(pdfDoc.GetPage(i)); 
-                        
-                        words = text.Split('\n');
                         for (int j = 0, len = words.Length; j < len; j++)
                         {
                             var line = Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(words[j]));     
@@ -221,7 +288,7 @@ namespace API.Controllers
                                 }
                                 string[] res = line.Split(' ');
                                 var sale = res[res.Length - 1].TrimStart().Replace(",", "");
-                                sale = sale.Replace(".", ",");
+                                //sale = sale.Replace(".", ",");
                                 sales = Math.Round(double.Parse(sale),2,MidpointRounding.AwayFromZero);
                             }
 
@@ -237,35 +304,35 @@ namespace API.Controllers
                             {
                                 string[] res = line.Split(' ');
                                 var total_drugs = res[res.Length - 1].TrimStart().Replace(",", "");
-                                total_drugs = total_drugs.Replace(".", ",");
+                                //total_drugs = total_drugs.Replace(".", ",");
                                 total_drug = Math.Round(double.Parse(total_drugs),2,MidpointRounding.AwayFromZero);
                             }
                             if (line.ToLower().StartsWith("total of all fees"))
                             {
                                 string[] res = line.Split(' ');
                                 var total_fee = res[res.Length - 1].TrimStart().Replace(",", "");
-                                total_fee = total_fee.Replace(".", ",");
+                                //total_fee = total_fee.Replace(".", ",");
                                 total_fees = Math.Round(double.Parse(total_fee),2,MidpointRounding.AwayFromZero);
                             }
                             if (line.ToLower().StartsWith("total of drug and appliance costs plus fees"))
                             {
                                 string[] res = line.Split(' ');
                                 var total_cost = res[res.Length - 1].TrimStart().Replace(",", "");
-                                total_cost = total_cost.Replace(".", ",");
+                                //total_cost = total_cost.Replace(".", ",");
                                 total_costs_fee = Math.Round(double.Parse(total_cost),2,MidpointRounding.AwayFromZero);
                             }
                             if (line.ToLower().StartsWith("total of charges (including fp57 refunds)"))
                             {
                                 string[] res = line.Split(' ');
                                 var total_charge = res[res.Length - 1].TrimStart().Replace(",", "");
-                                total_charge = total_charge.Replace(".", ",");
+                                //total_charge = total_charge.Replace(".", ",");
                                 total_charges = Math.Round(double.Parse(total_charge),2,MidpointRounding.AwayFromZero);
                             }
                             if (line.ToLower().StartsWith("total of account"))
                             {
                                 string[] res = line.Split(' ');
                                 var total_accounts = res[res.Length - 1].TrimStart().Replace(",", "");
-                                total_accounts = total_accounts.Replace(".", ",");
+                                //total_accounts = total_accounts.Replace(".", ",");
                                 total_account = Math.Round(double.Parse(total_accounts),2,MidpointRounding.AwayFromZero);
                             }
                             if (line.ToLower().StartsWith("recovery of advance payment"))
@@ -274,12 +341,12 @@ namespace API.Controllers
                                 {
                                     string[] rs = line.Split(' ');
                                     var recover_adv_payment_late_reg = rs[rs.Length - 1].TrimStart().Replace(",", "");
-                                    recover_adv_payment_late_reg = recover_adv_payment_late_reg.Replace(".", ",");
+                                    //recover_adv_payment_late_reg = recover_adv_payment_late_reg.Replace(".", ",");
                                     recover_adv_payment_late = Math.Round(double.Parse(recover_adv_payment_late_reg),2,MidpointRounding.AwayFromZero);
                                 } else {
                                     string[] res = line.Split(' ');
                                     var recovery_adv_payment = res[res.Length - 1].TrimStart().Replace(",", "");
-                                    recovery_adv_payment = recovery_adv_payment.Replace(".", ",");
+                                    //recovery_adv_payment = recovery_adv_payment.Replace(".", ",");
                                     recover_adv_payment = Math.Round(double.Parse(recovery_adv_payment),2,MidpointRounding.AwayFromZero);
                                 }
                             }
@@ -297,7 +364,7 @@ namespace API.Controllers
                                 }
                                 string[] rs = line.Split(' ');
                                 var balance_dues = rs[rs.Length - 1].TrimStart().Replace(",", "");
-                                balance_dues = balance_dues.Replace(".", ",");
+                                //balance_dues = balance_dues.Replace(".", ",");
                                 balance_due = Math.Round(double.Parse(balance_dues),2,MidpointRounding.AwayFromZero);
                             }
                             if (line.ToLower().StartsWith("payment on account for"))
@@ -317,54 +384,443 @@ namespace API.Controllers
                                 }
                                 string[] res = line.Split(' ');
                                 var payment_accounts = res[res.Length - 1].TrimStart().Replace(",", "");
-                                payment_accounts = payment_accounts.Replace(".", ",");
+                                //payment_accounts = payment_accounts.Replace(".", ",");
                                 payment_account = Math.Round(double.Parse(payment_accounts),2,MidpointRounding.AwayFromZero);
                             }
                             if (line.ToLower().StartsWith("advance payment in respect of a late registered batch"))
                             {
                                 string[] res = line.Split(' ');
                                 var adv_payment_late_reg = res[res.Length - 1].TrimStart().Replace(",", "");
-                                adv_payment_late_reg = adv_payment_late_reg.Replace(".", ",");
+                                //adv_payment_late_reg = adv_payment_late_reg.Replace(".", ",");
                                 adv_payment_late = Math.Round(double.Parse(adv_payment_late_reg),2,MidpointRounding.AwayFromZero);
                             }
                             if (line.ToLower().StartsWith("total amount authorised by nhsbsa"))
                             {
                                 string[] res = line.Split(' ');
                                 var total_authorise = res[res.Length - 1].TrimStart().Replace(",", "");
-                                total_authorise = total_authorise.Replace(".", ",");
+                                //total_authorise = total_authorise.Replace(".", ",");
                                 total_authorised = Math.Round(double.Parse(total_authorise),2,MidpointRounding.AwayFromZero);
                             }
                             if (line.ToLower().StartsWith("total amount authorised by lpp"))
                             {
                                 string[] res = line.Split(' ');
                                 var total_authorise_lpp = res[res.Length - 1].TrimStart().Replace(",", "");
-                                total_authorise_lpp = total_authorise_lpp.Replace(".", ",");
+                                //total_authorise_lpp = total_authorise_lpp.Replace(".", ",");
                                 total_authorised_lpp = Math.Round(double.Parse(total_authorise_lpp),2,MidpointRounding.AwayFromZero);
                             }
                             if (line.ToLower().StartsWith("total of other amounts authorised"))
                             {
                                 string[] res = line.Split(' ');
                                 var total_others = res[res.Length - 1].TrimStart().Replace(",", "");
-                                total_others = total_others.Replace(".", ",");
+                                //total_others = total_others.Replace(".", ",");
                                 total_other = Math.Round(double.Parse(total_others),2,MidpointRounding.AwayFromZero);
                             }
                             if (line.ToLower().StartsWith("total of basic prices at standard discount rate"))
                             {
                                 string[] res = line.Split(' ');
                                 var total_price_standrt_discount = res[res.Length - 1].TrimStart().Replace(",", "");
-                                total_price_standrt_discount = total_price_standrt_discount.Replace(".", ",");
+                                //total_price_standrt_discount = total_price_standrt_discount.Replace(".", ",");
                                 total_price_standrt_disc = Math.Round(double.Parse(total_price_standrt_discount),2,MidpointRounding.AwayFromZero);
                             }
                             if (line.ToLower().StartsWith("discount"))
                             {
                                 string[] res = line.Split(' ');
-                                var total_price_standrt_discount = res[res.Length - 1].TrimStart().Replace(",", "");
-                                total_price_standrt_discount = total_price_standrt_discount.Replace(".", ",");
-                                total_price_standrt_disc = Math.Round(double.Parse(total_price_standrt_discount),2,MidpointRounding.AwayFromZero);
+                                for (var k = 1; k < res.Length; k++)
+                                {
+                                    if (res[k].Equals("%"))
+                                        discount_percent = res[k-1].TrimStart().TrimEnd() + " %";
+                                }
+                                var discounts = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //discounts = discounts.Replace(".", ",");
+                                discount = Math.Round(double.Parse(discounts),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("total of basic prices at zero discount"))
+                            {
+                                string[] res = line.Split(' ');
+                                var total_price_zero_discount = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //total_price_zero_discount = total_price_zero_discount.Replace(".", ",");
+                                total_price_zero_disc = Math.Round(double.Parse(total_price_zero_discount),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("sub total of basic prices"))
+                            {
+                                string[] res = line.Split(' ');
+                                var sub_total_prices = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //sub_total_prices = sub_total_prices.Replace(".", ",");
+                                sub_total_price = Math.Round(double.Parse(sub_total_prices),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("out of pocket expenses"))
+                            {
+                                string[] res = line.Split(' ');
+                                var out_pocket_expense = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //out_pocket_expense = out_pocket_expense.Replace(".", ",");
+                                out_pocket_expenses = Math.Round(double.Parse(out_pocket_expense),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("payment for consumables"))
+                            {
+                                string[] res = line.Split(' ');
+                                for (var k = 1; k < res.Length; k++)
+                                {
+                                    if (res[k].Equals("p"))
+                                    {
+                                        var pay_consumable_per_items = res[k-1].TrimStart().TrimEnd();
+                                        //pay_consumable_per_items = pay_consumable_per_items.Replace(".", ",");
+                                        pay_consumable_per_item = Math.Round(double.Parse(pay_consumable_per_items),2,MidpointRounding.AwayFromZero);
+                                    }
+                                        
+                                }
+                                var pay_consumables = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //pay_consumables = pay_consumables.Replace(".", ",");
+                                pay_consumable = Math.Round(double.Parse(pay_consumables),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("payment for containers"))
+                            {
+                                string[] res = line.Split(' ');
+                                var pay_containers = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //pay_containers = pay_containers.Replace(".", ",");
+                                pay_container = Math.Round(double.Parse(pay_containers),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("total of drug and appliance costs"))
+                            {
+                                string[] res = line.Split(' ');
+                                var total_cost = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //total_cost = total_cost.Replace(".", ",");
+                                total_costs = Math.Round(double.Parse(total_cost),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("activity payment"))
+                            {
+                                string[] res = line.Split(' ');
+                                for (var k = 1; k < res.Length; k++)
+                                {
+                                    if (res[k].Equals("p"))
+                                    {
+                                        var presc_activity_pay_per_items = res[k-1].TrimStart().TrimEnd();
+                                        //presc_activity_pay_per_items = presc_activity_pay_per_items.Replace(".", ",");
+                                        presc_activity_pay_per_item = Math.Round(double.Parse(presc_activity_pay_per_items),2,MidpointRounding.AwayFromZero);
+                                    }
+                                        
+                                }
+                                var presc_activity_payment = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //presc_activity_payment = presc_activity_payment.Replace(".", ",");
+                                presc_activity_pay = Math.Round(double.Parse(presc_activity_payment),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("additional fees") && line.ToLower().Contains("2a unlicensed medicines"))
+                            {
+                                string[] res = line.Split(' ');
+                                var presc_addfee_2a_unlicensed_med = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //presc_addfee_2a_unlicensed_med = presc_addfee_2a_unlicensed_med.Replace(".", ",");
+                                presc_addfee_2a_unlicensed_meds = Math.Round(double.Parse(presc_addfee_2a_unlicensed_med),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().Contains("2b appliances - measured and fitted"))
+                            {
+                                string[] res = line.Split(' ');
+                                var presc_addfee_2b_appliance_measured = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //presc_addfee_2b_appliance_measured = presc_addfee_2b_appliance_measured.Replace(".", ",");
+                                presc_addfee_2b_appliance_measure = Math.Round(double.Parse(presc_addfee_2b_appliance_measured),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().Contains("appliances - home delivery"))
+                            {
+                                string[] res = line.Split(' ');
+                                var presc_addfee_2b_appliance_home_d = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //presc_addfee_2b_appliance_home_d = presc_addfee_2b_appliance_home_d.Replace(".", ",");
+                                presc_addfee_2b_appliance_home = Math.Round(double.Parse(presc_addfee_2b_appliance_home_d),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().Contains("2E controlled drug schedules 2 and 3"))
+                            {
+                                string[] res = line.Split(' ');
+                                var presc_addfee_2e_controlled_drug = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //presc_addfee_2e_controlled_drug = presc_addfee_2e_controlled_drug.Replace(".", ",");
+                                presc_addfee_2e_controlled = Math.Round(double.Parse(presc_addfee_2e_controlled_drug),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().Contains("methadone payment"))
+                            {
+                                string[] res = line.Split(' ');
+                                var presc_addfee_methadone_payment = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //presc_addfee_methadone_payment = presc_addfee_methadone_payment.Replace(".", ",");
+                                presc_addfee_methadone_pay = Math.Round(double.Parse(presc_addfee_methadone_payment),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().Contains("2f expensive prescription fees"))
+                            {
+                                string[] res = line.Split(' ');
+                                presc_addfee_2f_expensive_fee_item = int.Parse(res[res.Length - 2].TrimStart().TrimEnd());
+                                var presc_addfee_2f_expensive_fee = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //presc_addfee_2f_expensive_fee = presc_addfee_2f_expensive_fee.Replace(".", ",");
+                                presc_addfee_2f_expensive_fees = Math.Round(double.Parse(presc_addfee_2f_expensive_fee),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().Contains("manually priced"))
+                            {
+                                string[] res = line.Split(' ');
+                                var presc_addfee_manual_priced = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //presc_addfee_manual_priced = presc_addfee_manual_priced.Replace(".", ",");
+                                presc_addfee_manual_price = Math.Round(double.Parse(presc_addfee_manual_priced),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("transitional Payment"))
+                            {
+                                string[] res = line.Split(' ');
+                                var transitional_payment = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //transitional_payment = transitional_payment.Replace(".", ",");
+                                transitional_pay = Math.Round(double.Parse(transitional_payment),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("sub total of prescription fees"))
+                            {
+                                string[] res = line.Split(' ');
+                                var sub_total_presc_fees = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //sub_total_presc_fees = sub_total_presc_fees.Replace(".", ",");
+                                sub_total_presc_fee = Math.Round(double.Parse(sub_total_presc_fees),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("other fees") && line.ToLower().Contains("medicines use reviews"))
+                            {
+                                string[] res = line.Split(' ');
+                                var other_fee_medicines = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //other_fee_medicines = other_fee_medicines.Replace(".", ",");
+                                other_fee_medicine = Math.Round(double.Parse(other_fee_medicines),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().Contains("appliance use reviews carried out at patients home"))
+                            {
+                                string[] res = line.Split(' ');
+                                var other_fee_appliance_patients = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //other_fee_appliance_patients = other_fee_appliance_patients.Replace(".", ",");
+                                other_fee_appliance_patient = Math.Round(double.Parse(other_fee_appliance_patients),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().Contains("appliance use reviews carried out at premises"))
+                            {
+                                string[] res = line.Split(' ');
+                                var other_fee_appliance_premises = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //other_fee_appliance_premises = other_fee_appliance_premises.Replace(".", ",");
+                                other_fee_appliance_premise = Math.Round(double.Parse(other_fee_appliance_premises),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().Contains("stoma customisation"))
+                            {
+                                string[] res = line.Split(' ');
+                                var other_fee_stoma_customi = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //other_fee_stoma_customi = other_fee_stoma_customi.Replace(".", ",");
+                                other_fee_stoma_custom = Math.Round(double.Parse(other_fee_stoma_customi),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().Contains("new medicine service"))
+                            {
+                                string[] res = line.Split(' ');
+                                var other_fee_medicine_services = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //other_fee_medicine_services = other_fee_medicine_services.Replace(".", ",");
+                                other_fee_medicine_service = Math.Round(double.Parse(other_fee_medicine_services),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("total of all fees"))
+                            {
+                                string[] res = line.Split(' ');
+                                var total_all_fee = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //total_all_fee = total_all_fee.Replace(".", ",");
+                                total_all_fees = Math.Round(double.Parse(total_all_fee),2,MidpointRounding.AwayFromZero);
                             }
                         }
+                    } else if (i == 2) {
+                        for (int j = 0, len = words.Length; j < len; j++)
+                        {
+                            var line = Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(words[j]));
+                            if (line.ToLower().StartsWith("collected excluding elastic hosiery"))
+                            {
+                                string[] res = line.Split(' ');
+                                for (int k = 0; k < res.Length; k++)
+                                {
+                                    if (res[k].Equals("@"))
+                                    {
+                                        charges_collected_excl_hosiery_1_items = int.Parse(res[k-1].TrimStart().TrimEnd());
+                                        charges_collected_excl_hosiery_1_per_item = Math.Round(double.Parse(res[k+1].TrimStart().TrimEnd()),2,MidpointRounding.AwayFromZero);
+                                    }
+                                }
+                                var charges_collected_exclu_hosiery_1 = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //charges_collected_exclu_hosiery_1 = charges_collected_exclu_hosiery_1.Replace(".", ",");
+                                charges_collected_excl_hosiery_1 = Math.Round(double.Parse(charges_collected_exclu_hosiery_1),2,MidpointRounding.AwayFromZero);
+                                var linenext = Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(words[j+1]));
+                                
+                                string[] res2 = linenext.Split(' ');
+                                for (int k = 0; k < res2.Length; k++)
+                                {
+                                    if (res2[k].Equals("@"))
+                                    {
+                                        charges_collected_excl_hosiery_2_items = int.Parse(res2[k-1].TrimStart().TrimEnd());
+                                        charges_collected_excl_hosiery_2_per_item = Math.Round(double.Parse(res2[k+1].TrimStart().TrimEnd()),2,MidpointRounding.AwayFromZero);
+                                    }
+                                }
+                                var charges_collected_exclu_hosiery_2 = res2[res2.Length - 1].TrimStart().Replace(",", "");
+                                //charges_collected_exclu_hosiery_2 = charges_collected_exclu_hosiery_2.Replace(".", ",");
+                                charges_collected_excl_hosiery_2 = Math.Round(double.Parse(charges_collected_exclu_hosiery_2),2,MidpointRounding.AwayFromZero);
+                                j++;
+                            }
+                            if (line.ToLower().StartsWith("collected elastic hosiery"))
+                            {
+                                string[] res = line.Split(' ');
+                                var charges_collected_elastic_hosier = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //charges_collected_elastic_hosier = charges_collected_elastic_hosier.Replace(".", ",");
+                                charges_collected_elastic_hosiery = Math.Round(double.Parse(charges_collected_elastic_hosier),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("fp57 refunds"))
+                            {
+                                string[] res = line.Split(' ');
+                                var charges_fp57_refunds = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //charges_fp57_refunds = charges_fp57_refunds.Replace(".", ",");
+                                charges_fp57_refund = Math.Round(double.Parse(charges_fp57_refunds),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("local scheme 1"))
+                            {
+                                string[] res = line.Split(' ');
+                                var local_scheme1 = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //local_scheme1 = local_scheme1.Replace(".", ",");
+                                local_scheme = Math.Round(double.Parse(local_scheme1),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("lpc - statutory levy"))
+                            {
+                                string[] res = line.Split(' ');
+                                var lpc_statutory_levys = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //lpc_statutory_levys = lpc_statutory_levys.Replace(".", ",");
+                                lpc_statutory_levy = Math.Round(double.Parse(lpc_statutory_levys),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("covid premises and refrigeration"))
+                            {
+                                string[] res = line.Split(' ');
+                                var covid_premise_refrigeration = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //covid_premise_refrigeration = covid_premise_refrigeration.Replace(".", ",");
+                                covid_premises_refrigeration = Math.Round(double.Parse(covid_premise_refrigeration),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("reimbursement of covid-19 costs"))
+                            {
+                                string[] res = line.Split(' ');
+                                var reimbursement_covid_cost = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //reimbursement_covid_cost = reimbursement_covid_cost.Replace(".", ",");
+                                reimbursement_covid_costs = Math.Round(double.Parse(reimbursement_covid_cost),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("total forms received (including electronic prescriptions)"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                total_forms_received = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("total electronic prescription forms received"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                total_electronic_prescription_received = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("total electronic prescription items received"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                total_electronic_prescription_items = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("items at zero discount rate, for which a fee is paid"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                items_zero_disc = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("items at standard discount rate, for which a fee is paid (including oxygen)"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                items_standard_disc = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("total of items, for which a fee is paid"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                total_paid_fee_items = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("average item value"))
+                            {
+                                string[] res = line.Split(' ');
+                                var avge_item_value = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //avge_item_value = avge_item_value.Replace(".", ",");
+                                avg_item_value = Math.Round(double.Parse(avge_item_value),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("referred back items"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                referred_back_items = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("referred back forms"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                referred_back_forms = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("medicines use reviews declared"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                medicines_reviews_declared = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("year to date mur declarations"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                ytd_mur_declaration = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("fp57 forms declared"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                fp57_declared = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("appliance use reviews carried out at patients home declared"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                appliance_reviews_carried_patients_home = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("appliance use reviews carried out at premises declared"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                appliance_reviews_carried_premises = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("new medicine services undertaken"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                new_medicine_service_undertaken = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("new medicine service items"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                new_medicine_service_items = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                        }
+                    } else if (i == 3) {
+                        for (int j = 0, len = words.Length; j < len; j++)
+                        {
+                            var line = Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(words[j]));
+                            if (line.ToLower().StartsWith("exempt to chargeable"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                exempt_chargeable = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("exempt to chargeable (old rate)"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                exempt_chargeable_old_rate = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("chargeable to exempt"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                chargeable_exempt = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("chargeable (old rate) to exempt"))
+                            {
+                                string[] res = line.Split(' ');                                
+                                chargeable_old_rate_exempt = int.Parse(res[res.Length - 1].TrimStart());
+                            }
+                            if (line.ToLower().StartsWith("number of items over £ 100 and up to £ 300"))
+                            {
+                                string[] res = line.Split(' ');
+                                items_over_100 = int.Parse(res[res.Length - 2].TrimStart());
+                                var items_over_100_basic_prices = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //items_over_100_basic_prices = items_over_100_basic_prices.Replace(".", ",");
+                                items_over_100_basic_price = Math.Round(double.Parse(items_over_100_basic_prices),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("number of items over £ 300"))
+                            {
+                                string[] res = line.Split(' ');
+                                items_over_300 = int.Parse(res[res.Length - 2].TrimStart());
+                                var items_over_300_basic_prices = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //items_over_300_basic_prices = items_over_300_basic_prices.Replace(".", ",");
+                                items_over_300_basic_price = Math.Round(double.Parse(items_over_300_basic_prices),2,MidpointRounding.AwayFromZero);
+                            }
+                            if (line.ToLower().StartsWith("total of items over £ 100"))
+                            {
+                                string[] res = line.Split(' ');
+                                total_items_over_100 = int.Parse(res[res.Length - 2].TrimStart());
+                                var total_items_over_100_basic_prices = res[res.Length - 1].TrimStart().Replace(",", "");
+                                //total_items_over_100_basic_prices = total_items_over_100_basic_prices.Replace(".", ",");
+                                total_items_over_100_basic_price = Math.Round(double.Parse(total_items_over_100_basic_prices),2,MidpointRounding.AwayFromZero);
+                            }
+                        }
+                        
                     }   
-                }     
+                }
                 var pay = new ScheduleOfPayment
                 {
                     OCS_Code = ocs_code,
@@ -388,6 +844,71 @@ namespace API.Controllers
                     Total_Authorised_LPP = total_authorised_lpp,
                     Total_Other = total_other,
                     Total_Price_Standrt_Disc = total_price_standrt_disc,
+                    Discount_Percent = discount_percent,
+                    Discount = discount,
+                    Total_Price_Zero_Disc = total_price_zero_disc,
+                    Sub_Total_Price = sub_total_price,
+                    Out_Pocket_Expenses = out_pocket_expenses,
+                    Pay_Consumable_Per_Item = pay_consumable_per_item,
+                    Pay_Consumable = pay_consumable,
+                    Pay_Container = pay_container,
+                    Total_Costs = total_costs,
+                    Presc_Activity_Pay_Per_Item = presc_activity_pay_per_item,
+                    Presc_Activity_Pay = presc_activity_pay,
+                    Presc_AddFee_2A_Unlicensed_Meds = presc_addfee_2a_unlicensed_meds,
+                    Presc_AddFee_2B_Appliance_Measure = presc_addfee_2b_appliance_measure,
+                    Presc_AddFee_2B_Appliance_Home = presc_addfee_2b_appliance_home,
+                    Presc_AddFee_2E_Controlled = presc_addfee_2e_controlled,
+                    Presc_AddFee_Methadone_Pay = presc_addfee_methadone_pay,
+                    Presc_AddFee_2F_Expensive_Fee_Item = presc_addfee_2f_expensive_fee_item,
+                    Presc_AddFee_2F_Expensive_Fees = presc_addfee_2f_expensive_fees,
+                    Presc_AddFee_Manual_Price = presc_addfee_manual_price,
+                    Transitional_Pay = transitional_pay,
+                    Sub_Total_Presc_Fee = sub_total_presc_fee,
+                    Other_Fee_Medicine = other_fee_medicine,
+                    Other_Fee_Appliance_Patient = other_fee_appliance_patient,
+                    Other_Fee_Appliance_Premise = other_fee_appliance_premise,
+                    Other_Fee_Stoma_Custom = other_fee_stoma_custom,
+                    Other_Fee_Medicine_Service = other_fee_medicine_service,
+                    Total_All_Fees = total_all_fees,
+                    Charges_Collected_Excl_Hosiery_1_Items = charges_collected_excl_hosiery_1_items,
+                    Charges_Collected_Excl_Hosiery_1_Per_Item = charges_collected_excl_hosiery_1_per_item,
+                    Charges_Collected_Excl_Hosiery_1 = charges_collected_excl_hosiery_1,
+                    Charges_Collected_Excl_Hosiery_2_Items = charges_collected_excl_hosiery_2_items,
+                    Charges_Collected_Excl_Hosiery_2_Per_Item = charges_collected_excl_hosiery_2_per_item,
+                    Charges_Collected_Excl_Hosiery_2 = charges_collected_excl_hosiery_2,
+                    Charges_Collected_Elastic_Hosiery = charges_collected_elastic_hosiery,
+                    Charges_FP57_Refund = charges_fp57_refund,
+                    Local_Scheme = local_scheme,
+                    LPC_Statutory_Levy = lpc_statutory_levy,
+                    COVID_Premises_Refrigeration = covid_premises_refrigeration,
+                    Reimbursement_Covid_Costs = reimbursement_covid_costs,
+                    Total_Forms_Received = total_forms_received,
+                    Total_Electronic_Prescription_Received = total_electronic_prescription_received,
+                    Total_Electronic_Prescription_Items = total_electronic_prescription_items,
+                    Items_Zero_Disc = items_zero_disc,
+                    Items_Standard_Disc = items_standard_disc,
+                    Total_Paid_Fee_Items = total_paid_fee_items,
+                    Avg_Item_Value = avg_item_value,
+                    Referred_Back_Items = referred_back_items,
+                    Referred_Back_Forms = referred_back_forms,
+                    Medicines_Reviews_Declared = medicines_reviews_declared,
+                    YTD_MUR_Declaration = ytd_mur_declaration,
+                    FP57_Declared = fp57_declared,
+                    Appliance_Reviews_Carried_Patients_Home = appliance_reviews_carried_patients_home,
+                    Appliance_Reviews_Carried_Premises = appliance_reviews_carried_premises,
+                    New_Medicine_Service_Undertaken = new_medicine_service_undertaken,
+                    New_Medicine_Service_Items = new_medicine_service_items,
+                    Exempt_Chargeable = exempt_chargeable,
+                    Exempt_Chargeable_Old_Rate = exempt_chargeable_old_rate,
+                    Chargeable_Exempt = chargeable_exempt,
+                    Chargeable_Old_Rate_Exempt = chargeable_old_rate_exempt,
+                    Items_Over_100 = items_over_100,
+                    Items_Over_100_Basic_Price = items_over_100_basic_price,
+                    Items_Over_300 = items_over_300,
+                    Items_Over_300_Basic_Price = items_over_300_basic_price,
+                    Total_Items_Over_100 = total_items_over_100,
+                    Total_Items_Over_100_Basic_Price = total_items_over_100_basic_price,
                     DocsId = docOut
                 };
                 document.ScheduleOfPayment.Add(pay);               
