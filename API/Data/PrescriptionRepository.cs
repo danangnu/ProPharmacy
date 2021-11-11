@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -22,8 +23,7 @@ namespace API.Data
             return await _context.Prescriptions.AsNoTracking()
                 .GroupBy(p => p.Dispensing_Month)
                 .Select(x => new PrescriptionReportDto
-                {
-                    Dispensing_Month = x.Key,
+                {              
                     Month = CultureInfo.InvariantCulture.DateTimeFormat.GetMonthName(int.Parse(
                         x.Key.Substring(x.Key.Length - 1, 2))),
                     Year = x.Key.Substring(0, 4),

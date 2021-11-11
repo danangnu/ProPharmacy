@@ -7,18 +7,12 @@
             <table class="table table-condensed">
                 <thead>
                     <tr>
-                      <th>Month</th>
-                      <th>Annual Prescription<br> 
-                        Items 2020/2021
-                    </th>
-                      <th>Average Item</th>
+                      <th *ngFor="let header of getPRHeaders()">{{header | titlecase}}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let prescription of prescriptionReport">
-                        <td>{{prescription.month}}</td>
-                        <td>{{prescription.annualSum}}</td>
-                        <td>{{prescription.annualAvg}}</td>
+                    <tr *ngFor="let presc of prescriptionReport">           
+                      <td *ngFor="let key of getPRHeaders()">{{presc[key]}}</td>
                     </tr>
                   </tbody>
             </table>
@@ -27,19 +21,18 @@
           <table class="table table-condensed">
             <thead>
                 <tr>
-                  <th>Month</th>
-                  <th>NHS Sales 2020/2021</th>
+                  <th *ngFor="let header of getSPHeaders()">{{header | titlecase}}</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let sched of schedulePaymentReports">
-                    <td>{{sched.month}}</td>
-                    <td>{{sched.nhS_SalesSum | currency:'GBP'}}</td>
+                <tr *ngFor="let sched of schedulePaymentReports">           
+                  <td *ngFor="let key of getSPHeaders(); index as i">{{i < 3 ? (sched[key]) : (sched[key] | currency: 'GBP')}}</td>
                 </tr>
               </tbody>
         </table>
         </tab>
         <tab heading='Gross Profit'>
+          <jqxPivotGrid #pivotGridReference [auto-create]="false"></jqxPivotGrid>
         </tab>
         <tab heading='Expenses'>
         </tab>

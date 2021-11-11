@@ -28,6 +28,7 @@ import { PlcVersionComponent } from './PLC/plc-version/plc-version.component';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { PlcReportComponent } from './plc/plc-report/plc-report.component';
 import { FileManagerComponent } from './plc/file-manager/file-manager.component';
+import { jqxPivotGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxpivotgrid';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { FileManagerComponent } from './plc/file-manager/file-manager.component'
     PlcVersionComponent,
     TextInputComponent,
     PlcReportComponent,
-    FileManagerComponent
+    FileManagerComponent,
+    jqxPivotGridComponent
   ],
   imports: [
     BrowserModule,
