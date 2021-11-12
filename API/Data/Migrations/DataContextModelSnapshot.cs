@@ -120,6 +120,9 @@ namespace API.Data.Migrations
                     b.Property<string>("Dispensing_UID")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Dispensing_Year")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("DocsId")
                         .HasColumnType("int");
 

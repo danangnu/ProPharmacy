@@ -87,6 +87,7 @@ namespace API.Controllers
                             var prescription = new Prescriptions
                             {
                                 OCS_Code = rows[0].ToString(),
+                                Dispensing_Year = rows[1].Substring(0, 4),
                                 Dispensing_Month = rows[1].ToString(),
                                 Fragment_Id = rows[2].ToString(),
                                 Form_Number = rows[3].ToString(),

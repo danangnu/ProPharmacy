@@ -70,6 +70,7 @@ namespace API.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OCS_Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Dispensing_Year = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Dispensing_Month = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Fragment_Id = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Form_Number = table.Column<string>(type: "nvarchar(max)", nullable: true),

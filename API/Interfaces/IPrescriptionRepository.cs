@@ -7,6 +7,7 @@ namespace API.Interfaces
 {
     public interface IPrescriptionRepository
     {
-        Task<IEnumerable<PrescriptionReportDto>> GetPrescriptionsAsync();
+        Task<IEnumerable<dynamic>> GetPrescriptionsAsync();
+        Task<IEnumerable<PrescriptionReportDto>> GetPrescriptionReportsAsync();
     }
 }

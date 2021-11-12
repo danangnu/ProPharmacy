@@ -7,98 +7,82 @@ import { PrescriptionReport } from 'src/app/_models/prescriptionReport';
 import { SchedulePaymentReport } from 'src/app/_models/schedulePaymentReport';
 import { PrescriptionService } from 'src/app/_services/prescription.service';
 import { SchedulePaymentService } from 'src/app/_services/schedule-payment.service';
-import { jqxPivotGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxpivotgrid';
 
 @Component({
   selector: 'app-plc-report',
   templateUrl: './plc-report.component.html',
   styleUrls: ['./plc-report.component.css']
 })
-export class PlcReportComponent implements AfterViewInit {
+export class PlcReportComponent implements OnInit {
   fileVersion: FileVersion;
   prescriptionReport: PrescriptionReport[] = [];
   schedulePaymentReports: SchedulePaymentReport[] = [];
-  @ViewChild('pivotGridReference') myPivotGrid: jqxPivotGridComponent;
-  pivotDataSource: [] = [];
 
   constructor(private auth: AuthService,
               private prescriptionService: PrescriptionService,
-              private schedulePayService: SchedulePaymentService) {
-                this.pivotDataSource = this.createPivotDataSource();
-               }
-
-  ngAfterViewInit(): void
-  {
-    this.myPivotGrid.createComponent(this.pivotGridSettings);
-  }
-  gOnInit() {
+              private schedulePayService: SchedulePaymentService) { }
+  ngOnInit(): void {
     this.loadPrescrptionReports();
     this.loadScheduleReports();
+    //this.transpose();
   }
 
-  pivotGridSettings: jqwidgets.PivotGridOptions =
-    {
-        source: this.pivotDataSource,
-        multipleSelectionEnabled: true,
-        treeStyleRows: true,
-        autoResize: false
-    }
-
-  createPivotDataSource(): any {
-    // Prepare Sample Data
-    let data = new Array();
-
-    const countries =
-    [
-        'Germany', 'France', 'United States', 'Italy', 'Spain', 'Finland', 'Canada', 'Japan', 'Brazil', 'United Kingdom', 'China', 'India', 'South Korea', 'Romania', 'Greece'
-    ];
-
-    const dataPoints =
-    [
-        '2.25', '1.5', '3.0', '3.3', '4.5', '3.6', '3.8', '2.5', '5.0', '1.75', '3.25', '4.0'
-    ];
-
-    for (let i = 0; i < countries.length * 2; i++) {
-        let row = {};
-        const value = parseFloat(dataPoints[Math.round((Math.random() * 100)) % dataPoints.length]);
-        row['country'] = countries[i % countries.length];
-        row['value'] = value;
-        data[i] = row;
-    }
-
-    // Create a Data Source and Data Adapter
-    const source =
-    {
-        localdata: data,
-        datatype: 'array',
-        datafields:
-        [
-          { name: 'country', type: 'string' },
-          { name: 'value', type: 'number' }
-        ]
-    };
-
-    const dataAdapter = new jqx.dataAdapter(source);
-    dataAdapter.dataBind();
-
-    // Create a Pivot Data Source from the DataAdapter
-    const pivotDataSource = new jqx.pivot(
-        dataAdapter,
+  transpose() {
+    var data = {d : 
+      [
         {
-            pivotValuesOnRows: false,
-            rows: [{ dataField: 'country', width: 190 }],
-            columns: [],
-            values: 
-            [
-                { dataField: 'value', width: 200, 'function': 'min', text: 'cells left alignment', formatSettings: { align: 'left', prefix: '', decimalPlaces: 2 } },
-                { dataField: 'value', width: 200, 'function': 'max', text: 'cells center alignment', formatSettings: { align: 'center', prefix: '', decimalPlaces: 2 } },
-                { dataField: 'value', width: 200, 'function': 'average', text: 'cells right alignment', formatSettings: { align: 'right', prefix: '', decimalPlaces: 2 } }
-            ]
-        }
-    );
-
-    return pivotDataSource;
+           Mon01: "03/2015",
+           Mon02: "04/2015",
+           Mon03: "05/2015",
+        },
+        {
+           Mon01: "1,0",
+           Mon02: "3,0",
+           Mon03: "5,0",
+        },
+        {
+           Mon01: "2,0",
+           Mon02: "4,0",
+           Mon03: "6,0",
+           Mon04: "",
+           Mon05: "",
+           Mon06: "",
+        },
+        {
+           Mon01: "10,0",
+           Mon02: "11,0",
+           Mon03: "12,0",
+           Mon04: "",
+           Mon05: "",
+           Mon06: "",
+      }
+      ],
+              length: 3};
+              //console.log(data.d[0]);
+    var keys = [];
+for(var key in data.d[data.length]){
+  // console.log(key);
+  keys.push(key);
 }
+
+var newObj = [];
+//newObj['length'] = data.length;
+for(var k =0;k<data.length;k++){
+  var obj = {};
+  for(var cnt in keys){
+    obj[keys[cnt]] = "";
+  }
+  newObj.push(obj);
+ }
+for(var k =0;k<data.length;k++){
+   //var obj = {};
+  //console.log(k);
+  for(var j=0;j<data.length;j++){
+    newObj[k][keys[j]] = data.d[j][keys[k]];
+  }
+}
+console.log(newObj);
+  }
 
   getPRHeaders() {
     let headers: string[] = [];

@@ -17,7 +17,7 @@ namespace API.Controllers
         [HttpGet("report")]
         public async Task<ActionResult<IEnumerable<PrescriptionReportDto>>> GetPrescriptionReport()
         {
-            var pres = await _prescriptionRepository.GetPrescriptionsAsync();
+            var pres = await _prescriptionRepository.GetPrescriptionReportsAsync();
 
             return Ok(pres);
         }

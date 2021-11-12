@@ -1,7 +1,15 @@
 export interface PrescriptionReport {
-    dispensing_Month: string;
-    month: string;
     year: string;
-    annualSum: number;
-    annualAvg: number;
+    jan: number;
+    feb: number;
+    mar: number;
+    apr: number;
+    may: number;
+    jun: number;
+    jul: number;
+    aug: number;
+    sep: number;
+    oct: number;
+    nov: number;
+    dec: number;
 }

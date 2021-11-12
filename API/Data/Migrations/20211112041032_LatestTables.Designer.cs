@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211111085816_LatestTables")]
+    [Migration("20211112041032_LatestTables")]
     partial class LatestTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -120,6 +120,9 @@ namespace API.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Dispensing_UID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Dispensing_Year")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DocsId")

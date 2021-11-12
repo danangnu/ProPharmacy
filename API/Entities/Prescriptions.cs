@@ -4,7 +4,8 @@ namespace API.Entities
     {
         public int Id { get; set; }
         public string OCS_Code { get; set; }
-	    public string Dispensing_Month { get; set; }
+	    public string Dispensing_Year { get; set; }
+		public string Dispensing_Month { get; set; }
 	    public string Fragment_Id { get; set; }
 	    public string Form_Number { get; set; }
 	    public int Item_Number { get; set; }
