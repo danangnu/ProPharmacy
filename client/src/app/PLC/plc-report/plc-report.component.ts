@@ -1,5 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
 import { take } from 'rxjs/operators';
 import { FileVersion } from 'src/app/_models/fileVersion';
@@ -17,6 +18,8 @@ export class PlcReportComponent implements OnInit {
   fileVersion: FileVersion;
   prescriptionReport: PrescriptionReport[] = [];
   schedulePaymentReports: SchedulePaymentReport[] = [];
+  LabelsArray = new FormArray([new FormControl('', Validators.required)]);
+  EntriesArray = new FormArray([new FormControl('', Validators.required)]);
 
   constructor(private auth: AuthService,
               private prescriptionService: PrescriptionService,
@@ -25,6 +28,16 @@ export class PlcReportComponent implements OnInit {
     this.loadPrescrptionReports();
     this.loadScheduleReports();
     //this.transpose();
+  }
+
+  addInputControl() {
+    this.LabelsArray.push(new FormControl('', Validators.required));
+    this.EntriesArray.push(new FormControl('', Validators.required));
+  }
+
+  removeInputControl(idx: number) {
+    this.LabelsArray.removeAt(idx);
+    this.EntriesArray.removeAt(idx);
   }
 
   transpose() {

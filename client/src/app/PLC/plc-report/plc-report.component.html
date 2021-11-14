@@ -32,7 +32,25 @@
         </table>
         </tab>
         <tab heading='Gross Profit'>
-          <button (click)="loadPrescrptionReports()">Show</button>
+          <div class="container">
+            <h2>Please add your manual inputs here</h2>
+            <div *ngFor="let entry of EntriesArray.controls; let label of LabelsArray.controls; last as isLast; index as idx" class="input-row">
+              <mat-form-field>
+                <input matInput [formControl]="label" placeholder="label">
+              </mat-form-field>
+              : &nbsp;
+              <mat-form-field>
+                <input matInput [formControl]="entry" placeholder="input data">
+              </mat-form-field>
+              <button mat-icon-button color="warn" (click)="removeInputControl(idx)" *ngIf="EntriesArray.length > 1">
+                <mat-icon>remove_circle</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" *ngIf="isLast" (click)="addInputControl()">
+                <mat-icon>add_circle</mat-icon>
+              </button>
+            </div>
+            <button class="btn btn-success mr-2" type="submit">Save Data</button>
+          </div>
         </tab>
         <tab heading='Expenses'>
         </tab>

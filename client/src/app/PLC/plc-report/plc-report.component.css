@@ -1,0 +1,8 @@
+.container {
+    padding: 32px;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+}
