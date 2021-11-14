@@ -1,6 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
 import { take } from 'rxjs/operators';
 import { FileVersion } from 'src/app/_models/fileVersion';
@@ -18,26 +18,47 @@ export class PlcReportComponent implements OnInit {
   fileVersion: FileVersion;
   prescriptionReport: PrescriptionReport[] = [];
   schedulePaymentReports: SchedulePaymentReport[] = [];
-  LabelsArray = new FormArray([new FormControl('', Validators.required)]);
-  EntriesArray = new FormArray([new FormControl('', Validators.required)]);
+  EntriesArray: FormArray;
+  LabelsArray: FormArray;
+  registerForm: FormGroup;
+  Expense = 0;
+  gross = 0; 
 
   constructor(private auth: AuthService,
               private prescriptionService: PrescriptionService,
-              private schedulePayService: SchedulePaymentService) { }
+              private schedulePayService: SchedulePaymentService,
+              private fb: FormBuilder) { }
   ngOnInit(): void {
     this.loadPrescrptionReports();
     this.loadScheduleReports();
-    //this.transpose();
+    this.initializeForm();
+    
+  }
+
+  
+
+  initializeForm() {
+    this.LabelsArray = new FormArray([new FormControl('', Validators.required)]);
+    this.EntriesArray = new FormArray([new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")])]);
   }
 
   addInputControl() {
     this.LabelsArray.push(new FormControl('', Validators.required));
-    this.EntriesArray.push(new FormControl('', Validators.required));
+    this.EntriesArray.push(new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]));
   }
 
   removeInputControl(idx: number) {
     this.LabelsArray.removeAt(idx);
     this.EntriesArray.removeAt(idx);
+  }
+
+  saveExpense() {
+    let form: FormGroup = new FormGroup({});
+    for (let i=0; i< this.EntriesArray.length; i++)
+    {
+      form.addControl(this.LabelsArray.value[i], new FormControl(this.EntriesArray.value[i], [Validators.required, Validators.pattern("^[0-9]*$")]));
+    }
+    this.Expense = this.gross + this.EntriesArray.value.reduce((prev, next) => Number(prev) + Number(next), 0);
   }
 
   transpose() {
@@ -139,6 +160,11 @@ console.log(newObj);
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       this.schedulePayService.getReport(headers).subscribe(sched => {
         this.schedulePaymentReports = sched;
+        this.gross = sched.map(a => a.nhS_SalesSum).reduce(function(a, b)
+                  {         
+                    return a + b;
+                  });
+        this.Expense=+ this.gross;
       });
     });
   }

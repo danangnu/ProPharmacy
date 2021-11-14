@@ -32,15 +32,17 @@
         </table>
         </tab>
         <tab heading='Gross Profit'>
+          
+        </tab>
+        <tab heading='Expenses'>
           <div class="container">
             <h2>Please add your manual inputs here</h2>
-            <div *ngFor="let entry of EntriesArray.controls; let label of LabelsArray.controls; last as isLast; index as idx" class="input-row">
+            <div *ngFor="let entry of EntriesArray.controls; last as isLast; index as idx" class="input-row">
+                <mat-form-field>
+                  <input matInput [formControl]='LabelsArray.controls[idx]' placeholder="label">
+                </mat-form-field>
               <mat-form-field>
-                <input matInput [formControl]="label" placeholder="label">
-              </mat-form-field>
-              : &nbsp;
-              <mat-form-field>
-                <input matInput [formControl]="entry" placeholder="input data">
+                <input matInput [formControl]="entry" (ngModelChange)="saveExpense()" placeholder="input data">
               </mat-form-field>
               <button mat-icon-button color="warn" (click)="removeInputControl(idx)" *ngIf="EntriesArray.length > 1">
                 <mat-icon>remove_circle</mat-icon>
@@ -49,10 +51,12 @@
                 <mat-icon>add_circle</mat-icon>
               </button>
             </div>
-            <button class="btn btn-success mr-2" type="submit">Save Data</button>
+            <strong for="grossProfit">Gross Profit/Loss: </strong>&nbsp;{{gross | currency: 'GBP'}}
+            <div>
+              <strong>Total:&nbsp; {{Expense | currency: 'GBP'}}</strong>
           </div>
-        </tab>
-        <tab heading='Expenses'>
+            <button class="btn btn-success mr-2" (click)="saveExpense()" type="submit">Save Data</button>
+          </div>
         </tab>
         <tab heading='Inflation'>
         </tab>
