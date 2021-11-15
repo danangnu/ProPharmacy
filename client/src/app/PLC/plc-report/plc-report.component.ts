@@ -58,7 +58,7 @@ export class PlcReportComponent implements OnInit {
     {
       form.addControl(this.LabelsArray.value[i], new FormControl(this.EntriesArray.value[i], [Validators.required, Validators.pattern("^[0-9]*$")]));
     }
-    
+    this.Expense = this.gross + this.EntriesArray.value.reduce((prev, next) => Number(prev) + Number(next), 0);
   }
 
   transpose() {
