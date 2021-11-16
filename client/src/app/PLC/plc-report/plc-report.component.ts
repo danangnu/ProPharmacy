@@ -25,6 +25,10 @@ export class PlcReportComponent implements OnInit {
   gross = 0; 
   noYear = 1;
   startYear: number;
+  YearA: number;
+  Years: string[] =[];
+  YearVal: any[][] = [[],[]];
+  htmlStr: string = '<input matInput>';
 
   constructor(private auth: AuthService,
               private prescriptionService: PrescriptionService,
@@ -36,6 +40,16 @@ export class PlcReportComponent implements OnInit {
     this.loadPrescrptionReports();
     this.loadScheduleReports();
     this.initializeForm();
+    this.Years.push("");
+    for (let i = 0; i < this.noYear; i++)
+    {
+      if (i === 0)
+        this.YearA = this.startYear;
+      else
+        this.YearA = this.YearA + 1;
+
+      this.Years.push(this.YearA.toString());
+    }
     
   }
 
@@ -54,6 +68,28 @@ export class PlcReportComponent implements OnInit {
   removeInputControl(idx: number) {
     this.LabelsArray.removeAt(idx);
     this.EntriesArray.removeAt(idx);
+  }
+
+  changeColumns() {
+    this.Years = [];
+    this.Years.push("");
+    for (let i = 0; i < this.noYear; i++)
+    {
+      if (i === 0)
+        this.YearA = Number(this.startYear);
+      else
+        this.YearA += 1;
+
+      this.Years.push(this.YearA.toString());
+    }
+  }
+
+  getTotal(idx: number):number {
+    let total = 0;
+    for (var i = 0; i < 2; i++) {
+      total += Number(this.YearVal[i][idx]);
+   }
+    return total;
   }
 
   saveExpense() {

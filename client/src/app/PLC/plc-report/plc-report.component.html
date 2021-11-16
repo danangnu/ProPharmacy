@@ -1,4 +1,4 @@
-<div class="col-8">
+<div class="sticky-div">
     <tabset class="member-tabset">
         <tab heading='Upload Files'>
             <app-file-manager [fileVersion]="fileVersion"></app-file-manager>
@@ -33,16 +33,34 @@
         </tab>
         <tab heading='Gross Profit'>     
           <div>
-            <label for="noYear">Number of Year Projections</label>&nbsp;
-            <mat-form-field>            
-              <input matInput name="noYear" [formControl]="noYear">
-            </mat-form-field>
-            <label for="startYear">Starting Year</label>    &nbsp;    
-            <mat-form-field>            
-              <input matInput name="startYear" [formControl]='startYear'>
-            </mat-form-field>
+            <label for="noYear">Number of Year Projections</label>&nbsp;   
+            <mat-form-field>
+              <input matInput [(ngModel)]="noYear" (ngModelChange)="changeColumns()">
+            </mat-form-field>        
+            &nbsp;&nbsp;
+            <label for="startYear">Starting Year</label>    &nbsp;     
+            <mat-form-field>
+              <input matInput [(ngModel)]="startYear" (ngModelChange)="changeColumns()">
+            </mat-form-field>         
           </div>     
-            
+          <table class="table table-condensed">
+            <thead>
+                <tr>
+                  <th *ngFor="let item of Years">{{item}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>           
+                  <td *ngFor="let item of Years; index as idx"><p *ngIf="idx === 0">OTC Sales</p><input matInput *ngIf="idx !== 0" [(ngModel)]="YearVal[0][idx]" value=0></td>
+                </tr>
+                <tr>           
+                  <td *ngFor="let item of Years; index as idx"><p *ngIf="idx === 0">NHS Sales</p><input matInput *ngIf="idx !== 0" [(ngModel)]="YearVal[1][idx]" value=0></td>
+                </tr>
+                <tr>           
+                  <td *ngFor="let item of Years; index as idx"><strong>{{idx === 0 ? "Total cost of sales" : getTotal(idx)}}</strong></td>
+                </tr>
+              </tbody>
+        </table>
         </tab>
         <tab heading='Expenses'>
           <div class="container">
