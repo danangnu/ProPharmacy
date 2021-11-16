@@ -31,8 +31,18 @@
               </tbody>
         </table>
         </tab>
-        <tab heading='Gross Profit'>
-          
+        <tab heading='Gross Profit'>     
+          <div>
+            <label for="noYear">Number of Year Projections</label>&nbsp;
+            <mat-form-field>            
+              <input matInput name="noYear" [formControl]="noYear">
+            </mat-form-field>
+            <label for="startYear">Starting Year</label>    &nbsp;    
+            <mat-form-field>            
+              <input matInput name="startYear" [formControl]='startYear'>
+            </mat-form-field>
+          </div>     
+            
         </tab>
         <tab heading='Expenses'>
           <div class="container">

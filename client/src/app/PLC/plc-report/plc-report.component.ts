@@ -23,11 +23,15 @@ export class PlcReportComponent implements OnInit {
   registerForm: FormGroup;
   Expense = 0;
   gross = 0; 
+  noYear = 1;
+  startYear: number;
 
   constructor(private auth: AuthService,
               private prescriptionService: PrescriptionService,
               private schedulePayService: SchedulePaymentService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder) {
+                this.startYear = new Date().getFullYear();
+               }
   ngOnInit(): void {
     this.loadPrescrptionReports();
     this.loadScheduleReports();
