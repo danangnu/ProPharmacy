@@ -24,10 +24,13 @@ export class PlcReportComponent implements OnInit {
   Expense = 0;
   gross = 0; 
   noYear = 1;
+  decrease = 0.00;
   startYear: number;
   YearA: number;
   Years: string[] =[];
+  AvgYears: string[] =[];
   YearVal: any[][] = [[],[]];
+  MonthPresc: number[][] = [[],[],[],[],[],[],[],[],[],[],[],[]];
   zeroOTCSale: number[] = [];
   vatOTCSale: number[] = [];
 
@@ -41,6 +44,20 @@ export class PlcReportComponent implements OnInit {
     this.loadPrescrptionReports();
     this.loadScheduleReports();
     this.initializeForm();
+    this.AvgYears.push("Month");
+    this.AvgYears.push(this.startYear.toString()+"/"+(this.startYear+1).toString());
+    this.AvgYears.push("Avg Item");
+    this.AvgYears.push((this.startYear+1).toString()+"/"+(this.startYear+2).toString());
+    this.AvgYears.push("Avg Item");
+    for (let i = 0; i < this.noYear; i++)
+    {
+      if (i === 0)
+        this.YearA = this.startYear;
+      else
+        this.YearA = this.YearA + 1;
+
+      this.AvgYears.push("Projected Volume "+(Number(this.YearA)+2).toString()+"/"+(Number(this.YearA)+3).toString());
+    }
     this.Years.push("");
     for (let i = 0; i < this.noYear; i++)
     {
@@ -51,7 +68,6 @@ export class PlcReportComponent implements OnInit {
 
       this.Years.push(this.YearA.toString());
     }
-    
   }
 
   
@@ -72,7 +88,13 @@ export class PlcReportComponent implements OnInit {
   }
 
   changeColumns() {
+    this.AvgYears = [];
     this.Years = [];
+    this.AvgYears.push("Month");
+    this.AvgYears.push(this.startYear.toString()+"/"+(Number(this.startYear)+1).toString());
+    this.AvgYears.push("Avg Item");
+    this.AvgYears.push((Number(this.startYear)+1).toString()+"/"+(Number(this.startYear)+2).toString());
+    this.AvgYears.push("Avg Item");
     this.Years.push("");
     for (let i = 0; i < this.noYear; i++)
     {
@@ -80,7 +102,7 @@ export class PlcReportComponent implements OnInit {
         this.YearA = Number(this.startYear);
       else
         this.YearA += 1;
-
+        this.AvgYears.push("Projected Volume "+(Number(this.YearA)+2).toString()+"/"+(Number(this.YearA)+3).toString());
       this.Years.push(this.YearA.toString());
     }
   }
@@ -89,7 +111,20 @@ export class PlcReportComponent implements OnInit {
     let total = 0;
     for (var i = 0; i < 2; i++) {
       total += Number(this.YearVal[i][idx]);
-   }
+    }
+    return total;
+  }
+
+  getTotalItems(idx: number):number {
+    let total = 0;
+    for (var i = 0; i < this.MonthPresc.length; i++) {
+      if (this.MonthPresc[i][idx] !== undefined)
+        total += Number(this.MonthPresc[i][idx]);
+      else
+        total += 0;
+    }
+    if (idx == 2 || idx == 4)
+      total = total / this.MonthPresc.length;
     return total;
   }
 

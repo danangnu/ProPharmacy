@@ -4,17 +4,70 @@
             <app-file-manager [fileVersion]="fileVersion"></app-file-manager>
         </tab>
         <tab heading='Prescriptions'>
+          <div>
+            <label for="noYear">Number of Projections</label>&nbsp;   
+            <mat-form-field>
+              <input matInput [(ngModel)]="noYear" (ngModelChange)="changeColumns()">
+            </mat-form-field>        
+            &nbsp;&nbsp;
+            <label for="startYear">Starting Year</label>    &nbsp;     
+            <mat-form-field>
+              <input matInput maxlength="4" [(ngModel)]="startYear" (ngModelChange)="changeColumns()">
+            </mat-form-field>  
+            &nbsp;&nbsp;     
+            <label for="decrease">Projected volume with a decrease of</label>&nbsp;      
+            <mat-form-field>
+              <input matInput [(ngModel)]="decrease" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"
+              step="0.00" (ngModelChange)="changeColumns()">
+            </mat-form-field> 
+          </div>
             <table class="table table-condensed">
-                <thead>
-                    <tr>
-                      <th *ngFor="let header of getPRHeaders()">{{header | titlecase}}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let presc of prescriptionReport">           
-                      <td *ngFor="let key of getPRHeaders()">{{presc[key]}}</td>
-                    </tr>
-                  </tbody>
+              <thead>
+                <tr>
+                  <th *ngFor="let item of AvgYears">{{item}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>           
+                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">April</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[0][idx]" value=0></td>
+                </tr>
+                <tr>           
+                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">May</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[1][idx]" value=0></td>
+                </tr>
+                <tr>           
+                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">June</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[2][idx]" value=0></td>
+                </tr>
+                <tr>           
+                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">July</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[3][idx]" value=0></td>
+                </tr>
+                <tr>           
+                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">August</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[4][idx]" value=0></td>
+                </tr>
+                <tr>           
+                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">September</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[5][idx]" value=0></td>
+                </tr>
+                <tr>           
+                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">October</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[6][idx]" value=0></td>
+                </tr>
+                <tr>           
+                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">November</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[7][idx]" value=0></td>
+                </tr>
+                <tr>           
+                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">December</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[8][idx]" value=0></td>
+                </tr>
+                <tr>           
+                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">January</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[9][idx]" value=0></td>
+                </tr>
+                <tr>           
+                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">February</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[10][idx]" value=0></td>
+                </tr>
+                <tr>           
+                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">March</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[11][idx]" value=0></td>
+                </tr>
+                <tr>           
+                  <td *ngFor="let item of AvgYears; index as idx"><strong>{{idx === 0 ? "Total Items" : getTotalItems(idx)}}</strong></td>
+                </tr>
+              </tbody>
             </table>
         </tab>
         <tab heading='Sales'>
@@ -47,18 +100,6 @@
               </tr>
             </tbody>
           </table>
-          <table class="table table-condensed">
-            <thead>
-                <tr>
-                  <th *ngFor="let header of getSPHeaders()">{{header | titlecase}}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let sched of schedulePaymentReports">           
-                  <td *ngFor="let key of getSPHeaders(); index as i">{{i < 3 ? (sched[key]) : (sched[key] | currency: 'GBP')}}</td>
-                </tr>
-              </tbody>
-        </table>
         </tab>
         <tab heading='Gross Profit'>     
           <div>
