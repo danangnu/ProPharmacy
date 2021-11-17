@@ -92,6 +92,13 @@ export class PlcReportComponent implements OnInit {
     return total;
   }
 
+  getGross(idx: number):number {
+    let gross = 0;
+    gross = this.Expense;
+    gross += Number(this.getTotal(idx));
+    return gross;
+  }
+
   saveExpense() {
     let form: FormGroup = new FormGroup({});
     for (let i=0; i< this.EntriesArray.length; i++)
@@ -99,63 +106,6 @@ export class PlcReportComponent implements OnInit {
       form.addControl(this.LabelsArray.value[i], new FormControl(this.EntriesArray.value[i], [Validators.required, Validators.pattern("^[0-9]*$")]));
     }
     this.Expense = this.gross + this.EntriesArray.value.reduce((prev, next) => Number(prev) + Number(next), 0);
-  }
-
-  transpose() {
-    var data = {d : 
-      [
-        {
-           Mon01: "03/2015",
-           Mon02: "04/2015",
-           Mon03: "05/2015",
-        },
-        {
-           Mon01: "1,0",
-           Mon02: "3,0",
-           Mon03: "5,0",
-        },
-        {
-           Mon01: "2,0",
-           Mon02: "4,0",
-           Mon03: "6,0",
-           Mon04: "",
-           Mon05: "",
-           Mon06: "",
-        },
-        {
-           Mon01: "10,0",
-           Mon02: "11,0",
-           Mon03: "12,0",
-           Mon04: "",
-           Mon05: "",
-           Mon06: "",
-      }
-      ],
-              length: 3};
-              //console.log(data.d[0]);
-    var keys = [];
-for(var key in data.d[data.length]){
-  // console.log(key);
-  keys.push(key);
-}
-
-var newObj = [];
-//newObj['length'] = data.length;
-for(var k =0;k<data.length;k++){
-  var obj = {};
-  for(var cnt in keys){
-    obj[keys[cnt]] = "";
-  }
-  newObj.push(obj);
- }
-for(var k =0;k<data.length;k++){
-   //var obj = {};
-  //console.log(k);
-  for(var j=0;j<data.length;j++){
-    newObj[k][keys[j]] = data.d[j][keys[k]];
-  }
-}
-console.log(newObj);
   }
 
   getPRHeaders() {

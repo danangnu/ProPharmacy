@@ -59,6 +59,10 @@
                 <tr>           
                   <td *ngFor="let item of Years; index as idx"><strong>{{idx === 0 ? "Total cost of sales" : getTotal(idx)}}</strong></td>
                 </tr>
+                <tr><td *ngFor="let item of Years; index as idx"></td></tr>
+                <tr>
+                  <td *ngFor="let item of Years; index as idx"><strong>{{idx === 0 ? "Gross Profit (£)" : getGross(idx) | currency}}</strong></td>
+                </tr>
               </tbody>
         </table>
         </tab>
