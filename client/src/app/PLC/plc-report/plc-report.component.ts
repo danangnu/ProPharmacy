@@ -28,7 +28,8 @@ export class PlcReportComponent implements OnInit {
   YearA: number;
   Years: string[] =[];
   YearVal: any[][] = [[],[]];
-  htmlStr: string = '<input matInput>';
+  zeroOTCSale: number[] = [];
+  vatOTCSale: number[] = [];
 
   constructor(private auth: AuthService,
               private prescriptionService: PrescriptionService,
@@ -92,10 +93,18 @@ export class PlcReportComponent implements OnInit {
     return total;
   }
 
+  getTotalOTC(idx: number):number {
+    let total = 0;
+    total += Number(this.zeroOTCSale[idx]);
+    total += Number(this.vatOTCSale[idx]);
+    return total;
+  }
+
   getGross(idx: number):number {
     let gross = 0;
     gross = this.Expense;
-    gross += Number(this.getTotal(idx));
+    if (this.getTotal(idx) != null)
+      gross += Number(this.getTotal(idx));
     return gross;
   }
 
