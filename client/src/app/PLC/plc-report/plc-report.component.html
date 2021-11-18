@@ -1,166 +1,469 @@
 <div class="sticky-div">
-    <tabset class="member-tabset">
-        <tab heading='Upload Files'>
-            <app-file-manager [fileVersion]="fileVersion"></app-file-manager>
-        </tab>
-        <tab heading='Prescriptions'>
-          <div>
-            <label for="noYear">Number of Projections</label>&nbsp;   
-            <mat-form-field>
-              <input matInput [(ngModel)]="noYear" (ngModelChange)="changeColumns()">
-            </mat-form-field>        
-            &nbsp;&nbsp;
-            <label for="startYear">Starting Year</label>    &nbsp;     
-            <mat-form-field>
-              <input matInput maxlength="4" [(ngModel)]="startYear" (ngModelChange)="changeColumns()">
-            </mat-form-field>  
-            &nbsp;&nbsp;     
-            <label for="decrease">Projected volume with a decrease of</label>&nbsp;      
-            <mat-form-field>
-              <input matInput [(ngModel)]="decrease" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"
-              step="0.00" (ngModelChange)="changeColumns()">
-            </mat-form-field> 
-          </div>
-            <table class="table table-condensed">
-              <thead>
-                <tr>
-                  <th *ngFor="let item of AvgYears">{{item}}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>           
-                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">April</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[0][idx]" value=0></td>
-                </tr>
-                <tr>           
-                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">May</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[1][idx]" value=0></td>
-                </tr>
-                <tr>           
-                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">June</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[2][idx]" value=0></td>
-                </tr>
-                <tr>           
-                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">July</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[3][idx]" value=0></td>
-                </tr>
-                <tr>           
-                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">August</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[4][idx]" value=0></td>
-                </tr>
-                <tr>           
-                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">September</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[5][idx]" value=0></td>
-                </tr>
-                <tr>           
-                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">October</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[6][idx]" value=0></td>
-                </tr>
-                <tr>           
-                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">November</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[7][idx]" value=0></td>
-                </tr>
-                <tr>           
-                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">December</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[8][idx]" value=0></td>
-                </tr>
-                <tr>           
-                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">January</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[9][idx]" value=0></td>
-                </tr>
-                <tr>           
-                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">February</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[10][idx]" value=0></td>
-                </tr>
-                <tr>           
-                  <td *ngFor="let item of AvgYears; index as idx"><p *ngIf="idx === 0">March</p><input matInput *ngIf="idx !== 0" [(ngModel)]="MonthPresc[11][idx]" value=0></td>
-                </tr>
-                <tr>           
-                  <td *ngFor="let item of AvgYears; index as idx"><strong>{{idx === 0 ? "Total Items" : getTotalItems(idx)}}</strong></td>
-                </tr>
-              </tbody>
-            </table>
-        </tab>
-        <tab heading='Sales'>
-          <div>
-            <label for="noYear">Number of Year Projections</label>&nbsp;   
-            <mat-form-field>
-              <input matInput [(ngModel)]="noYear" (ngModelChange)="changeColumns()">
-            </mat-form-field>        
-            &nbsp;&nbsp;
-            <label for="startYear">Starting Year</label>    &nbsp;     
-            <mat-form-field>
-              <input matInput [(ngModel)]="startYear" (ngModelChange)="changeColumns()">
-            </mat-form-field>         
-          </div>     
-          <table class="table table-condensed">
-            <thead>
-              <tr>
-                <th *ngFor="let item of Years">{{item}}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>           
-                <td *ngFor="let item of Years; index as idx"><p *ngIf="idx === 0">Zero Rated OTC Sales</p><input matInput *ngIf="idx !== 0" [(ngModel)]="zeroOTCSale[idx]" value=0></td>
-              </tr>
-              <tr>           
-                <td *ngFor="let item of Years; index as idx"><p *ngIf="idx === 0">VAT Exclusive OTC Sales</p><input matInput *ngIf="idx !== 0" [(ngModel)]="vatOTCSale[idx]" value=0></td>
-              </tr>
-              <tr>           
-                <td *ngFor="let item of Years; index as idx"><strong>{{idx === 0 ? "Total OTC Sales" : getTotalOTC(idx) | currency: 'GBP'}}</strong></td>
-              </tr>
-            </tbody>
-          </table>
-        </tab>
-        <tab heading='Gross Profit'>     
-          <div>
-            <label for="noYear">Number of Year Projections</label>&nbsp;   
-            <mat-form-field>
-              <input matInput [(ngModel)]="noYear" (ngModelChange)="changeColumns()">
-            </mat-form-field>        
-            &nbsp;&nbsp;
-            <label for="startYear">Starting Year</label>    &nbsp;     
-            <mat-form-field>
-              <input matInput [(ngModel)]="startYear" (ngModelChange)="changeColumns()">
-            </mat-form-field>         
-          </div>     
-          <table class="table table-condensed">
-            <thead>
-                <tr>
-                  <th *ngFor="let item of Years">{{item}}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>           
-                  <td *ngFor="let item of Years; index as idx"><p *ngIf="idx === 0">OTC Sales</p><input matInput *ngIf="idx !== 0" [(ngModel)]="YearVal[0][idx]" value=0></td>
-                </tr>
-                <tr>           
-                  <td *ngFor="let item of Years; index as idx"><p *ngIf="idx === 0">NHS Sales</p><input matInput *ngIf="idx !== 0" [(ngModel)]="YearVal[1][idx]" value=0></td>
-                </tr>
-                <tr>           
-                  <td *ngFor="let item of Years; index as idx"><strong>{{idx === 0 ? "Total cost of sales" : getTotal(idx)}}</strong></td>
-                </tr>
-                <tr><td *ngFor="let item of Years; index as idx"></td></tr>
-                <tr>
-                  <td *ngFor="let item of Years; index as idx"><strong>{{idx === 0 ? "Gross Profit (£)" : getGross(idx) | currency}}</strong></td>
-                </tr>
-              </tbody>
-        </table>
-        </tab>
-        <tab heading='Expenses'>
-          <div class="container">
-            <h2>Please add your manual inputs here</h2>
-            <div *ngFor="let entry of EntriesArray.controls; last as isLast; index as idx" class="input-row">
-                <mat-form-field>
-                  <input matInput [formControl]='LabelsArray.controls[idx]' placeholder="label">
-                </mat-form-field>
-              <mat-form-field>
-                <input matInput [formControl]="entry" (ngModelChange)="saveExpense()" placeholder="input data">
-              </mat-form-field>
-              <button mat-icon-button color="warn" (click)="removeInputControl(idx)" *ngIf="EntriesArray.length > 1">
-                <mat-icon>remove_circle</mat-icon>
-              </button>
-              <button mat-icon-button color="primary" *ngIf="isLast" (click)="addInputControl()">
-                <mat-icon>add_circle</mat-icon>
-              </button>
-            </div>
-            <strong for="grossProfit">Gross Profit/Loss: </strong>&nbsp;{{gross | currency: 'GBP'}}
-            <div>
-              <strong>Total:&nbsp; {{Expense | currency: 'GBP'}}</strong>
-          </div>
-            <button class="btn btn-success mr-2" (click)="saveExpense()" type="submit">Save Data</button>
-          </div>
-        </tab>
-        <tab heading='Inflation'>
-        </tab>
-    </tabset>
+  <tabset class="member-tabset">
+    <tab heading="Upload Files">
+      <app-file-manager [fileVersion]="fileVersion"></app-file-manager>
+    </tab>
+    <tab heading="Prescriptions">
+      <div>
+        <label for="noYear">Number of Projections</label>&nbsp;
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="noYear"
+            (ngModelChange)="changeColumns()"
+          />
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <label for="startYear">Starting Year</label> &nbsp;
+        <mat-form-field>
+          <input
+            matInput
+            maxlength="4"
+            [(ngModel)]="startYear"
+            (ngModelChange)="changeColumns()"
+          />
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <label for="decrease">Projected volume with a decrease of</label>&nbsp;
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="decrease"
+            ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"
+            step="0.00"
+            (ngModelChange)="changeColumns()"
+          />
+        </mat-form-field>
+      </div>
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th *ngFor="let item of AvgYears">{{ item }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td *ngFor="let item of AvgYears; index as idx">
+              <p *ngIf="idx === 0">April</p>
+              <input
+                matInput
+                [disabled]="idx > 4"
+                *ngIf="idx !== 0"
+                [(ngModel)]="MonthPresc[0][idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of AvgYears; index as idx">
+              <p *ngIf="idx === 0">May</p>
+              <input
+                matInput
+                [disabled]="idx > 4"
+                *ngIf="idx !== 0"
+                [(ngModel)]="MonthPresc[1][idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of AvgYears; index as idx">
+              <p *ngIf="idx === 0">June</p>
+              <input
+                matInput
+                [disabled]="idx > 4"
+                *ngIf="idx !== 0"
+                [(ngModel)]="MonthPresc[2][idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of AvgYears; index as idx">
+              <p *ngIf="idx === 0">July</p>
+              <input
+                matInput
+                [disabled]="idx > 4"
+                *ngIf="idx !== 0"
+                [(ngModel)]="MonthPresc[3][idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of AvgYears; index as idx">
+              <p *ngIf="idx === 0">August</p>
+              <input
+                matInput
+                [disabled]="idx > 4"
+                *ngIf="idx !== 0"
+                [(ngModel)]="MonthPresc[4][idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of AvgYears; index as idx">
+              <p *ngIf="idx === 0">September</p>
+              <input
+                matInput
+                [disabled]="idx > 4"
+                *ngIf="idx !== 0"
+                [(ngModel)]="MonthPresc[5][idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of AvgYears; index as idx">
+              <p *ngIf="idx === 0">October</p>
+              <input
+                matInput
+                [disabled]="idx > 4"
+                *ngIf="idx !== 0"
+                [(ngModel)]="MonthPresc[6][idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of AvgYears; index as idx">
+              <p *ngIf="idx === 0">November</p>
+              <input
+                matInput
+                [disabled]="idx > 4"
+                *ngIf="idx !== 0"
+                [(ngModel)]="MonthPresc[7][idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of AvgYears; index as idx">
+              <p *ngIf="idx === 0">December</p>
+              <input
+                matInput
+                [disabled]="idx > 4"
+                *ngIf="idx !== 0"
+                [(ngModel)]="MonthPresc[8][idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of AvgYears; index as idx">
+              <p *ngIf="idx === 0">January</p>
+              <input
+                matInput
+                [disabled]="idx > 4"
+                *ngIf="idx !== 0"
+                [(ngModel)]="MonthPresc[9][idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of AvgYears; index as idx">
+              <p *ngIf="idx === 0">February</p>
+              <input
+                matInput
+                [disabled]="idx > 4"
+                *ngIf="idx !== 0"
+                [(ngModel)]="MonthPresc[10][idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of AvgYears; index as idx">
+              <p *ngIf="idx === 0">March</p>
+              <input
+                matInput
+                [disabled]="idx > 4"
+                *ngIf="idx !== 0"
+                [(ngModel)]="MonthPresc[11][idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of AvgYears; index as idx">
+              <strong>{{
+                idx === 0 ? "Total Items" : getTotalItems(idx)
+              }}</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr />
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th *ngFor="let item of Years | slice: 0:3; let i = index">
+              {{ item }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <p *ngIf="idx === 0">Total MURs (Max 400)</p>
+              <input
+                matInput
+                *ngIf="idx !== 0 || idx < 3"
+                [(ngModel)]="mur[idx - 1]"
+                value="0"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr />
+    </tab>
+    <tab heading="Sales">
+      <div>
+        <label for="noYear">Number of Year Projections</label>&nbsp;
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="noYear"
+            (ngModelChange)="changeColumns()"
+          />
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <label for="startYear">Starting Year</label> &nbsp;
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="startYear"
+            (ngModelChange)="changeColumns()"
+          />
+        </mat-form-field>
+      </div>
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th *ngFor="let item of Years">{{ item }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <p *ngIf="idx === 0">Zero Rated OTC Sales</p>
+              <input
+                matInput
+                *ngIf="idx !== 0"
+                [(ngModel)]="zeroOTCSale[idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <p *ngIf="idx === 0">VAT Exclusive OTC Sales</p>
+              <input
+                matInput
+                *ngIf="idx !== 0"
+                [(ngModel)]="vatOTCSale[idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <strong>{{
+                idx === 0
+                  ? "Total OTC Sales"
+                  : (getTotalOTC(idx) | currency: "GBP")
+              }}</strong>
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              {{
+                idx === 0
+                  ? "NHS Sales Reimbursement (net)"
+                  : getNHSSalesReimburse(idx)
+              }}
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              {{ idx === 0 ? "SAF" : getSAF(idx) }}
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              {{
+                idx === 0
+                  ? "Establishment Payment"
+                  : idx < 3
+                  ? getEstablishedPay(idx)
+                  : ""
+              }}
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <p *ngIf="idx === 0">Other</p>
+              <p *ngIf="idx > 2">{{ nhsother[2] }}</p>
+              <input
+                matInput
+                [disabled]="idx > 2"
+                *ngIf="idx !== 0"
+                [(ngModel)]="nhsother[idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <strong>{{
+                idx === 0
+                  ? "Total NHS Sales"
+                  : (getTotalOTC(idx) | currency: "GBP")
+              }}</strong>
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <strong>{{
+                idx === 0
+                  ? "Grand total sales / Turnover (£)"
+                  : (getTotalOTC(idx) | currency: "GBP")
+              }}</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </tab>
+    <tab heading="Gross Profit">
+      <div>
+        <label for="noYear">Number of Year Projections</label>&nbsp;
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="noYear"
+            (ngModelChange)="changeColumns()"
+          />
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <label for="startYear">Starting Year</label> &nbsp;
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="startYear"
+            (ngModelChange)="changeColumns()"
+          />
+        </mat-form-field>
+      </div>
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th *ngFor="let item of Years">{{ item }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <p *ngIf="idx === 0">OTC Sales</p>
+              <input
+                matInput
+                *ngIf="idx !== 0"
+                [(ngModel)]="YearVal[0][idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <p *ngIf="idx === 0">NHS Sales</p>
+              <input
+                matInput
+                *ngIf="idx !== 0"
+                [(ngModel)]="YearVal[1][idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <strong>{{
+                idx === 0 ? "Total cost of sales" : getTotal(idx)
+              }}</strong>
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx"></td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <strong>{{
+                idx === 0 ? "Gross Profit (£)" : (getGross(idx) | currency)
+              }}</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </tab>
+    <tab heading="Expenses">
+      <div class="container">
+        <h2>Please add your manual inputs here</h2>
+        <div
+          *ngFor="
+            let entry of EntriesArray.controls;
+            last as isLast;
+            index as idx
+          "
+          class="input-row"
+        >
+          <mat-form-field>
+            <input
+              matInput
+              [formControl]="LabelsArray.controls[idx]"
+              placeholder="label"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              [formControl]="entry"
+              (ngModelChange)="saveExpense()"
+              placeholder="input data"
+            />
+          </mat-form-field>
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="removeInputControl(idx)"
+            *ngIf="EntriesArray.length > 1"
+          >
+            <mat-icon>remove_circle</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="primary"
+            *ngIf="isLast"
+            (click)="addInputControl()"
+          >
+            <mat-icon>add_circle</mat-icon>
+          </button>
+        </div>
+        <strong for="grossProfit">Gross Profit/Loss: </strong>&nbsp;{{
+          gross | currency: "GBP"
+        }}
+        <div>
+          <strong>Total:&nbsp; {{ Expense | currency: "GBP" }}</strong>
+        </div>
+        <button
+          class="btn btn-success mr-2"
+          (click)="saveExpense()"
+          type="submit"
+        >
+          Save Data
+        </button>
+      </div>
+    </tab>
+    <tab heading="Inflation"> </tab>
+  </tabset>
 </div>
