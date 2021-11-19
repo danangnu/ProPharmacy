@@ -25,9 +25,10 @@ export class PlcReportComponent implements OnInit {
   prescriptionReport: PrescriptionReport[] = [];
   schedulePaymentReports: SchedulePaymentReport[] = [];
   EntriesArray: FormArray;
+  Entries2Array: FormArray;
   LabelsArray: FormArray;
   registerForm: FormGroup;
-  Expense = 0;
+  Expense: number[] = [];
   gross = 0;
   noYear = 1;
   decrease = 0.0;
@@ -35,19 +36,20 @@ export class PlcReportComponent implements OnInit {
   YearA: number;
   Years: string[] = [];
   AvgYears: string[] = [];
-  YearVal: any[][] = [[], []];
+  YearVal: any[][] = [[], [], [], [], [], [], []];
   MonthPresc: number[][] = [[], [], [], [], [], [], [], [], [], [], [], []];
-  zeroOTCSale: number[] = [];
-  vatOTCSale: number[] = [];
+  zeroOTCSale: any[] = [];
+  vatOTCSale: any[] = [];
   mur: number[] = [];
-  nhsother: number[] = [];
-  nms: number[] = [];
-  advother: number[] = [];
-  nhsenhancedserv: number[] = [];
-  nhsundries: number[] = [];
-  qualitypay: number[] = [];
-  pharmacyaccscheme: number[] = [];
-  buyingprofit: number[] = [];
+  nhsother: any[] = [];
+  nms: any[] = [];
+  advother: any[] = [];
+  nhsenhancedserv: any[] = [];
+  nhsundries: any[] = [];
+  qualitypay: any[] = [];
+  pharmacyaccscheme: any[] = [];
+  buyingprofit: any[] = [];
+  transitionpay: any[] = [];
 
   constructor(
     private auth: AuthService,
@@ -63,6 +65,19 @@ export class PlcReportComponent implements OnInit {
     this.initializeForm();
     this.mur.push(400);
     this.mur.push(400);
+    this.YearVal[0][0] = 'OTC Sales';
+    this.YearVal[1][0] = 'NHS Sales';
+    this.zeroOTCSale.push('Zero Rated OTC Sales');
+    this.vatOTCSale.push('VAT Exclusive OTC Sales');
+    this.nhsother.push('Other');
+    this.nms.push('NMS');
+    this.transitionpay.push('Transition Payment');
+    this.advother.push('Other');
+    this.nhsenhancedserv.push('NHS Enhanced services');
+    this.nhsundries.push('NHS Sundries');
+    this.qualitypay.push('Quality Payments');
+    this.pharmacyaccscheme.push('Pharmacy Access Scheme');
+    this.buyingprofit.push('Buying Profit');
     this.AvgYears.push('Month');
     this.AvgYears.push(
       this.startYear.toString() + '/' + (this.startYear + 1).toString()
@@ -112,6 +127,12 @@ export class PlcReportComponent implements OnInit {
         Validators.pattern('^[0-9]*$'),
       ]),
     ]);
+    this.Entries2Array = new FormArray([
+      new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
+      ]),
+    ]);
   }
 
   addInputControl() {
@@ -119,11 +140,15 @@ export class PlcReportComponent implements OnInit {
     this.EntriesArray.push(
       new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')])
     );
+    this.Entries2Array.push(
+      new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')])
+    );
   }
 
   removeInputControl(idx: number) {
     this.LabelsArray.removeAt(idx);
     this.EntriesArray.removeAt(idx);
+    this.Entries2Array.removeAt(idx);
   }
 
   changeColumns() {
@@ -170,9 +195,97 @@ export class PlcReportComponent implements OnInit {
   getTotal(idx: number): number {
     let total = 0;
     for (var i = 0; i < 2; i++) {
-      total += Number(this.YearVal[i][idx]);
+      if (this.YearVal[i][idx] != null) total += Number(this.YearVal[i][idx]);
     }
     return total;
+  }
+
+  cpZeroOTCSale(idx: number) {
+    if (idx == 2) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.zeroOTCSale[idx + i] = this.zeroOTCSale[idx];
+      }
+    }
+  }
+
+  cpVatOTCSale(idx: number) {
+    if (idx == 2) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.vatOTCSale[idx + i] = this.vatOTCSale[idx];
+      }
+    }
+  }
+
+  cpNhsOther(idx: number) {
+    if (idx == 2) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.nhsother[idx + i] = this.nhsother[idx];
+      }
+    }
+  }
+
+  cpNms(idx: number) {
+    if (idx == 2) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.nms[idx + i] = this.nms[idx];
+      }
+    }
+  }
+
+  cpAdvOther(idx: number) {
+    if (idx == 2) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.advother[idx + i] = this.advother[idx];
+      }
+    }
+  }
+
+  cpNHSenhancedServ(idx: number) {
+    if (idx == 2) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.nhsenhancedserv[idx + i] = this.nhsenhancedserv[idx];
+      }
+    }
+  }
+
+  cpNHSundries(idx: number) {
+    if (idx == 2) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.nhsundries[idx + i] = this.nhsundries[idx];
+      }
+    }
+  }
+
+  cpQualityPay(idx: number) {
+    if (idx == 2) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.qualitypay[idx + i] = this.qualitypay[idx];
+      }
+    }
+  }
+
+  cpPharmacy(idx: number) {
+    if (idx == 2) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.pharmacyaccscheme[idx + i] = this.pharmacyaccscheme[idx];
+      }
+    }
+  }
+
+  cpBuyingProfit(idx: number) {
+    if (idx == 2) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.buyingprofit[idx + i] = this.buyingprofit[idx];
+      }
+    }
+  }
+
+  copyData(j: number, idx: number) {
+    if (idx == 2) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.YearVal[j][idx + i] = this.YearVal[j][idx];
+      }
+    }
   }
 
   getTotalItems(idx: number): number {
@@ -202,7 +315,23 @@ export class PlcReportComponent implements OnInit {
   getSAF(idx: number): number {
     let saf = 0;
     saf = Math.round(this.getTotalItems(idx) * 1.26);
-    if (idx == 2) saf = Math.round(this.getTotalItems(idx + 1) * 1.27);
+    if (idx == 2) {
+      let first = 0.0;
+      for (var i = 0; i < 4; i++) {
+        if (this.MonthPresc[i][idx + 1] != null)
+          first += Number(this.MonthPresc[i][idx + 1]);
+        else first += 0;
+      }
+      first = Number(first * 1.26);
+      let second = 0.0;
+      for (var i = 4; i < this.MonthPresc.length; i++) {
+        if (this.MonthPresc[i][idx + 1] != null)
+          second += Number(this.MonthPresc[i][idx + 1]);
+        else second += 0;
+      }
+      second = Number(second * 1.27);
+      saf = Math.round(first + second);
+    }
     if (idx > 2) saf = Math.round(this.getTotalItems(idx + 2) * 1.27);
     return saf;
   }
@@ -234,17 +363,21 @@ export class PlcReportComponent implements OnInit {
 
   getSubtotalNHS(idx: number): number {
     let total = 0;
-    total += this.getSAF(idx);
-    total += this.getEstablishedPay(idx);
-    total += Number(this.nhsother[idx]);
+    if (this.getSAF(idx) != null) total += this.getSAF(idx);
+    if (this.getEstablishedPay(idx) != null)
+      total += this.getEstablishedPay(idx);
+    if (this.nhsother[idx] != null) total += Number(this.nhsother[idx]);
     return total;
   }
 
   getSubtotalAdv(idx: number): number {
     let total = 0;
-    total += Number(this.nms[idx]);
-    total += this.getMUR(idx);
-    total += Number(this.advother[idx]);
+    if (this.nms[idx] != null) total += Number(this.nms[idx]);
+    if (idx < 3) total += this.getMUR(idx);
+    else total += 0;
+    if (this.transitionpay[idx] != null)
+      total += Number(this.transitionpay[idx]);
+    if (this.advother[idx] != null) total += Number(this.advother[idx]);
     return total;
   }
 
@@ -256,21 +389,24 @@ export class PlcReportComponent implements OnInit {
 
   getTotalOTC(idx: number): number {
     let total = 0;
-    total += Number(this.zeroOTCSale[idx]);
-    total += Number(this.vatOTCSale[idx]);
+    if (this.zeroOTCSale[idx] != null) total += Number(this.zeroOTCSale[idx]);
+    if (this.vatOTCSale[idx] != null) total += Number(this.vatOTCSale[idx]);
     return total;
   }
 
   getNHSSales(idx: number): number {
     let total = 0;
-    total += this.getNHSSalesReimburse(idx);
-    total += this.getSubtotalNHS(idx);
-    total += this.getSubtotalAdv(idx);
-    total += Number(this.nhsenhancedserv[idx]);
-    total += Number(this.nhsundries[idx]);
-    total += Number(this.qualitypay[idx]);
-    total += Number(this.pharmacyaccscheme[idx]);
-    total += Number(this.buyingprofit[idx]);
+    if (this.getNHSSalesReimburse(idx) != null)
+      total += this.getNHSSalesReimburse(idx);
+    if (this.getSubtotalNHS(idx) != null) total += this.getSubtotalNHS(idx);
+    if (this.getSubtotalAdv(idx) != null) total += this.getSubtotalAdv(idx);
+    if (this.nhsenhancedserv[idx] != null)
+      total += Number(this.nhsenhancedserv[idx]);
+    if (this.nhsundries[idx] != null) total += Number(this.nhsundries[idx]);
+    if (this.qualitypay[idx] != null) total += Number(this.qualitypay[idx]);
+    if (this.pharmacyaccscheme[idx] != null)
+      total += Number(this.pharmacyaccscheme[idx]);
+    if (this.buyingprofit[idx] != null) total += Number(this.buyingprofit[idx]);
     return total;
   }
 
@@ -283,12 +419,19 @@ export class PlcReportComponent implements OnInit {
 
   getGross(idx: number): number {
     let gross = 0;
-    gross = this.Expense;
-    if (this.getTotal(idx) != null) gross += Number(this.getTotal(idx));
+    if (this.getGrandTotalNHS(idx) != null && this.getTotal(idx) != null)
+      gross = this.getGrandTotalNHS(idx) - this.getTotal(idx);
     return gross;
   }
 
-  saveExpense() {
+  getProfitLoss(idx: number): number {
+    let total = 0;
+    if (this.getGross(idx) != null) total += this.getGross(idx);
+    if (this.Expense[idx] != null) total -= Number(this.Expense[idx]);
+    return total;
+  }
+
+  saveExpense(idx) {
     let form: FormGroup = new FormGroup({});
     for (let i = 0; i < this.EntriesArray.length; i++) {
       form.addControl(
@@ -299,12 +442,21 @@ export class PlcReportComponent implements OnInit {
         ])
       );
     }
-    this.Expense =
-      this.gross +
-      this.EntriesArray.value.reduce(
+    if (idx == 1) {
+      this.Expense[idx] = this.EntriesArray.value.reduce(
         (prev, next) => Number(prev) + Number(next),
         0
       );
+    }
+    if (idx == 2) {
+      this.Expense[idx] = this.Entries2Array.value.reduce(
+        (prev, next) => Number(prev) + Number(next),
+        0
+      );
+      for (let j = 1; j <= this.noYear; j++) {
+        this.Expense[idx + j] = this.Expense[2];
+      }
+    }
   }
 
   getPRHeaders() {
@@ -361,12 +513,12 @@ export class PlcReportComponent implements OnInit {
         );
         this.schedulePayService.getReport(headers).subscribe((sched) => {
           this.schedulePaymentReports = sched;
-          this.gross = sched
+          /*this.gross = sched
             .map((a) => a.nhS_SalesSum)
             .reduce(function (a, b) {
               return a + b;
-            });
-          this.Expense = +this.gross;
+            });*/
+          //this.Expense = +this.gross;
         });
       });
   }

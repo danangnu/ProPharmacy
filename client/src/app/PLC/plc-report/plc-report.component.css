@@ -12,3 +12,10 @@
   top: 0px;
   padding: 10px 0px;
 }
+
+input:disabled {
+  /*css declaration to make 
+  font-color of disable input
+  black*/
+  color: black;
+}
