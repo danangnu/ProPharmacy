@@ -320,8 +320,122 @@
             <td *ngFor="let item of Years; index as idx">
               <strong>{{
                 idx === 0
+                  ? "Subtotal (Ess. Services)"
+                  : (getSubtotalNHS(idx) | currency: "GBP")
+              }}</strong>
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <p *ngIf="idx === 0">NMS</p>
+              <p *ngIf="idx > 2">{{ nms[2] }}</p>
+              <input
+                matInput
+                [disabled]="idx > 2"
+                *ngIf="idx !== 0"
+                [(ngModel)]="nms[idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              {{ idx === 0 ? "MUR" : idx < 3 ? getMUR(idx) : "" }}
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <p *ngIf="idx === 0">Other</p>
+              <p *ngIf="idx > 2">{{ advother[2] }}</p>
+              <input
+                matInput
+                [disabled]="idx > 2"
+                *ngIf="idx !== 0"
+                [(ngModel)]="advother[idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <strong>{{
+                idx === 0
+                  ? "Subtotal (Adv. Services)"
+                  : (getSubtotalAdv(idx) | currency: "GBP")
+              }}</strong>
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <p *ngIf="idx === 0">NHS Enhanced services</p>
+              <p *ngIf="idx > 2">{{ nhsenhancedserv[2] }}</p>
+              <input
+                matInput
+                [disabled]="idx > 2"
+                *ngIf="idx !== 0"
+                [(ngModel)]="nhsenhancedserv[idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <p *ngIf="idx === 0">NHS Sundries</p>
+              <p *ngIf="idx > 2">{{ nhsundries[2] }}</p>
+              <input
+                matInput
+                [disabled]="idx > 2"
+                *ngIf="idx !== 0"
+                [(ngModel)]="nhsundries[idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <p *ngIf="idx === 0">Quality Payments</p>
+              <p *ngIf="idx > 2">{{ qualitypay[2] }}</p>
+              <input
+                matInput
+                [disabled]="idx > 2"
+                *ngIf="idx !== 0"
+                [(ngModel)]="qualitypay[idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <p *ngIf="idx === 0">Pharmacy Access Scheme</p>
+              <p *ngIf="idx > 2">{{ pharmacyaccscheme[2] }}</p>
+              <input
+                matInput
+                [disabled]="idx > 2"
+                *ngIf="idx !== 0"
+                [(ngModel)]="pharmacyaccscheme[idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <p *ngIf="idx === 0">Buying Profit</p>
+              <p *ngIf="idx > 2">{{ buyingprofit[2] }}</p>
+              <input
+                matInput
+                [disabled]="idx > 2"
+                *ngIf="idx !== 0"
+                [(ngModel)]="buyingprofit[idx]"
+                value="0"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td *ngFor="let item of Years; index as idx">
+              <strong>{{
+                idx === 0
                   ? "Total NHS Sales"
-                  : (getTotalOTC(idx) | currency: "GBP")
+                  : (getNHSSales(idx) | currency: "GBP")
               }}</strong>
             </td>
           </tr>
@@ -330,7 +444,7 @@
               <strong>{{
                 idx === 0
                   ? "Grand total sales / Turnover (£)"
-                  : (getTotalOTC(idx) | currency: "GBP")
+                  : (getGrandTotalNHS(idx) | currency: "GBP")
               }}</strong>
             </td>
           </tr>

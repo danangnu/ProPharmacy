@@ -41,6 +41,13 @@ export class PlcReportComponent implements OnInit {
   vatOTCSale: number[] = [];
   mur: number[] = [];
   nhsother: number[] = [];
+  nms: number[] = [];
+  advother: number[] = [];
+  nhsenhancedserv: number[] = [];
+  nhsundries: number[] = [];
+  qualitypay: number[] = [];
+  pharmacyaccscheme: number[] = [];
+  buyingprofit: number[] = [];
 
   constructor(
     private auth: AuthService,
@@ -225,10 +232,52 @@ export class PlcReportComponent implements OnInit {
     return est;
   }
 
+  getSubtotalNHS(idx: number): number {
+    let total = 0;
+    total += this.getSAF(idx);
+    total += this.getEstablishedPay(idx);
+    total += Number(this.nhsother[idx]);
+    return total;
+  }
+
+  getSubtotalAdv(idx: number): number {
+    let total = 0;
+    total += Number(this.nms[idx]);
+    total += this.getMUR(idx);
+    total += Number(this.advother[idx]);
+    return total;
+  }
+
+  getMUR(idx: number): number {
+    let mur = 0;
+    mur = Number(this.mur[idx - 1]) * 28;
+    return mur;
+  }
+
   getTotalOTC(idx: number): number {
     let total = 0;
     total += Number(this.zeroOTCSale[idx]);
     total += Number(this.vatOTCSale[idx]);
+    return total;
+  }
+
+  getNHSSales(idx: number): number {
+    let total = 0;
+    total += this.getNHSSalesReimburse(idx);
+    total += this.getSubtotalNHS(idx);
+    total += this.getSubtotalAdv(idx);
+    total += Number(this.nhsenhancedserv[idx]);
+    total += Number(this.nhsundries[idx]);
+    total += Number(this.qualitypay[idx]);
+    total += Number(this.pharmacyaccscheme[idx]);
+    total += Number(this.buyingprofit[idx]);
+    return total;
+  }
+
+  getGrandTotalNHS(idx: number): number {
+    let total = 0;
+    total += this.getTotalOTC(idx);
+    total += this.getNHSSales(idx);
     return total;
   }
 

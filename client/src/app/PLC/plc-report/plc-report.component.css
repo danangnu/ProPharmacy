@@ -1,14 +1,14 @@
 .container {
-    padding: 32px;
+  padding: 22px;
 }
 
 .input-row {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .sticky-div {
-    position: sticky;
-    top: 0px;
-    padding: 10px 0px;
+  position: sticky;
+  top: 0px;
+  padding: 10px 0px;
 }
