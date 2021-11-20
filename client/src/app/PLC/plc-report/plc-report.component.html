@@ -323,6 +323,19 @@
               }}</strong>
             </td>
           </tr>
+          <tr
+            [ngStyle]="{
+              'background-color': 'rgb(217,226,243)'
+            }"
+          >
+            <td *ngFor="let item of Years; index as idx">
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : (getSubtotalNHS(idx) / getGross(idx) | percent)
+              }}
+            </td>
+          </tr>
           <tr>
             <td *ngFor="let item of Years; index as idx">
               <input
@@ -367,6 +380,19 @@
                   ? "Subtotal (Adv. Services)"
                   : (getSubtotalAdv(idx) | currency: "GBP")
               }}</strong>
+            </td>
+          </tr>
+          <tr
+            [ngStyle]="{
+              'background-color': 'rgb(217,226,243)'
+            }"
+          >
+            <td *ngFor="let item of Years; index as idx">
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : (getSubtotalAdv(idx) / getGross(idx) | percent)
+              }}
             </td>
           </tr>
           <tr>
@@ -422,6 +448,19 @@
                 (ngModelChange)="cpBuyingProfit(idx)"
                 value="0"
               />
+            </td>
+          </tr>
+          <tr
+            [ngStyle]="{
+              'background-color': 'rgb(217,226,243)'
+            }"
+          >
+            <td *ngFor="let item of Years; index as idx">
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : (buyingprofit[idx] / getGross(idx) | percent)
+              }}
             </td>
           </tr>
           <tr>
@@ -582,12 +621,38 @@
                 }}
               </td>
             </tr>
+            <tr
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              <td *ngFor="let item of Years; index as idx">
+                {{
+                  idx === 0
+                    ? "As % of gross profit"
+                    : (Expense[idx] / getGross(idx) | percent)
+                }}
+              </td>
+            </tr>
             <tr>
               <td *ngFor="let item of Years; index as idx">
                 <strong>{{
                   idx === 0
                     ? "Profit/Loss"
                     : (getProfitLoss(idx) | currency: "GBP")
+                }}</strong>
+              </td>
+            </tr>
+            <tr
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              <td *ngFor="let item of Years; index as idx">
+                <strong>{{
+                  idx === 0
+                    ? "As % of gross profit"
+                    : (getProfitLoss(idx) / getGross(idx) | percent)
                 }}</strong>
               </td>
             </tr>
