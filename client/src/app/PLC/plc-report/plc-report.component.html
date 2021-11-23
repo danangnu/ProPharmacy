@@ -43,144 +43,192 @@
         </thead>
         <tbody>
           <tr>
-            <td *ngFor="let item of AvgYears; index as idx">
-              <p *ngIf="idx === 0">April</p>
+            <td
+              *ngFor="let item of AvgYears; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
-                [disabled]="idx > 4"
-                *ngIf="idx !== 0"
+                [disabled]="idx > 4 || idx == 0"
                 [(ngModel)]="MonthPresc[0][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of AvgYears; index as idx">
-              <p *ngIf="idx === 0">May</p>
+            <td
+              *ngFor="let item of AvgYears; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
                 [disabled]="idx > 4"
-                *ngIf="idx !== 0"
                 [(ngModel)]="MonthPresc[1][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of AvgYears; index as idx">
-              <p *ngIf="idx === 0">June</p>
+            <td
+              *ngFor="let item of AvgYears; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
                 [disabled]="idx > 4"
-                *ngIf="idx !== 0"
                 [(ngModel)]="MonthPresc[2][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of AvgYears; index as idx">
-              <p *ngIf="idx === 0">July</p>
+            <td
+              *ngFor="let item of AvgYears; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
                 [disabled]="idx > 4"
-                *ngIf="idx !== 0"
                 [(ngModel)]="MonthPresc[3][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of AvgYears; index as idx">
-              <p *ngIf="idx === 0">August</p>
+            <td
+              *ngFor="let item of AvgYears; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
                 [disabled]="idx > 4"
-                *ngIf="idx !== 0"
                 [(ngModel)]="MonthPresc[4][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of AvgYears; index as idx">
-              <p *ngIf="idx === 0">September</p>
+            <td
+              *ngFor="let item of AvgYears; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
                 [disabled]="idx > 4"
-                *ngIf="idx !== 0"
                 [(ngModel)]="MonthPresc[5][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of AvgYears; index as idx">
-              <p *ngIf="idx === 0">October</p>
+            <td
+              *ngFor="let item of AvgYears; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
                 [disabled]="idx > 4"
-                *ngIf="idx !== 0"
                 [(ngModel)]="MonthPresc[6][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of AvgYears; index as idx">
-              <p *ngIf="idx === 0">November</p>
+            <td
+              *ngFor="let item of AvgYears; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
                 [disabled]="idx > 4"
-                *ngIf="idx !== 0"
                 [(ngModel)]="MonthPresc[7][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of AvgYears; index as idx">
-              <p *ngIf="idx === 0">December</p>
+            <td
+              *ngFor="let item of AvgYears; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
                 [disabled]="idx > 4"
-                *ngIf="idx !== 0"
                 [(ngModel)]="MonthPresc[8][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of AvgYears; index as idx">
-              <p *ngIf="idx === 0">January</p>
+            <td
+              *ngFor="let item of AvgYears; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
                 [disabled]="idx > 4"
-                *ngIf="idx !== 0"
                 [(ngModel)]="MonthPresc[9][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of AvgYears; index as idx">
-              <p *ngIf="idx === 0">February</p>
+            <td
+              *ngFor="let item of AvgYears; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
                 [disabled]="idx > 4"
-                *ngIf="idx !== 0"
                 [(ngModel)]="MonthPresc[10][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of AvgYears; index as idx">
-              <p *ngIf="idx === 0">March</p>
+            <td
+              *ngFor="let item of AvgYears; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
                 [disabled]="idx > 4"
-                *ngIf="idx !== 0"
                 [(ngModel)]="MonthPresc[11][idx]"
                 value="0"
               />
@@ -206,12 +254,17 @@
         </thead>
         <tbody>
           <tr>
-            <td *ngFor="let item of Years; index as idx">
-              <p *ngIf="idx === 0">Total MURs (Max 400)</p>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx !== 0 && idx < 3 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
                 *ngIf="idx !== 0 || idx < 3"
-                [(ngModel)]="mur[idx - 1]"
+                [(ngModel)]="mur[idx]"
                 value="0"
               />
             </td>

@@ -37,10 +37,10 @@ export class PlcReportComponent implements OnInit {
   Years: string[] = [];
   AvgYears: string[] = [];
   YearVal: any[][] = [[], [], [], [], [], [], []];
-  MonthPresc: number[][] = [[], [], [], [], [], [], [], [], [], [], [], []];
+  MonthPresc: any[][] = [[], [], [], [], [], [], [], [], [], [], [], []];
   zeroOTCSale: any[] = [];
   vatOTCSale: any[] = [];
-  mur: number[] = [];
+  mur: any[] = [];
   nhsother: any[] = [];
   nms: any[] = [];
   advother: any[] = [];
@@ -63,8 +63,22 @@ export class PlcReportComponent implements OnInit {
     this.loadPrescrptionReports();
     this.loadScheduleReports();
     this.initializeForm();
+    this.mur.push('Total MURs (Max 400)');
     this.mur.push(400);
     this.mur.push(400);
+    this.MonthPresc[0][0] = 'April';
+    this.MonthPresc[1][0] = 'May';
+    this.MonthPresc[2][0] = 'June';
+    this.MonthPresc[3][0] = 'July';
+    this.MonthPresc[4][0] = 'August';
+    this.MonthPresc[5][0] = 'September';
+    this.MonthPresc[6][0] = 'October';
+    this.MonthPresc[7][0] = 'November';
+    this.MonthPresc[8][0] = 'December';
+    this.MonthPresc[9][0] = 'January';
+    this.MonthPresc[10][0] = 'February';
+    this.MonthPresc[11][0] = 'March';
+    this.initialValue();
     this.YearVal[0][0] = 'OTC Sales';
     this.YearVal[1][0] = 'NHS Sales';
     this.zeroOTCSale.push('Zero Rated OTC Sales');
@@ -80,39 +94,56 @@ export class PlcReportComponent implements OnInit {
     this.buyingprofit.push('Buying Profit');
     this.AvgYears.push('Month');
     this.AvgYears.push(
-      this.startYear.toString() + '/' + (this.startYear + 1).toString()
+      'Annual Prescription Items ' +
+        this.startYear.toString() +
+        '/' +
+        (this.startYear + 1).toString().substring(2, 4)
     );
-    this.AvgYears.push('Avg Item');
+    this.AvgYears.push('average item value');
     this.AvgYears.push(
-      (this.startYear + 1).toString() + '/' + (this.startYear + 2).toString()
+      'Annual Prescription Items ' +
+        (this.startYear + 1).toString() +
+        '/' +
+        (this.startYear + 2).toString().substring(2, 4)
     );
-    this.AvgYears.push('Avg Item');
+    this.AvgYears.push('average item value');
     for (let i = 0; i < this.noYear; i++) {
       if (i === 0) this.YearA = this.startYear;
       else this.YearA = this.YearA + 1;
 
       this.AvgYears.push(
-        'Projected Volume ' +
+        'Projected Prescription volume for ' +
           (Number(this.YearA) + 2).toString() +
           '/' +
-          (Number(this.YearA) + 3).toString()
+          (Number(this.YearA) + 3).toString().substring(2, 4)
       );
     }
     this.Years.push('');
     this.Years.push(
-      this.startYear.toString() + '/' + (this.startYear + 1).toString()
+      this.startYear.toString() +
+        '/' +
+        (this.startYear + 1).toString().substring(2, 4)
     );
     this.Years.push(
-      (this.startYear + 1).toString() + '/' + (this.startYear + 2).toString()
+      'Year 1 ' +
+        ' (' +
+        (this.startYear + 1).toString() +
+        '/' +
+        (this.startYear + 2).toString().substring(2, 4) +
+        ')'
     );
     for (let i = 0; i < this.noYear; i++) {
       if (i === 0) this.YearA = this.startYear;
       else this.YearA = this.YearA + 1;
 
       this.Years.push(
-        (Number(this.YearA) + 2).toString() +
+        'Year ' +
+          (i + 2) +
+          ' (' +
+          (Number(this.YearA) + 2).toString() +
           '/' +
-          (Number(this.YearA) + 3).toString()
+          (Number(this.YearA) + 3).toString().substring(2, 4) +
+          ')'
       );
     }
   }
@@ -133,6 +164,12 @@ export class PlcReportComponent implements OnInit {
         Validators.pattern('^[0-9]*$'),
       ]),
     ]);
+  }
+
+  initialValue() {
+    for (let i = 1; i < 5; i++) {
+      for (let j = 0; j < 12; j++) this.MonthPresc[j][i] = 0;
+    }
   }
 
   addInputControl() {
@@ -156,38 +193,51 @@ export class PlcReportComponent implements OnInit {
     this.Years = [];
     this.AvgYears.push('Month');
     this.AvgYears.push(
-      this.startYear.toString() + '/' + (Number(this.startYear) + 1).toString()
-    );
-    this.AvgYears.push('Avg Item');
-    this.AvgYears.push(
-      (Number(this.startYear) + 1).toString() +
+      'Annual Prescription Items ' +
+        this.startYear.toString() +
         '/' +
-        (Number(this.startYear) + 2).toString()
+        (Number(this.startYear) + 1).toString().substring(2, 4)
     );
-    this.AvgYears.push('Avg Item');
+    this.AvgYears.push('average item value');
+    this.AvgYears.push(
+      'Annual Prescription Items ' +
+        (Number(this.startYear) + 1).toString() +
+        '/' +
+        (Number(this.startYear) + 2).toString().substring(2, 4)
+    );
+    this.AvgYears.push('average item value');
     this.Years.push('');
     this.Years.push(
-      this.startYear.toString() + '/' + (Number(this.startYear) + 1).toString()
+      this.startYear.toString() +
+        '/' +
+        (Number(this.startYear) + 1).toString().substring(2, 4)
     );
     this.Years.push(
-      (Number(this.startYear) + 1).toString() +
+      'Year 1' +
+        ' (' +
+        (Number(this.startYear) + 1).toString() +
         '/' +
-        (Number(this.startYear) + 2).toString()
+        (Number(this.startYear) + 2).toString().substring(2, 4) +
+        ')'
     );
     const yr = Number(this.startYear) + 2;
     for (let i = 0; i < this.noYear; i++) {
       if (i === 0) this.YearA = Number(this.startYear);
       else this.YearA += 1;
       this.AvgYears.push(
-        'Projected Volume ' +
+        'Projected Prescription volume for ' +
           yr.toString() +
           '/' +
-          (Number(this.YearA) + 3).toString()
+          (Number(this.YearA) + 3).toString().substring(2, 4)
       );
       this.Years.push(
-        (Number(this.YearA) + 2).toString() +
+        'Year ' +
+          (i + 2) +
+          ' (' +
+          (Number(this.YearA) + 2).toString() +
           '/' +
-          (Number(this.YearA) + 3).toString()
+          (Number(this.YearA) + 3).toString().substring(2, 4) +
+          ')'
       );
     }
   }
@@ -383,7 +433,7 @@ export class PlcReportComponent implements OnInit {
 
   getMUR(idx: number): number {
     let mur = 0;
-    mur = Number(this.mur[idx - 1]) * 28;
+    mur = Number(this.mur[idx]) * 28;
     return mur;
   }
 
