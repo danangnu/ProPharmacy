@@ -43,192 +43,228 @@
         </thead>
         <tbody>
           <tr>
+            <td>April</td>
             <td
-              *ngFor="let item of AvgYears; index as idx"
+              *ngFor="
+                let item of AvgYears | slice: 0:AvgYears.length - 1;
+                index as idx
+              "
               [ngStyle]="{
-                'background-color':
-                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+                'background-color': idx < 4 ? 'rgb(254,242,203)' : 'white'
               }"
             >
               <input
                 matInput
-                [disabled]="idx > 4 || idx == 0"
+                [disabled]="idx > 3"
                 [(ngModel)]="MonthPresc[0][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
+            <td>May</td>
             <td
-              *ngFor="let item of AvgYears; index as idx"
+              *ngFor="
+                let item of AvgYears | slice: 0:AvgYears.length - 1;
+                index as idx
+              "
               [ngStyle]="{
-                'background-color':
-                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+                'background-color': idx < 4 ? 'rgb(254,242,203)' : 'white'
               }"
             >
               <input
                 matInput
-                [disabled]="idx > 4"
+                [disabled]="idx > 3"
                 [(ngModel)]="MonthPresc[1][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
+            <td>June</td>
             <td
-              *ngFor="let item of AvgYears; index as idx"
+              *ngFor="
+                let item of AvgYears | slice: 0:AvgYears.length - 1;
+                index as idx
+              "
               [ngStyle]="{
-                'background-color':
-                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+                'background-color': idx < 4 ? 'rgb(254,242,203)' : 'white'
               }"
             >
               <input
                 matInput
-                [disabled]="idx > 4"
+                [disabled]="idx > 3"
                 [(ngModel)]="MonthPresc[2][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
+            <td>July</td>
             <td
-              *ngFor="let item of AvgYears; index as idx"
+              *ngFor="
+                let item of AvgYears | slice: 0:AvgYears.length - 1;
+                index as idx
+              "
               [ngStyle]="{
-                'background-color':
-                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+                'background-color': idx < 4 ? 'rgb(254,242,203)' : 'white'
               }"
             >
               <input
                 matInput
-                [disabled]="idx > 4"
+                [disabled]="idx > 3"
                 [(ngModel)]="MonthPresc[3][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
+            <td>August</td>
             <td
-              *ngFor="let item of AvgYears; index as idx"
+              *ngFor="
+                let item of AvgYears | slice: 0:AvgYears.length - 1;
+                index as idx
+              "
               [ngStyle]="{
-                'background-color':
-                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+                'background-color': idx < 4 ? 'rgb(254,242,203)' : 'white'
               }"
             >
               <input
                 matInput
-                [disabled]="idx > 4"
+                [disabled]="idx > 3"
                 [(ngModel)]="MonthPresc[4][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
+            <td>September</td>
             <td
-              *ngFor="let item of AvgYears; index as idx"
+              *ngFor="
+                let item of AvgYears | slice: 0:AvgYears.length - 1;
+                index as idx
+              "
               [ngStyle]="{
-                'background-color':
-                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+                'background-color': idx < 4 ? 'rgb(254,242,203)' : 'white'
               }"
             >
               <input
                 matInput
-                [disabled]="idx > 4"
+                [disabled]="idx > 3"
                 [(ngModel)]="MonthPresc[5][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
+            <td>October</td>
             <td
-              *ngFor="let item of AvgYears; index as idx"
+              *ngFor="
+                let item of AvgYears | slice: 0:AvgYears.length - 1;
+                index as idx
+              "
               [ngStyle]="{
-                'background-color':
-                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+                'background-color': idx < 4 ? 'rgb(254,242,203)' : 'white'
               }"
             >
               <input
                 matInput
-                [disabled]="idx > 4"
+                [disabled]="idx > 3"
                 [(ngModel)]="MonthPresc[6][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
+            <td>November</td>
             <td
-              *ngFor="let item of AvgYears; index as idx"
+              *ngFor="
+                let item of AvgYears | slice: 0:AvgYears.length - 1;
+                index as idx
+              "
               [ngStyle]="{
-                'background-color':
-                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+                'background-color': idx < 4 ? 'rgb(254,242,203)' : 'white'
               }"
             >
               <input
                 matInput
-                [disabled]="idx > 4"
+                [disabled]="idx > 3"
                 [(ngModel)]="MonthPresc[7][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
+            <td>December</td>
             <td
-              *ngFor="let item of AvgYears; index as idx"
+              *ngFor="
+                let item of AvgYears | slice: 0:AvgYears.length - 1;
+                index as idx
+              "
               [ngStyle]="{
-                'background-color':
-                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+                'background-color': idx < 4 ? 'rgb(254,242,203)' : 'white'
               }"
             >
               <input
                 matInput
-                [disabled]="idx > 4"
+                [disabled]="idx > 3"
                 [(ngModel)]="MonthPresc[8][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
+            <td>January</td>
             <td
-              *ngFor="let item of AvgYears; index as idx"
+              *ngFor="
+                let item of AvgYears | slice: 0:AvgYears.length - 1;
+                index as idx
+              "
               [ngStyle]="{
-                'background-color':
-                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+                'background-color': idx < 4 ? 'rgb(254,242,203)' : 'white'
               }"
             >
               <input
                 matInput
-                [disabled]="idx > 4"
+                [disabled]="idx > 3"
                 [(ngModel)]="MonthPresc[9][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
+            <td>February</td>
             <td
-              *ngFor="let item of AvgYears; index as idx"
+              *ngFor="
+                let item of AvgYears | slice: 0:AvgYears.length - 1;
+                index as idx
+              "
               [ngStyle]="{
-                'background-color':
-                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+                'background-color': idx < 4 ? 'rgb(254,242,203)' : 'white'
               }"
             >
               <input
                 matInput
-                [disabled]="idx > 4"
+                [disabled]="idx > 3"
                 [(ngModel)]="MonthPresc[10][idx]"
                 value="0"
               />
             </td>
           </tr>
           <tr>
+            <td>March</td>
             <td
-              *ngFor="let item of AvgYears; index as idx"
+              *ngFor="
+                let item of AvgYears | slice: 0:AvgYears.length - 1;
+                index as idx
+              "
               [ngStyle]="{
-                'background-color':
-                  idx !== 0 && idx < 5 ? 'rgb(254,242,203)' : 'white'
+                'background-color': idx < 4 ? 'rgb(254,242,203)' : 'white'
               }"
             >
               <input
                 matInput
-                [disabled]="idx > 4"
+                [disabled]="idx > 3"
                 [(ngModel)]="MonthPresc[11][idx]"
                 value="0"
               />
@@ -237,7 +273,7 @@
           <tr>
             <td *ngFor="let item of AvgYears; index as idx">
               <strong>{{
-                idx === 0 ? "Total Items" : getTotalItems(idx)
+                idx === 0 ? "Total Items" : getTotalItems(idx - 1)
               }}</strong>
             </td>
           </tr>
@@ -305,39 +341,64 @@
             <td colspan="3">
               <strong>Sales: 11 months figures </strong>
             </td>
-            <td *ngFor="let item of Years |  slice:3; index as idx;">
-            </td>
+            <td *ngFor="let item of Years | slice: 3; index as idx"></td>
             <td colspan="3">
               <strong>As % of Total Sales / Turnover </strong>
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of Years; index as idx">
+            <td>Zero Rated OTC Sales</td>
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+              [ngStyle]="{
+                'background-color': idx < 2 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
-                [disabled]="idx > 2 || idx == 0"
+                [disabled]="idx > 1"
                 [(ngModel)]="zeroOTCSale[idx]"
                 (ngModelChange)="cpZeroOTCSale(idx)"
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentZeroOTCSale(idx2) }}%</p>
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of Years; index as idx">
+            <td>VAT Exclusive OTC Sales</td>
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+              [ngStyle]="{
+                'background-color': idx < 2 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
-                [disabled]="idx > 2 || idx == 0"
+                [disabled]="idx > 1"
                 [(ngModel)]="vatOTCSale[idx]"
                 (ngModelChange)="cpVatOTCSale(idx)"
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentVatOTCSale(idx2) }}%</p>
             </td>
           </tr>
@@ -346,33 +407,46 @@
               <strong>{{
                 idx === 0
                   ? "Total OTC Sales"
-                  : (getTotalOTC(idx) | currency: "GBP")
+                  : (getTotalOTC(idx - 1) | currency: "GBP")
               }}</strong>
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <strong>{{ percentTotalOTC(idx2) }}%</strong>
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of Years; index as idx">
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx != 0 && idx < 3 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               {{
                 idx === 0
                   ? "NHS Sales Reimbursement (net)"
                   : getNHSSalesReimburse(idx)
               }}
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentNHSSalesReimburse(idx2) }}%</p>
             </td>
           </tr>
           <tr>
             <td *ngFor="let item of Years; index as idx">
-              {{ idx === 0 ? "SAF" : getSAF(idx) }}
+              {{ idx === 0 ? "SAF" : getSAF(idx - 1) }}
             </td>
-            <td *ngFor="let item of TOYears">
-            </td>
+            <td *ngFor="let item of TOYears"></td>
           </tr>
           <tr>
             <td *ngFor="let item of Years; index as idx">
@@ -380,36 +454,47 @@
                 idx === 0
                   ? "Establishment Payment"
                   : idx < 3
-                  ? getEstablishedPay(idx)
+                  ? getEstablishedPay(idx - 1)
                   : ""
               }}
             </td>
-            <td *ngFor="let item of TOYears">
-            </td>
+            <td *ngFor="let item of TOYears"></td>
           </tr>
           <tr>
-            <td *ngFor="let item of Years; index as idx">
+            <td>Other</td>
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+              [ngStyle]="{
+                'background-color': idx < 2 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
-                [disabled]="idx > 2 || idx == 0"
+                [disabled]="idx > 1"
                 [(ngModel)]="nhsother[idx]"
                 (ngModelChange)="cpNhsOther(idx)"
                 value="0"
               />
             </td>
-            <td *ngFor="let item of TOYears">
-            </td>
+            <td *ngFor="let item of TOYears"></td>
           </tr>
           <tr>
             <td *ngFor="let item of Years; index as idx">
               <strong>{{
                 idx === 0
                   ? "Subtotal (Ess. Services)"
-                  : (getSubtotalNHS(idx) | currency: "GBP")
+                  : (getSubtotalNHS(idx - 1) | currency: "GBP")
               }}</strong>
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <strong>{{ percentSubtotalNHS(idx2) }}%</strong>
             </td>
           </tr>
@@ -422,56 +507,70 @@
               {{
                 idx === 0
                   ? "As % of Gross Profit"
-                  : (getSubtotalNHS(idx) / getGross(idx) | percent)
+                  : (getSubtotalNHS(idx - 1) / getGross(idx) | percent)
               }}
             </td>
-            <td *ngFor="let item of TOYears">
-            </td>
+            <td *ngFor="let item of TOYears"></td>
           </tr>
           <tr>
-            <td *ngFor="let item of Years; index as idx">
+            <td>NMS</td>
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+              [ngStyle]="{
+                'background-color': idx < 2 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
-                [disabled]="idx > 2 || idx == 0"
+                [disabled]="idx > 1"
                 [(ngModel)]="nms[idx]"
                 (ngModelChange)="cpNms(idx)"
                 value="0"
               />
             </td>
-            <td *ngFor="let item of TOYears">
-            </td>
+            <td *ngFor="let item of TOYears"></td>
           </tr>
           <tr>
             <td *ngFor="let item of Years; index as idx">
               {{ idx === 0 ? "MUR" : idx < 3 ? getMUR(idx) : "" }}
             </td>
-            <td *ngFor="let item of TOYears">
-            </td>
+            <td *ngFor="let item of TOYears"></td>
           </tr>
           <tr>
-            <td *ngFor="let item of Years; index as idx">
-              <input
-                matInput
-                [disabled]="idx == 0"
-                [(ngModel)]="transitionpay[idx]"
-                value="0"
-              />
+            <td>Transition Payment</td>
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
+              <input matInput [(ngModel)]="transitionpay[idx]" value="0" />
             </td>
-            <td *ngFor="let item of TOYears">
-            </td>
+            <td *ngFor="let item of TOYears"></td>
           </tr>
           <tr>
-            <td *ngFor="let item of Years; index as idx">
+            <td>Other</td>
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+              [ngStyle]="{
+                'background-color': idx < 2 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
-                [disabled]="idx > 2 || idx == 0"
+                [disabled]="idx > 1"
                 [(ngModel)]="advother[idx]"
                 (ngModelChange)="cpAdvOther(idx)"
                 value="0"
               />
             </td>
-            <td *ngFor="let item of TOYears">
-            </td>
+            <td *ngFor="let item of TOYears"></td>
           </tr>
           <tr>
             <td *ngFor="let item of Years; index as idx">
@@ -481,8 +580,12 @@
                   : (getSubtotalAdv(idx) | currency: "GBP")
               }}</strong>
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <strong>{{ percentSubtotalAdv(idx2) }}%</strong>
             </td>
           </tr>
@@ -498,77 +601,122 @@
                   : (getSubtotalAdv(idx) / getGross(idx) | percent)
               }}
             </td>
-            <td *ngFor="let item of TOYears">
-            </td>
+            <td *ngFor="let item of TOYears"></td>
           </tr>
           <tr>
-            <td *ngFor="let item of Years; index as idx">
+            <td>NHS Enhanced services</td>
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+              [ngStyle]="{
+                'background-color': idx < 2 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
-                [disabled]="idx > 2 || idx == 0"
+                [disabled]="idx > 1"
                 [(ngModel)]="nhsenhancedserv[idx]"
                 (ngModelChange)="cpNHSenhancedServ(idx)"
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentNhsEnhancedServ(idx2) }}%</p>
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of Years; index as idx">
+            <td>NHS Sundries</td>
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+              [ngStyle]="{
+                'background-color': idx < 2 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
-                [disabled]="idx > 2 || idx == 0"
+                [disabled]="idx > 1"
                 [(ngModel)]="nhsundries[idx]"
                 (ngModelChange)="cpNHSundries(idx)"
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentNhSundries(idx2) }}%</p>
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of Years; index as idx">
+            <td>Quality Payments</td>
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+              [ngStyle]="{
+                'background-color': idx < 2 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
-                [disabled]="idx > 2 || idx == 0"
+                [disabled]="idx > 1"
                 [(ngModel)]="qualitypay[idx]"
                 (ngModelChange)="cpQualityPay(idx)"
                 value="0"
               />
             </td>
-            <td *ngFor="let item of TOYears">
-            </td>
+            <td *ngFor="let item of TOYears"></td>
           </tr>
           <tr>
-            <td *ngFor="let item of Years; index as idx">
+            <td>Pharmacy Access Scheme</td>
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+              [ngStyle]="{
+                'background-color': idx < 2 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
               <input
                 matInput
-                [disabled]="idx > 2 || idx == 0"
+                [disabled]="idx > 1"
                 [(ngModel)]="pharmacyaccscheme[idx]"
                 (ngModelChange)="cpPharmacy(idx)"
                 value="0"
               />
             </td>
-            <td *ngFor="let item of TOYears">
-            </td>
+            <td *ngFor="let item of TOYears"></td>
           </tr>
           <tr>
-            <td *ngFor="let item of Years; index as idx">
-              <input
-                matInput
-                [disabled]="idx > 2 || idx == 0"
-                [(ngModel)]="buyingprofit[idx]"
-                (ngModelChange)="cpBuyingProfit(idx)"
-                value="0"
-              />
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx !== 0 && idx < 3 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
+              {{ idx == 0 ? "Buying Profit" : getBuyingProfit(idx) }}
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentBuyingProfit(idx2) }}%</p>
             </td>
           </tr>
@@ -581,11 +729,10 @@
               {{
                 idx === 0
                   ? "As % of gross profit"
-                  : (buyingprofit[idx] / getGross(idx) | percent)
+                  : (getBuyingProfit(idx) / getGross(idx) | percent)
               }}
             </td>
-            <td *ngFor="let item of TOYears">
-            </td>
+            <td *ngFor="let item of TOYears"></td>
           </tr>
           <tr>
             <td *ngFor="let item of Years; index as idx">
@@ -595,8 +742,12 @@
                   : (getNHSSales(idx) | currency: "GBP")
               }}</strong>
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <strong>{{ percentNHSSales(idx2) }}%</strong>
             </td>
           </tr>
@@ -608,8 +759,7 @@
                   : (getGrandTotalNHS(idx) | currency: "GBP")
               }}</strong>
             </td>
-            <td *ngFor="let item of TOYears">
-            </td>
+            <td *ngFor="let item of TOYears"></td>
           </tr>
         </tbody>
       </table>
@@ -642,31 +792,33 @@
         </thead>
         <tbody>
           <tr>
-            <td *ngFor="let item of Years; index as idx">
-              <input
-                matInput
-                [disabled]="idx > 2 || idx == 0"
-                [(ngModel)]="YearVal[0][idx]"
-                (ngModelChange)="copyData(0, idx)"
-                value="0"
-              />
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx !== 0 && idx < 3 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
+              {{ idx == 0 ? "OTC Sales" : getTotalOTC(idx - 1) * 0.85 }}
             </td>
           </tr>
           <tr>
-            <td *ngFor="let item of Years; index as idx">
-              <input
-                matInput
-                [disabled]="idx > 2 || idx == 0"
-                [(ngModel)]="YearVal[1][idx]"
-                (ngModelChange)="copyData(1, idx)"
-                value="0"
-              />
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color':
+                  idx !== 0 && idx < 3 ? 'rgb(254,242,203)' : 'white'
+              }"
+            >
+              {{ idx == 0 ? "NHS Sales" : getNHSSalesReimburse(idx) * 0.8 }}
             </td>
           </tr>
           <tr>
             <td *ngFor="let item of Years; index as idx">
               <strong>{{
-                idx === 0 ? "Total cost of sales" : getTotal(idx)
+                idx === 0
+                  ? "Total cost of sales"
+                  : (getTotal(idx) | currency: "GBP")
               }}</strong>
             </td>
           </tr>
@@ -715,7 +867,12 @@
         <tbody>
           <tr>
             <td>Directors’ Pension and salaries/ Owner's withdrawals</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -724,14 +881,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentDirectorSalary(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : directorsalary[idx - 1] !== undefined
+                  ? (directorsalary[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Employee salary and wage costs</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -740,14 +928,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentEmployeeSalary(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : employeesalary[idx - 1] !== undefined
+                  ? (employeesalary[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Locum costs</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -756,14 +975,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentLocumCost(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : locumcost[idx - 1] !== undefined
+                  ? (locumcost[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Other personnel costs</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -772,21 +1022,51 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentOtherCost(idx2) }}%</p>
             </td>
+          </tr>
+          <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : othercost[idx - 1] !== undefined
+                  ? (othercost[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
           </tr>
           <tr>
             <td *ngFor="let item of Years; index as idx">
               <strong>{{
                 idx === 0
                   ? "Total personnel costs"
-                  : (getTotalPersonelCost(idx-1) | currency: "GBP")
+                  : (getTotalPersonelCost(idx - 1) | currency: "GBP")
               }}</strong>
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <strong>{{ percentTotalPersonelCost(idx2) }}%</strong>
             </td>
           </tr>
@@ -806,7 +1086,12 @@
           </tr>
           <tr>
             <td>Rent</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -815,14 +1100,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentRent(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : rent[idx - 1] !== undefined
+                  ? (rent[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Rates</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -831,14 +1147,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentRates(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : rates[idx - 1] !== undefined
+                  ? (rates[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Utilities (heat and light)</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -847,14 +1194,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentUtilities(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : utilities[idx - 1] !== undefined
+                  ? (utilities[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Telephone costs</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -863,14 +1241,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentTelephone(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : telephone[idx - 1] !== undefined
+                  ? (telephone[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Repairs and renewals</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -879,14 +1288,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentRepair(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : repair[idx - 1] !== undefined
+                  ? (repair[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Communication and website</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -895,14 +1335,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentCommunication(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : communication[idx - 1] !== undefined
+                  ? (communication[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Leasing and rentals</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -911,14 +1382,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentLeasing(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : leasing[idx - 1] !== undefined
+                  ? (leasing[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Insurance</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -927,14 +1429,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentInsurance(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : insurance[idx - 1] !== undefined
+                  ? (insurance[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Professional Indemnity</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -943,14 +1476,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentProindemnity(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : proindemnity[idx - 1] !== undefined
+                  ? (proindemnity[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Computer and IT costs</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -959,30 +1523,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentComputerit(idx2) }}%</p>
             </td>
           </tr>
           <tr>
-            <td>Computer and IT costs</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
-              <input
-                matInput
-                [disabled]="idx > 1"
-                [(ngModel)]="computerit[idx]"
-                (ngModelChange)="cpComputerit(idx)"
-                value="0"
-              />
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : computerit[idx - 1] !== undefined
+                  ? (computerit[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
-              <p>{{ percentComputerit(idx2) }}%</p>
-            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
           </tr>
           <tr>
             <td>Recruitment and training</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -991,14 +1570,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentRecruitment(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : recruitment[idx - 1] !== undefined
+                  ? (recruitment[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Professional registration fees (e.g. GPhC, NPA)</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -1007,14 +1617,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentRegistrationfee(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : registrationfee[idx - 1] !== undefined
+                  ? (registrationfee[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Marketing and advertising</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -1023,14 +1664,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentMarketing(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : marketing[idx - 1] !== undefined
+                  ? (marketing[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Travel</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -1039,14 +1711,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentTravel(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : travel[idx - 1] !== undefined
+                  ? (travel[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Entertainment</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -1055,14 +1758,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentEntertainment(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : entertainment[idx - 1] !== undefined
+                  ? (entertainment[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Transport</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -1071,14 +1805,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentTransport(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : transport[idx - 1] !== undefined
+                  ? (transport[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Accountancy and legal</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -1087,14 +1852,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentAccountancy(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : accountancy[idx - 1] !== undefined
+                  ? (accountancy[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Banking costs</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -1103,14 +1899,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentBanking(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : banking[idx - 1] !== undefined
+                  ? (banking[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Interest costs</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -1119,14 +1946,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentInterest(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : interest[idx - 1] !== undefined
+                  ? (interest[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Other</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -1135,14 +1993,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentOtherexpense(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : otherexpense[idx - 1] !== undefined
+                  ? (otherexpense[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Amortalisation of intangible fixed assets (Goodwill)</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -1151,14 +2040,45 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentAmortalisation(idx2) }}%</p>
             </td>
           </tr>
           <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : amortalisation[idx - 1] !== undefined
+                  ? (amortalisation[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
+          </tr>
+          <tr>
             <td>Depreciation of tangible assts (fixtures and fittings)</td>
-            <td *ngFor="let item of Years | slice:0:(Years.length-1); index as idx">
+            <td
+              *ngFor="
+                let item of Years | slice: 0:Years.length - 1;
+                index as idx
+              "
+            >
               <input
                 matInput
                 [disabled]="idx > 1"
@@ -1167,34 +2087,88 @@
                 value="0"
               />
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <p>{{ percentDepreciation(idx2) }}%</p>
             </td>
+          </tr>
+          <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              {{
+                idx === 0
+                  ? "As % of gross profit"
+                  : depreciation[idx - 1] !== undefined
+                  ? (depreciation[idx - 1] / getGross(idx) | percent)
+                  : (0 | percent)
+              }}
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
           </tr>
           <tr>
             <td *ngFor="let item of Years; index as idx">
               <strong>{{
                 idx === 0
                   ? "Total operating costs"
-                  : (getTotalOperatingCost(idx) | currency: "GBP")
+                  : (getTotalOperatingCost(idx - 1) | currency: "GBP")
               }}</strong>
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <strong>{{ percentTotalOperatingCost(idx2) }}%</strong>
             </td>
+          </tr>
+          <tr>
+            <td
+              *ngFor="let item of Years; index as idx"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            >
+              <strong>{{
+                idx === 0
+                  ? "As % of gross profit"
+                  : (getTotalOperatingCost(idx - 1) / getGross(idx) | percent)
+              }}</strong>
+            </td>
+            <td
+              *ngFor="let item of TOYears"
+              [ngStyle]="{
+                'background-color': 'rgb(217,226,243)'
+              }"
+            ></td>
           </tr>
           <tr>
             <td *ngFor="let item of Years; index as idx">
               <strong>{{
                 idx === 0
                   ? "Total Expense"
-                  : (getTotalExpense(idx) | currency: "GBP")
+                  : (getTotalExpense(idx - 1) | currency: "GBP")
               }}</strong>
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <strong>{{ percentTotalExpense(idx2) }}%</strong>
             </td>
           </tr>
@@ -1205,14 +2179,18 @@
           >
             <td *ngFor="let item of Years; index as idx">
               <strong>{{
-                idx === 0
+                idx == 0
                   ? "As % of Gross Profit"
-                  : (percentTotalExpense(idx) / getGross(idx) | percent)
+                  : (getTotalExpense(idx - 1) / getGross(idx) | percent)
               }}</strong>
             </td>
             <td *ngFor="let item of TOYears"></td>
           </tr>
-          <tr>
+          <tr
+            [ngStyle]="{
+              'background-color': 'rgb(244,176,131)'
+            }"
+          >
             <td *ngFor="let item of Years; index as idx">
               <strong>{{
                 idx === 0
@@ -1220,8 +2198,12 @@
                   : (getProfitLoss(idx) | currency: "GBP")
               }}</strong>
             </td>
-            <td [ngStyle]="{
-              'background-color': 'rgb(180,198,231)'}" *ngFor="let item of TOYears; index as idx2">
+            <td
+              [ngStyle]="{
+                'background-color': 'rgb(180,198,231)'
+              }"
+              *ngFor="let item of TOYears; index as idx2"
+            >
               <strong>{{ percentProfitLoss(idx2) }}%</strong>
             </td>
           </tr>
@@ -1232,12 +2214,91 @@
           >
             <td *ngFor="let item of Years; index as idx">
               <strong>{{
-                idx === 0
+                idx == 0
                   ? "As % of Gross Profit"
                   : (getProfitLoss(idx) / getGross(idx) | percent)
               }}</strong>
             </td>
             <td *ngFor="let item of TOYears"></td>
+          </tr>
+        </tbody>
+      </table>
+    </tab>
+    <tab heading="Inflation">
+      <div>
+        <label for="noYear">Number of Year Projections</label>&nbsp;
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="noYear"
+            (ngModelChange)="changeColumns()"
+          />
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <label for="startYear">Starting Year</label> &nbsp;
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="startYear"
+            (ngModelChange)="changeColumns()"
+          />
+        </mat-form-field>
+      </div>
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th colspan="1">Total Expenses after Inflation at:</th>
+            <th *ngFor="let item of InfYears">{{ item }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td *ngFor="let item of InfYears; index as idx">
+              {{
+                idx == 0
+                  ? (inflation[0] | percent)
+                  : (calcInflation(0, idx) | number: "1.2-2")
+              }}
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td *ngFor="let item of InfYears; index as idx">
+              {{
+                idx == 0
+                  ? (inflation[1] | percent)
+                  : (calcInflation(1, idx) | number: "1.2-2")
+              }}
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td *ngFor="let item of InfYears; index as idx">
+              {{
+                idx == 0
+                  ? (inflation[2] | percent)
+                  : (calcInflation(2, idx) | number: "1.2-2")
+              }}
+            </td>
+          </tr>
+          <tr>
+            <td>Profit/Loss after inflation</td>
+            <td *ngFor="let item of InfYears; index as idx">
+              {{ idx == 0 ? (inflation[0] | percent) : calcInflation2(0, idx) }}
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td *ngFor="let item of InfYears; index as idx">
+              {{ idx == 0 ? (inflation[1] | percent) : calcInflation2(1, idx) }}
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td *ngFor="let item of InfYears; index as idx">
+              {{ idx == 0 ? (inflation[2] | percent) : calcInflation2(2, idx) }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -1249,6 +2310,5 @@
         Save Data
       </button>
     </tab>
-    <tab heading="Inflation"> </tab>
   </tabset>
 </div>
