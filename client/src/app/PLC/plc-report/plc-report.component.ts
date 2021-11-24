@@ -35,6 +35,7 @@ export class PlcReportComponent implements OnInit {
   startYear: number;
   YearA: number;
   Years: string[] = [];
+  TOYears: string[] = [];
   AvgYears: string[] = [];
   YearVal: any[][] = [[], [], [], [], [], [], []];
   MonthPresc: any[][] = [[], [], [], [], [], [], [], [], [], [], [], []];
@@ -50,6 +51,10 @@ export class PlcReportComponent implements OnInit {
   pharmacyaccscheme: any[] = [];
   buyingprofit: any[] = [];
   transitionpay: any[] = [];
+  directorsalary: any[] = [];
+  employeesalary: any[] = [];
+  locumcost: any[] = [];
+  othercost: any[] = [];
 
   constructor(
     private auth: AuthService,
@@ -132,11 +137,35 @@ export class PlcReportComponent implements OnInit {
         (this.startYear + 2).toString().substring(2, 4) +
         ')'
     );
+
+    this.TOYears.push(
+      this.startYear.toString() +
+        '/' +
+        (this.startYear + 1).toString().substring(2, 4)
+    );
+    this.TOYears.push(
+      'Year 1 ' +
+        ' (' +
+        (this.startYear + 1).toString() +
+        '/' +
+        (this.startYear + 2).toString().substring(2, 4) +
+        ')'
+    );
     for (let i = 0; i < this.noYear; i++) {
       if (i === 0) this.YearA = this.startYear;
       else this.YearA = this.YearA + 1;
 
       this.Years.push(
+        'Year ' +
+          (i + 2) +
+          ' (' +
+          (Number(this.YearA) + 2).toString() +
+          '/' +
+          (Number(this.YearA) + 3).toString().substring(2, 4) +
+          ')'
+      );
+
+      this.TOYears.push(
         'Year ' +
           (i + 2) +
           ' (' +
@@ -191,6 +220,7 @@ export class PlcReportComponent implements OnInit {
   changeColumns() {
     this.AvgYears = [];
     this.Years = [];
+    this.TOYears = [];
     this.AvgYears.push('Month');
     this.AvgYears.push(
       'Annual Prescription Items ' +
@@ -220,6 +250,19 @@ export class PlcReportComponent implements OnInit {
         (Number(this.startYear) + 2).toString().substring(2, 4) +
         ')'
     );
+    this.TOYears.push(
+      this.startYear.toString() +
+        '/' +
+        (this.startYear + 1).toString().substring(2, 4)
+    );
+    this.TOYears.push(
+      'Year 1 ' +
+        ' (' +
+        (Number(this.startYear) + 1).toString() +
+        '/' +
+        (Number(this.startYear) + 2).toString().substring(2, 4) +
+        ')'
+    );
     const yr = Number(this.startYear) + 2;
     for (let i = 0; i < this.noYear; i++) {
       if (i === 0) this.YearA = Number(this.startYear);
@@ -231,6 +274,15 @@ export class PlcReportComponent implements OnInit {
           (Number(this.YearA) + 3).toString().substring(2, 4)
       );
       this.Years.push(
+        'Year ' +
+          (i + 2) +
+          ' (' +
+          (Number(this.YearA) + 2).toString() +
+          '/' +
+          (Number(this.YearA) + 3).toString().substring(2, 4) +
+          ')'
+      );
+      this.TOYears.push(
         'Year ' +
           (i + 2) +
           ' (' +
@@ -258,12 +310,42 @@ export class PlcReportComponent implements OnInit {
     }
   }
 
+  percentZeroOTCSale(idx: number): number {
+    let total = 0;
+    if (this.zeroOTCSale[idx+1] != null) total = Math.ceil((this.zeroOTCSale[idx+1] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
   cpVatOTCSale(idx: number) {
     if (idx == 2) {
       for (var i = 1; i <= this.noYear; i++) {
         this.vatOTCSale[idx + i] = this.vatOTCSale[idx];
       }
     }
+  }
+
+  percentVatOTCSale(idx: number): number {
+    let total = 0;
+    if (this.vatOTCSale[idx+1] != null) total = Math.ceil((this.vatOTCSale[idx+1] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  percentNhsEnhancedServ(idx: number): number {
+    let total = 0;
+    if (this.nhsenhancedserv[idx+1] != null) total = Math.ceil((this.nhsenhancedserv[idx+1] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  percentNhSundries(idx: number): number {
+    let total = 0;
+    if (this.nhsundries[idx+1] != null) total = Math.ceil((this.nhsundries[idx+1] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  percentBuyingProfit(idx: number): number {
+    let total = 0;
+    if (this.buyingprofit[idx+1] != null) total = Math.ceil((this.buyingprofit[idx+1] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
   }
 
   cpNhsOther(idx: number) {
@@ -338,6 +420,62 @@ export class PlcReportComponent implements OnInit {
     }
   }
 
+  cpDirectorSalary(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.directorsalary[idx + i] = this.directorsalary[idx];
+      }
+    }
+  }
+
+  percentDirectorSalary(idx: number): number {
+    let total = 0;
+    if (this.directorsalary[idx] != null) total = Math.ceil((this.directorsalary[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpEmployeeSalary(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.employeesalary[idx + i] = this.employeesalary[idx];
+      }
+    }
+  }
+
+  percentEmployeeSalary(idx: number): number {
+    let total = 0;
+    if (this.employeesalary[idx] != null) total = Math.ceil((this.employeesalary[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpLocumCost(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.locumcost[idx + i] = this.locumcost[idx];
+      }
+    }
+  }
+
+  percentLocumCost(idx: number): number {
+    let total = 0;
+    if (this.locumcost[idx] != null) total = Math.ceil((this.locumcost[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpOtherCost(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.othercost[idx + i] = this.othercost[idx];
+      }
+    }
+  }
+
+  percentOtherCost(idx: number): number {
+    let total = 0;
+    if (this.othercost[idx] != null) total = Math.ceil((this.othercost[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
   getTotalItems(idx: number): number {
     let total = 0;
     for (var i = 0; i < this.MonthPresc.length; i++) {
@@ -360,6 +498,12 @@ export class PlcReportComponent implements OnInit {
       nsr = this.getTotalItems(idx + 1) * this.getTotalItems(idx + 2);
     if (idx > 2) nsr = this.getNHSSalesReimburse(2);
     return nsr;
+  }
+
+  percentNHSSalesReimburse(idx: number): number {
+    let total = 0;
+    if (this.getNHSSalesReimburse(idx+1) != null) total = Math.ceil((this.getNHSSalesReimburse(idx+1) / this.getGrandTotalNHS(idx+1))*100);
+    return total;
   }
 
   getSAF(idx: number): number {
@@ -420,6 +564,12 @@ export class PlcReportComponent implements OnInit {
     return total;
   }
 
+  percentSubtotalNHS(idx: number): number {
+    let total = 0;
+    if (this.getSubtotalNHS(idx+1) != null) total = Math.ceil((this.getSubtotalNHS(idx+1) / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
   getSubtotalAdv(idx: number): number {
     let total = 0;
     if (this.nms[idx] != null) total += Number(this.nms[idx]);
@@ -428,6 +578,12 @@ export class PlcReportComponent implements OnInit {
     if (this.transitionpay[idx] != null)
       total += Number(this.transitionpay[idx]);
     if (this.advother[idx] != null) total += Number(this.advother[idx]);
+    return total;
+  }
+
+  percentSubtotalAdv(idx: number): number {
+    let total = 0;
+    if (this.getSubtotalAdv(idx+1) != null) total = Math.ceil((this.getSubtotalAdv(idx+1) / this.getGrandTotalNHS(idx+1))*100);
     return total;
   }
 
@@ -441,6 +597,12 @@ export class PlcReportComponent implements OnInit {
     let total = 0;
     if (this.zeroOTCSale[idx] != null) total += Number(this.zeroOTCSale[idx]);
     if (this.vatOTCSale[idx] != null) total += Number(this.vatOTCSale[idx]);
+    return total;
+  }
+
+  percentTotalOTC(idx: number): number {
+    let total = 0;
+    if (this.getTotalOTC(idx+1) != null) total = Math.ceil((this.getTotalOTC(idx+1) / this.getGrandTotalNHS(idx+1))*100);
     return total;
   }
 
@@ -460,6 +622,12 @@ export class PlcReportComponent implements OnInit {
     return total;
   }
 
+  percentNHSSales(idx: number): number {
+    let total = 0;
+    if (this.getNHSSales(idx+1) != null) total = Math.ceil((this.getNHSSales(idx+1) / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
   getGrandTotalNHS(idx: number): number {
     let total = 0;
     total += this.getTotalOTC(idx);
@@ -472,6 +640,21 @@ export class PlcReportComponent implements OnInit {
     if (this.getGrandTotalNHS(idx) != null && this.getTotal(idx) != null)
       gross = this.getGrandTotalNHS(idx) - this.getTotal(idx);
     return gross;
+  }
+
+  getTotalPersonelCost(idx: number): number {
+    let total = 0;
+    if (this.directorsalary[idx] != null) total += Number(this.directorsalary[idx]);
+    if (this.employeesalary[idx] != null) total += Number(this.employeesalary[idx]);
+    if (this.locumcost[idx] != null) total += Number(this.locumcost[idx]);
+    if (this.othercost[idx] != null) total += Number(this.othercost[idx]);
+    return total;
+  }
+
+  percentTotalPersonelCost(idx: number): number {
+    let total = 0;
+    if (this.getTotalPersonelCost(idx-1) != null) total = Math.ceil((this.getTotalPersonelCost(idx-1) / this.getGrandTotalNHS(idx+1))*100);
+    return total;
   }
 
   getProfitLoss(idx: number): number {

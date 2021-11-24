@@ -19,3 +19,7 @@ input:disabled {
   black*/
   color: black;
 }
+
+th {
+  white-space: nowrap;
+}
