@@ -55,6 +55,28 @@ export class PlcReportComponent implements OnInit {
   employeesalary: any[] = [];
   locumcost: any[] = [];
   othercost: any[] = [];
+  rent: any[] = [];
+  rates: any[] = [];
+  utilities: any[] = [];
+  telephone: any[] = [];
+  repair: any[] = [];
+  communication: any[] = [];
+  leasing: any[] = [];
+  insurance: any[] = [];
+  proindemnity: any[] = [];
+  computerit: any[] = [];
+  recruitment: any[] = [];
+  registrationfee: any[] = [];
+  marketing: any[] = [];
+  travel: any[] = [];
+  entertainment: any[] = [];
+  transport: any[] = [];
+  accountancy: any[] = [];
+  banking: any[] = [];
+  interest: any[] = [];
+  otherexpense: any[] = [];
+  amortalisation: any[] = [];
+  depreciation: any[] = [];
 
   constructor(
     private auth: AuthService,
@@ -476,6 +498,360 @@ export class PlcReportComponent implements OnInit {
     return total;
   }
 
+  cpRent(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.rent[idx + i] = this.rent[idx];
+      }
+    }
+  }
+
+  percentRent(idx: number): number {
+    let total = 0;
+    if (this.rent[idx] != null) total = Math.ceil((this.rent[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpRates(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.rates[idx + i] = this.rates[idx];
+      }
+    }
+  }
+
+  percentRates(idx: number): number {
+    let total = 0;
+    if (this.rates[idx] != null) total = Math.ceil((this.rates[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpUtilities(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.utilities[idx + i] = this.utilities[idx];
+      }
+    }
+  }
+
+  percentUtilities(idx: number): number {
+    let total = 0;
+    if (this.utilities[idx] != null) total = Math.ceil((this.utilities[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpTelephone(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.telephone[idx + i] = this.telephone[idx];
+      }
+    }
+  }
+
+  percentTelephone(idx: number): number {
+    let total = 0;
+    if (this.telephone[idx] != null) total = Math.ceil((this.telephone[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpRepair(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.repair[idx + i] = this.repair[idx];
+      }
+    }
+  }
+
+  percentRepair(idx: number): number {
+    let total = 0;
+    if (this.repair[idx] != null) total = Math.ceil((this.repair[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpCommunication(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.communication[idx + i] = this.communication[idx];
+      }
+    }
+  }
+
+  percentCommunication(idx: number): number {
+    let total = 0;
+    if (this.communication[idx] != null) total = Math.ceil((this.communication[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpLeasing(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.leasing[idx + i] = this.leasing[idx];
+      }
+    }
+  }
+
+  percentLeasing(idx: number): number {
+    let total = 0;
+    if (this.leasing[idx] != null) total = Math.ceil((this.leasing[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpInsurance(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.insurance[idx + i] = this.insurance[idx];
+      }
+    }
+  }
+
+  percentInsurance(idx: number): number {
+    let total = 0;
+    if (this.insurance[idx] != null) total = Math.ceil((this.insurance[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpProindemnity(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.proindemnity[idx + i] = this.proindemnity[idx];
+      }
+    }
+  }
+
+  percentProindemnity(idx: number): number {
+    let total = 0;
+    if (this.proindemnity[idx] != null) total = Math.ceil((this.proindemnity[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpComputerit(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.computerit[idx + i] = this.computerit[idx];
+      }
+    }
+  }
+
+  percentComputerit(idx: number): number {
+    let total = 0;
+    if (this.computerit[idx] != null) total = Math.ceil((this.computerit[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpRecruitment(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.recruitment[idx + i] = this.recruitment[idx];
+      }
+    }
+  }
+
+  percentRecruitment(idx: number): number {
+    let total = 0;
+    if (this.recruitment[idx] != null) total = Math.ceil((this.recruitment[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpRegistrationfee(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.registrationfee[idx + i] = this.registrationfee[idx];
+      }
+    }
+  }
+
+  percentRegistrationfee(idx: number): number {
+    let total = 0;
+    if (this.registrationfee[idx] != null) total = Math.ceil((this.registrationfee[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpMarketing(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.marketing[idx + i] = this.marketing[idx];
+      }
+    }
+  }
+
+  percentMarketing(idx: number): number {
+    let total = 0;
+    if (this.marketing[idx] != null) total = Math.ceil((this.marketing[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpTravel(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.travel[idx + i] = this.travel[idx];
+      }
+    }
+  }
+
+  percentTravel(idx: number): number {
+    let total = 0;
+    if (this.travel[idx] != null) total = Math.ceil((this.travel[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpEntertainment(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.entertainment[idx + i] = this.entertainment[idx];
+      }
+    }
+  }
+
+  percentEntertainment(idx: number): number {
+    let total = 0;
+    if (this.entertainment[idx] != null) total = Math.ceil((this.entertainment[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpTransport(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.transport[idx + i] = this.transport[idx];
+      }
+    }
+  }
+
+  percentTransport(idx: number): number {
+    let total = 0;
+    if (this.transport[idx] != null) total = Math.ceil((this.transport[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpAccountancy(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.accountancy[idx + i] = this.accountancy[idx];
+      }
+    }
+  }
+
+  percentAccountancy(idx: number): number {
+    let total = 0;
+    if (this.accountancy[idx] != null) total = Math.ceil((this.accountancy[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpBanking(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.banking[idx + i] = this.banking[idx];
+      }
+    }
+  }
+
+  percentBanking(idx: number): number {
+    let total = 0;
+    if (this.banking[idx] != null) total = Math.ceil((this.banking[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpInterest(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.interest[idx + i] = this.interest[idx];
+      }
+    }
+  }
+
+  percentInterest(idx: number): number {
+    let total = 0;
+    if (this.interest[idx] != null) total = Math.ceil((this.interest[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpOtherexpense(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.otherexpense[idx + i] = this.otherexpense[idx];
+      }
+    }
+  }
+
+  percentOtherexpense(idx: number): number {
+    let total = 0;
+    if (this.otherexpense[idx] != null) total = Math.ceil((this.otherexpense[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpAmortalisation(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.amortalisation[idx + i] = this.amortalisation[idx];
+      }
+    }
+  }
+
+  percentAmortalisation(idx: number): number {
+    let total = 0;
+    if (this.amortalisation[idx] != null) total = Math.ceil((this.amortalisation[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  cpDepreciation(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.depreciation[idx + i] = this.depreciation[idx];
+      }
+    }
+  }
+
+  percentDepreciation(idx: number): number {
+    let total = 0;
+    if (this.depreciation[idx] != null) total = Math.ceil((this.depreciation[idx] / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  getTotalOperatingCost(idx: number): number {
+    let total = 0;
+    if (this.rent[idx] != null) total += Number(this.rent[idx]);
+    if (this.rates[idx] != null) total += Number(this.rates[idx]);
+    if (this.utilities[idx] != null) total += Number(this.utilities[idx]);
+    if (this.telephone[idx] != null) total += Number(this.telephone[idx]);
+    if (this.repair[idx] != null) total += Number(this.repair[idx]);
+    if (this.communication[idx] != null) total += Number(this.communication[idx]);
+    if (this.leasing[idx] != null) total += Number(this.leasing[idx]);
+    if (this.insurance[idx] != null) total += Number(this.insurance[idx]);
+    if (this.proindemnity[idx] != null) total += Number(this.proindemnity[idx]);
+    if (this.computerit[idx] != null) total += Number(this.computerit[idx]);
+    if (this.recruitment[idx] != null) total += Number(this.recruitment[idx]);
+    if (this.registrationfee[idx] != null) total += Number(this.registrationfee[idx]);
+    if (this.marketing[idx] != null) total += Number(this.marketing[idx]);
+    if (this.travel[idx] != null) total += Number(this.travel[idx]);
+    if (this.entertainment[idx] != null) total += Number(this.entertainment[idx]);
+    if (this.transport[idx] != null) total += Number(this.transport[idx]);
+    if (this.accountancy[idx] != null) total += Number(this.accountancy[idx]);
+    if (this.banking[idx] != null) total += Number(this.banking[idx]);
+    if (this.interest[idx] != null) total += Number(this.interest[idx]);
+    if (this.otherexpense[idx] != null) total += Number(this.otherexpense[idx]);
+    if (this.amortalisation[idx] != null) total += Number(this.amortalisation[idx]);
+    if (this.depreciation[idx] != null) total += Number(this.depreciation[idx]);
+    return total;
+  }
+
+  percentTotalOperatingCost(idx: number): number {
+    let total = 0;
+    if (this.getTotalOperatingCost(idx) != null) total = Math.ceil((this.getTotalOperatingCost(idx) / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
+  getTotalExpense(idx: number): number {
+    let total = 0;
+    if (this.getTotalPersonelCost(idx) != null) total += this.getTotalPersonelCost(idx);
+    if (this.getTotalOperatingCost(idx) != null) total += this.getTotalOperatingCost(idx);
+    return total;
+  }
+
+  percentTotalExpense(idx: number): number {
+    let total = 0;
+    if (this.getTotalExpense(idx) != null) total = Math.ceil((this.getTotalExpense(idx) / this.getGrandTotalNHS(idx+1))*100);
+    return total;
+  }
+
   getTotalItems(idx: number): number {
     let total = 0;
     for (var i = 0; i < this.MonthPresc.length; i++) {
@@ -653,7 +1029,7 @@ export class PlcReportComponent implements OnInit {
 
   percentTotalPersonelCost(idx: number): number {
     let total = 0;
-    if (this.getTotalPersonelCost(idx-1) != null) total = Math.ceil((this.getTotalPersonelCost(idx-1) / this.getGrandTotalNHS(idx+1))*100);
+    if (this.getTotalPersonelCost(idx) != null) total = Math.ceil((this.getTotalPersonelCost(idx) / this.getGrandTotalNHS(idx+1))*100);
     return total;
   }
 
@@ -661,6 +1037,12 @@ export class PlcReportComponent implements OnInit {
     let total = 0;
     if (this.getGross(idx) != null) total += this.getGross(idx);
     if (this.Expense[idx] != null) total -= Number(this.Expense[idx]);
+    return total;
+  }
+
+  percentProfitLoss(idx: number): number {
+    let total = 0;
+    if (this.getProfitLoss(idx) != null) total = Math.ceil((this.getProfitLoss(idx) / this.getGrandTotalNHS(idx+1))*100);
     return total;
   }
 
