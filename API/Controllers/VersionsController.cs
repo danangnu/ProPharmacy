@@ -54,6 +54,26 @@ namespace API.Controllers
             return BadRequest("Error Deleting Version");
         }
 
+        [HttpPost("add-prescsum/{id}")]
+        public async Task<ActionResult<PrescriptionSummaryDto>> AddPrescSummary(int id, AddPrescriptionSummaryDto addPrescriptionSummaryDto)
+        {
+            var version = await _versionRepository.GetVersionByUserIdAsync(id);
+
+            var prescsum = new PrescriptionSummary
+            {
+                PrescMonth = addPrescriptionSummaryDto.PrescMonth,
+                PrescItems = addPrescriptionSummaryDto.PrescItems,
+                PrescAvgItem = addPrescriptionSummaryDto.PrescAvgItem,
+                FilesVersionId = version.Id
+            };
+
+            version.PrescriptionSummary.Add(prescsum);
+
+            if (await _versionRepository.SaveAllAsync()) return _mapper.Map<PrescriptionSummaryDto>(prescsum);
+
+            return BadRequest("Cannot add new Prescription Summary");
+        }
+
         [HttpPost("add-docs/{id}")]
         public async Task<ActionResult<DocsDto>> AddDocs(int id, IFormFile file)
         {

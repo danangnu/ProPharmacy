@@ -10,6 +10,7 @@ namespace API.Entities
         public DateTime Created { get; set; } = DateTime.Now;
         public AppUser Creator { get; set; }
         public int AppUserId { get; set; }
+        public ICollection<PrescriptionSummary> PrescriptionSummary { get; set; }
         public ICollection<Docs> Documents { get; set; }
     }
 }

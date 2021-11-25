@@ -23,3 +23,12 @@ input:disabled {
 th {
   white-space: nowrap;
 }
+
+.valuePadding {
+  border: 1 px inset #ccc;
+}
+.valuePadding input {
+  border: none;
+  padding: 0 px;
+  outline: none;
+}
