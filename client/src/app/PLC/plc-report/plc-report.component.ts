@@ -7,6 +7,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { take } from 'rxjs/operators';
 import { FileVersion } from 'src/app/_models/fileVersion';
@@ -14,6 +15,7 @@ import { PrescriptionReport } from 'src/app/_models/prescriptionReport';
 import { SchedulePaymentReport } from 'src/app/_models/schedulePaymentReport';
 import { PrescriptionService } from 'src/app/_services/prescription.service';
 import { SchedulePaymentService } from 'src/app/_services/schedule-payment.service';
+import { VersionsService } from 'src/app/_services/versions.service';
 
 @Component({
   selector: 'app-plc-report',
@@ -84,8 +86,10 @@ export class PlcReportComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private prescriptionService: PrescriptionService,
+    private versionService: VersionsService,
     private schedulePayService: SchedulePaymentService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute
   ) {
     this.startYear = new Date().getFullYear();
   }
@@ -1264,7 +1268,15 @@ export class PlcReportComponent implements OnInit {
           else
             bar = {prescMonth: (Number(this.startYear)+i).toString() + m, prescItems: this.MonthPresc[j][i], prescAvgItem: this.MonthPresc[j][i+1]};
         }
-        console.log(bar);
+        this.auth
+      .getAccessTokenSilently()
+      .pipe(take(1))
+      .subscribe((token) => {
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        this.versionService.addPrescSummary(Number(this.route.snapshot.paramMap.get('id')), bar,headers).subscribe(presc => {
+          console.log(presc);
+        });
+      });
       }
     }
   }
