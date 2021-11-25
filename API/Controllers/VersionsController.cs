@@ -57,7 +57,7 @@ namespace API.Controllers
         [HttpPost("add-prescsum/{id}")]
         public async Task<ActionResult<PrescriptionSummaryDto>> AddPrescSummary(int id, AddPrescriptionSummaryDto addPrescriptionSummaryDto)
         {
-            var version = await _versionRepository.GetVersionByUserIdAsync(id);
+            var version = await _versionRepository.GetVersionPrescByIdAsync(id);
 
             var prescsum = new PrescriptionSummary
             {
@@ -72,6 +72,55 @@ namespace API.Controllers
             if (await _versionRepository.SaveAllAsync()) return _mapper.Map<PrescriptionSummaryDto>(prescsum);
 
             return BadRequest("Cannot add new Prescription Summary");
+        }
+
+        [HttpPost("add-mur/{id}")]
+        public async Task<ActionResult<MurDto>> AddMur(int id, AddMurDto addMurDto)
+        {
+            var version = await _versionRepository.GetVersionMurByIdAsync(id);
+
+            var mur = new Mur
+            {
+                MurYear = addMurDto.MurYear,
+                TotalMur = addMurDto.TotalMur,
+                FilesVersionId = version.Id
+            };
+
+            version.Mur.Add(mur);
+
+            if (await _versionRepository.SaveAllAsync()) return _mapper.Map<MurDto>(mur);
+
+            return BadRequest("Cannot add new Mur");
+        }
+
+        [HttpPost("add-salessum/{id}")]
+        public async Task<ActionResult<SalesSummaryDto>> AddSalesSummary(int id, AddSalesSummaryDto addSalesSummaryDto)
+        {
+            var version = await _versionRepository.GetVersionSalesByIdAsync(id);
+
+            var salesum = _mapper.Map<SalesSummary>(addSalesSummaryDto);
+            salesum.FilesVersionId = version.Id;
+
+            version.SalesSummary.Add(salesum);
+
+            if (await _versionRepository.SaveAllAsync()) return _mapper.Map<SalesSummaryDto>(salesum);
+
+            return BadRequest("Cannot add new Sales Summary");
+        }
+
+        [HttpPost("add-expensesum/{id}")]
+        public async Task<ActionResult<ExpenseSummaryDto>> AddSalesSummary(int id, AddExpenseSummaryDto addExpenseSummaryDto)
+        {
+            var version = await _versionRepository.GetVersionExpenseByIdAsync(id);
+
+            var expsum = _mapper.Map<ExpenseSummary>(addExpenseSummaryDto);
+            expsum.FilesVersionId = version.Id;
+
+            version.ExpenseSummary.Add(expsum);
+
+            if (await _versionRepository.SaveAllAsync()) return _mapper.Map<ExpenseSummaryDto>(expsum);
+
+            return BadRequest("Cannot add new Expense Summary");
         }
 
         [HttpPost("add-docs/{id}")]

@@ -15,5 +15,9 @@ namespace API.Data
         public DbSet<Prescriptions> Prescriptions { get; set; }
         public DbSet<ScheduleOfPayment> ScheduleOfPayments { get; set; }
         public DbSet<PriceListHistory> PriceListHistory { get; set; }
+        public DbSet<PrescriptionSummary> PrescriptionSummary { get; set; }
+        public DbSet<Mur> Mur { get; set; }
+         public DbSet<SalesSummary> SalesSummary { get; set; }
+          public DbSet<ExpenseSummary> ExpenseSummary { get; set; }
     }
 }

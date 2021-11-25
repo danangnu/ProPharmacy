@@ -11,6 +11,9 @@ namespace API.Entities
         public AppUser Creator { get; set; }
         public int AppUserId { get; set; }
         public ICollection<PrescriptionSummary> PrescriptionSummary { get; set; }
+        public ICollection<Mur> Mur { get; set; }
+        public ICollection<SalesSummary> SalesSummary { get; set; }
+        public ICollection<ExpenseSummary> ExpenseSummary { get; set; }
         public ICollection<Docs> Documents { get; set; }
     }
 }

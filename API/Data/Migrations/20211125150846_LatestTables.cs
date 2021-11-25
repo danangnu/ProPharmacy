@@ -64,6 +64,117 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ExpenseSummary",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ExpMonth = table.Column<int>(type: "int", nullable: false),
+                    DirectorSalary = table.Column<double>(type: "float", nullable: false),
+                    EmployeeSalary = table.Column<double>(type: "float", nullable: false),
+                    LocumCost = table.Column<double>(type: "float", nullable: false),
+                    OtherCost = table.Column<double>(type: "float", nullable: false),
+                    Rent = table.Column<double>(type: "float", nullable: false),
+                    Rates = table.Column<double>(type: "float", nullable: false),
+                    Utilities = table.Column<double>(type: "float", nullable: false),
+                    Telephone = table.Column<double>(type: "float", nullable: false),
+                    Repair = table.Column<double>(type: "float", nullable: false),
+                    Communication = table.Column<double>(type: "float", nullable: false),
+                    Leasing = table.Column<double>(type: "float", nullable: false),
+                    Insurance = table.Column<double>(type: "float", nullable: false),
+                    ProIndemnity = table.Column<double>(type: "float", nullable: false),
+                    ComputerIt = table.Column<double>(type: "float", nullable: false),
+                    Recruitment = table.Column<double>(type: "float", nullable: false),
+                    RegistrationFee = table.Column<double>(type: "float", nullable: false),
+                    Marketing = table.Column<double>(type: "float", nullable: false),
+                    Travel = table.Column<double>(type: "float", nullable: false),
+                    Entertainment = table.Column<double>(type: "float", nullable: false),
+                    Transport = table.Column<double>(type: "float", nullable: false),
+                    Accountancy = table.Column<double>(type: "float", nullable: false),
+                    Banking = table.Column<double>(type: "float", nullable: false),
+                    Interest = table.Column<double>(type: "float", nullable: false),
+                    OtherExpense = table.Column<double>(type: "float", nullable: false),
+                    Amortalisation = table.Column<double>(type: "float", nullable: false),
+                    Depreciation = table.Column<double>(type: "float", nullable: false),
+                    FilesVersionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExpenseSummary", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExpenseSummary_FilesVersion_FilesVersionId",
+                        column: x => x.FilesVersionId,
+                        principalTable: "FilesVersion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Mur",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MurYear = table.Column<int>(type: "int", nullable: false),
+                    TotalMur = table.Column<int>(type: "int", nullable: false),
+                    FilesVersionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Mur", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Mur_FilesVersion_FilesVersionId",
+                        column: x => x.FilesVersionId,
+                        principalTable: "FilesVersion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PrescriptionSummary",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PrescMonth = table.Column<int>(type: "int", nullable: false),
+                    PrescItems = table.Column<int>(type: "int", nullable: false),
+                    PrescAvgItem = table.Column<int>(type: "int", nullable: false),
+                    FilesVersionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PrescriptionSummary", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PrescriptionSummary_FilesVersion_FilesVersionId",
+                        column: x => x.FilesVersionId,
+                        principalTable: "FilesVersion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SalesSummary",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SalesMonth = table.Column<int>(type: "int", nullable: false),
+                    ZeroRatedOTCSale = table.Column<int>(type: "int", nullable: false),
+                    VATExclusiveOTCSale = table.Column<int>(type: "int", nullable: false),
+                    FilesVersionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SalesSummary", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SalesSummary_FilesVersion_FilesVersionId",
+                        column: x => x.FilesVersionId,
+                        principalTable: "FilesVersion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Prescriptions",
                 columns: table => new
                 {
@@ -293,9 +404,19 @@ namespace API.Data.Migrations
                 column: "FilesVersionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExpenseSummary_FilesVersionId",
+                table: "ExpenseSummary",
+                column: "FilesVersionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FilesVersion_AppUserId",
                 table: "FilesVersion",
                 column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Mur_FilesVersionId",
+                table: "Mur",
+                column: "FilesVersionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Prescriptions_DocsId",
@@ -303,9 +424,19 @@ namespace API.Data.Migrations
                 column: "DocsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PrescriptionSummary_FilesVersionId",
+                table: "PrescriptionSummary",
+                column: "FilesVersionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PriceListHistory_DocsId",
                 table: "PriceListHistory",
                 column: "DocsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SalesSummary_FilesVersionId",
+                table: "SalesSummary",
+                column: "FilesVersionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ScheduleOfPayments_DocsId",
@@ -316,10 +447,22 @@ namespace API.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ExpenseSummary");
+
+            migrationBuilder.DropTable(
+                name: "Mur");
+
+            migrationBuilder.DropTable(
                 name: "Prescriptions");
 
             migrationBuilder.DropTable(
+                name: "PrescriptionSummary");
+
+            migrationBuilder.DropTable(
                 name: "PriceListHistory");
+
+            migrationBuilder.DropTable(
+                name: "SalesSummary");
 
             migrationBuilder.DropTable(
                 name: "ScheduleOfPayments");

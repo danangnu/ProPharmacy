@@ -9,6 +9,10 @@ namespace API.Interfaces
         Task<bool> SaveAllAsync();
         Task<IEnumerable<FilesVersion>> GetFVersions();
         Task<FilesVersion> GetVersionByUserIdAsync(int Id);
+        Task<FilesVersion> GetVersionPrescByIdAsync(int Id);
+        Task<FilesVersion> GetVersionMurByIdAsync(int Id);
+        Task<FilesVersion> GetVersionSalesByIdAsync(int Id);
+        Task<FilesVersion> GetVersionExpenseByIdAsync(int Id);
         void DeleteVersion(FilesVersion filesVersion);
     }
 }

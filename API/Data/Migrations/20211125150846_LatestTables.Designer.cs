@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211112041032_LatestTables")]
+    [Migration("20211125150846_LatestTables")]
     partial class LatestTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,6 +62,104 @@ namespace API.Data.Migrations
                     b.ToTable("Documents");
                 });
 
+            modelBuilder.Entity("API.Entities.ExpenseSummary", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Accountancy")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Amortalisation")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Banking")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Communication")
+                        .HasColumnType("float");
+
+                    b.Property<double>("ComputerIt")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Depreciation")
+                        .HasColumnType("float");
+
+                    b.Property<double>("DirectorSalary")
+                        .HasColumnType("float");
+
+                    b.Property<double>("EmployeeSalary")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Entertainment")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ExpMonth")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FilesVersionId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Insurance")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Interest")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Leasing")
+                        .HasColumnType("float");
+
+                    b.Property<double>("LocumCost")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Marketing")
+                        .HasColumnType("float");
+
+                    b.Property<double>("OtherCost")
+                        .HasColumnType("float");
+
+                    b.Property<double>("OtherExpense")
+                        .HasColumnType("float");
+
+                    b.Property<double>("ProIndemnity")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Rates")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Recruitment")
+                        .HasColumnType("float");
+
+                    b.Property<double>("RegistrationFee")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Rent")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Repair")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Telephone")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Transport")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Travel")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Utilities")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FilesVersionId");
+
+                    b.ToTable("ExpenseSummary");
+                });
+
             modelBuilder.Entity("API.Entities.FilesVersion", b =>
                 {
                     b.Property<int>("Id")
@@ -83,6 +181,55 @@ namespace API.Data.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("FilesVersion");
+                });
+
+            modelBuilder.Entity("API.Entities.Mur", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FilesVersionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MurYear")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalMur")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FilesVersionId");
+
+                    b.ToTable("Mur");
+                });
+
+            modelBuilder.Entity("API.Entities.PrescriptionSummary", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FilesVersionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PrescAvgItem")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PrescItems")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PrescMonth")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FilesVersionId");
+
+                    b.ToTable("PrescriptionSummary");
                 });
 
             modelBuilder.Entity("API.Entities.Prescriptions", b =>
@@ -360,6 +507,32 @@ namespace API.Data.Migrations
                     b.HasIndex("DocsId");
 
                     b.ToTable("PriceListHistory");
+                });
+
+            modelBuilder.Entity("API.Entities.SalesSummary", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FilesVersionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SalesMonth")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VATExclusiveOTCSale")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ZeroRatedOTCSale")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FilesVersionId");
+
+                    b.ToTable("SalesSummary");
                 });
 
             modelBuilder.Entity("API.Entities.ScheduleOfPayment", b =>
@@ -648,6 +821,17 @@ namespace API.Data.Migrations
                     b.Navigation("Version");
                 });
 
+            modelBuilder.Entity("API.Entities.ExpenseSummary", b =>
+                {
+                    b.HasOne("API.Entities.FilesVersion", "Version")
+                        .WithMany("ExpenseSummary")
+                        .HasForeignKey("FilesVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Version");
+                });
+
             modelBuilder.Entity("API.Entities.FilesVersion", b =>
                 {
                     b.HasOne("API.Entities.AppUser", "Creator")
@@ -657,6 +841,28 @@ namespace API.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Creator");
+                });
+
+            modelBuilder.Entity("API.Entities.Mur", b =>
+                {
+                    b.HasOne("API.Entities.FilesVersion", "Version")
+                        .WithMany("Mur")
+                        .HasForeignKey("FilesVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Version");
+                });
+
+            modelBuilder.Entity("API.Entities.PrescriptionSummary", b =>
+                {
+                    b.HasOne("API.Entities.FilesVersion", "Version")
+                        .WithMany("PrescriptionSummary")
+                        .HasForeignKey("FilesVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Version");
                 });
 
             modelBuilder.Entity("API.Entities.Prescriptions", b =>
@@ -679,6 +885,17 @@ namespace API.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Document");
+                });
+
+            modelBuilder.Entity("API.Entities.SalesSummary", b =>
+                {
+                    b.HasOne("API.Entities.FilesVersion", "Version")
+                        .WithMany("SalesSummary")
+                        .HasForeignKey("FilesVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Version");
                 });
 
             modelBuilder.Entity("API.Entities.ScheduleOfPayment", b =>
@@ -709,6 +926,14 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.FilesVersion", b =>
                 {
                     b.Navigation("Documents");
+
+                    b.Navigation("ExpenseSummary");
+
+                    b.Navigation("Mur");
+
+                    b.Navigation("PrescriptionSummary");
+
+                    b.Navigation("SalesSummary");
                 });
 #pragma warning restore 612, 618
         }

@@ -292,10 +292,9 @@
           <tr>
             <td>Total MURs (Max 400)</td>
             <td
-              *ngFor="let item of Years; index as idx"
+              *ngFor="let item of Years | slice: 0:2; index as idx"
               [ngStyle]="{
-                'background-color':
-                  idx < 2 ? 'rgb(254,242,203)' : 'white'
+                'background-color': idx < 2 ? 'rgb(254,242,203)' : 'white'
               }"
             >
               <input
@@ -536,7 +535,7 @@
           </tr>
           <tr>
             <td *ngFor="let item of Years; index as idx">
-              {{ idx === 0 ? "MUR" : idx < 3 ? getMUR(idx-1) : "" }}
+              {{ idx === 0 ? "MUR" : idx < 3 ? getMUR(idx - 1) : "" }}
             </td>
             <td *ngFor="let item of TOYears"></td>
           </tr>
@@ -2245,7 +2244,10 @@
           />
         </mat-form-field>
       </div>
-      <strong>Inflation assuming expenses remain constant (value given for {{ InfYears[1] }}) except for inflation increase</strong>
+      <strong
+        >Inflation assuming expenses remain constant (value given for
+        {{ InfYears[1] }}) except for inflation increase</strong
+      >
       <table class="table table-condensed">
         <thead>
           <tr>
@@ -2284,58 +2286,83 @@
               }}
             </td>
           </tr>
-          <tr [ngStyle]="{
-            'background-color': 'rgb(244,176,131)'
-          }">
+          <tr
+            [ngStyle]="{
+              'background-color': 'rgb(244,176,131)'
+            }"
+          >
             <td>Profit/Loss after inflation</td>
             <td *ngFor="let item of InfYears; index as idx">
-              <strong>{{ idx == 0 ? (inflation[0] | percent) : calcInflation2(0, idx) | number }}</strong>
+              <strong>{{
+                idx == 0
+                  ? (inflation[0] | percent)
+                  : (calcInflation2(0, idx) | number)
+              }}</strong>
             </td>
           </tr>
-          <tr [ngStyle]="{
-            'background-color': 'rgb(244,176,131)'
-          }">
+          <tr
+            [ngStyle]="{
+              'background-color': 'rgb(244,176,131)'
+            }"
+          >
             <td></td>
             <td *ngFor="let item of InfYears; index as idx">
-              <strong>{{ idx == 0 ? (inflation[1] | percent) : calcInflation2(1, idx) | number }}</strong>
+              <strong>{{
+                idx == 0
+                  ? (inflation[1] | percent)
+                  : (calcInflation2(1, idx) | number)
+              }}</strong>
             </td>
           </tr>
-          <tr [ngStyle]="{
-            'background-color': 'rgb(244,176,131)'
-          }">
+          <tr
+            [ngStyle]="{
+              'background-color': 'rgb(244,176,131)'
+            }"
+          >
             <td></td>
             <td *ngFor="let item of InfYears; index as idx">
-              <strong>{{ idx == 0 ? (inflation[2] | percent) : calcInflation2(2, idx) | number }}</strong>
+              <strong>{{
+                idx == 0
+                  ? (inflation[2] | percent)
+                  : (calcInflation2(2, idx) | number)
+              }}</strong>
             </td>
           </tr>
         </tbody>
       </table>
-      <br>
-      <strong>Calculate the effect of inflation  assuming expenses remain constant (value given for {{ InfYears[1] }}) except for inflation increase</strong>
-      <table class="table table-condensed" style="width: 40%;">
+      <br />
+      <strong
+        >Calculate the effect of inflation assuming expenses remain constant
+        (value given for {{ InfYears[1] }}) except for inflation
+        increase</strong
+      >
+      <table class="table table-condensed" style="width: 40%">
         <tbody>
           <tr>
             <td>
               <strong>Rate of inflation</strong>
             </td>
-            <td [ngStyle]="{'background-color': 'rgb(254,242,203)'}">
+            <td [ngStyle]="{ 'background-color': 'rgb(254,242,203)' }">
               <input
                 matInput
                 [(ngModel)]="rateinflation"
                 ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"
                 step="0.00"
-          />
+              />
             </td>
-            <td [ngStyle]="{'background-color': 'rgb(254,242,203)'}">
+            <td [ngStyle]="{ 'background-color': 'rgb(254,242,203)' }">
               <span matSuffix>%</span>
             </td>
             <td></td>
           </tr>
           <tr>
             <td><strong>Years</strong></td>
-            <td [ngStyle]="{'background-color': 'rgb(254,242,203)'}" colspan="2"><input matInput 
-              [(ngModel)]="noYear"
-            /></td>
+            <td
+              [ngStyle]="{ 'background-color': 'rgb(254,242,203)' }"
+              colspan="2"
+            >
+              <input matInput [(ngModel)]="noYear" />
+            </td>
           </tr>
           <tr>
             <td><strong>Increase in expenses (£)</strong></td>
@@ -2345,33 +2372,59 @@
             <td><strong>Total expenses after inflation (£)</strong></td>
             <td colspan="2">{{ getExpenseAfterInfl() | number: "1.2-2" }}</td>
           </tr>
-          <tr [ngStyle]="{'background-color': 'rgb(191,191,191)'}">
+          <tr [ngStyle]="{ 'background-color': 'rgb(191,191,191)' }">
             <td><strong>Profit/Loss after inflation (£)</strong></td>
             <td colspan="2">{{ getPLAfterInfl() | number: "1.2-2" }}</td>
           </tr>
           <tr>
-            <td><strong>Total Expenses after inflation % of Gross Profit</strong></td>
-            <td [ngStyle]="{'background-color': 'rgb(217,226,243)'}" colspan="2">{{ getPLAfterInflPercent() | percent }}</td>
+            <td>
+              <strong>Total Expenses after inflation % of Gross Profit</strong>
+            </td>
+            <td
+              [ngStyle]="{ 'background-color': 'rgb(217,226,243)' }"
+              colspan="2"
+            >
+              {{ getPLAfterInflPercent() | percent }}
+            </td>
           </tr>
           <tr>
-            <td><strong>Total Expenses after inflation % of Turnover</strong></td>
-            <td [ngStyle]="{'background-color': 'rgb(180,198,231)'}" colspan="2">{{ getExpenseAfterInflPercent() | percent }}</td>
+            <td>
+              <strong>Total Expenses after inflation % of Turnover</strong>
+            </td>
+            <td
+              [ngStyle]="{ 'background-color': 'rgb(180,198,231)' }"
+              colspan="2"
+            >
+              {{ getExpenseAfterInflPercent() | percent }}
+            </td>
           </tr>
         </tbody>
       </table>
-      <br>
-      <strong>Profit from total OTC sales (assumed 23% for illistrative purposes) as % of gross profit</strong>
+      <br />
+      <strong
+        >Profit from total OTC sales (assumed 23% for illistrative purposes) as
+        % of gross profit</strong
+      >
       <table class="table table-condensed">
         <thead>
           <tr>
-            <th *ngFor="let item of InfYears"><strong>{{ item }}</strong></th>
+            <th *ngFor="let item of InfYears">
+              <strong>{{ item }}</strong>
+            </th>
           </tr>
         </thead>
         <tbody>
-            <tr>
-              <td><strong>Profit from Total OTC Sales</strong></td>
-              <td *ngFor="let item of InfYears | slice:0:(InfYears.length-1); index as idx"><strong>{{ (getTotalOTC(idx)/100)*23 }}</strong></td>
-            </tr>
+          <tr>
+            <td><strong>Profit from Total OTC Sales</strong></td>
+            <td
+              *ngFor="
+                let item of InfYears | slice: 0:InfYears.length - 1;
+                index as idx
+              "
+            >
+              <strong>{{ (getTotalOTC(idx) / 100) * 23 }}</strong>
+            </td>
+          </tr>
         </tbody>
       </table>
       <button

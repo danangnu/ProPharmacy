@@ -11,7 +11,12 @@ namespace API.Helpers
             CreateMap<AppUser, MemberDto>();
             CreateMap<FilesVersion, FilesVersionDto>();
             CreateMap<Docs, DocsDto>();
-             CreateMap<PrescriptionSummary, PrescriptionSummaryDto>();
+            CreateMap<PrescriptionSummary, PrescriptionSummaryDto>();
+            CreateMap<Mur, MurDto>();
+            CreateMap<SalesSummary, SalesSummaryDto>();
+            CreateMap<AddSalesSummaryDto, SalesSummary>();
+            CreateMap<ExpenseSummary, ExpenseSummaryDto>();
+            CreateMap<AddExpenseSummaryDto, ExpenseSummary>();
         }
     }
 }

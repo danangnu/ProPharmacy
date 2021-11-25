@@ -118,13 +118,13 @@ export class PlcReportComponent implements OnInit {
     );
     this.AvgYears.push('average item value');
     const yr = Number(this.startYear) + 2;
-    for (let i = 0; i < this.noYear-1; i++) {
+    for (let i = 0; i < this.noYear - 1; i++) {
       if (i === 0) this.YearA = this.startYear;
       else this.YearA = this.YearA + 1;
 
       this.AvgYears.push(
         'Projected Prescription volume for ' +
-          (yr).toString() +
+          yr.toString() +
           '/' +
           (Number(this.YearA) + 3).toString().substring(2, 4)
       );
@@ -264,7 +264,7 @@ export class PlcReportComponent implements OnInit {
         (this.startYear + 1).toString().substring(2, 4)
     );
     const yr = Number(this.startYear) + 2;
-    for (let i = 0; i < this.noYear-1; i++) {
+    for (let i = 0; i < this.noYear - 1; i++) {
       if (i === 0) this.YearA = Number(this.startYear);
       else this.YearA += 1;
       this.AvgYears.push(
@@ -947,14 +947,16 @@ export class PlcReportComponent implements OnInit {
     let result = 0;
     if (idx == 0 && idy == 1)
       result = Math.round(this.getGross(1) - this.calcInflation(idx, idy));
-    else
-      result = Math.round(this.getGross(2) - this.calcInflation(idx, idy));
+    else result = Math.round(this.getGross(2) - this.calcInflation(idx, idy));
     return result;
   }
 
   increaseExpense(): number {
     let incr = 0;
-    incr = this.getTotalExpense(0) * Math.pow((Number(1 + this.rateinflation/100)), this.noYear) - this.getTotalExpense(0);
+    incr =
+      this.getTotalExpense(0) *
+        Math.pow(Number(1 + this.rateinflation / 100), this.noYear) -
+      this.getTotalExpense(0);
     return incr;
   }
 
@@ -972,13 +974,13 @@ export class PlcReportComponent implements OnInit {
 
   getPLAfterInflPercent(): number {
     let total = 0;
-    total += this.getExpenseAfterInfl()/this.getGross(1);
+    total += this.getExpenseAfterInfl() / this.getGross(1);
     return total;
   }
 
   getExpenseAfterInflPercent(): number {
     let total = 0;
-    total += this.getExpenseAfterInfl()/this.getGrandTotalNHS(1);
+    total += this.getExpenseAfterInfl() / this.getGrandTotalNHS(1);
     return total;
   }
 
@@ -1101,7 +1103,7 @@ export class PlcReportComponent implements OnInit {
   getSubtotalAdv(idx: number): number {
     let total = 0;
     if (this.nms[idx - 1] != null) total += Number(this.nms[idx - 1]);
-    if (idx < 3) total += this.getMUR(idx);
+    if (idx < 3) total += this.getMUR(idx - 1);
     else total += 0;
     if (this.transitionpay[idx - 1] != null)
       total += Number(this.transitionpay[idx - 1]);
@@ -1246,38 +1248,145 @@ export class PlcReportComponent implements OnInit {
       }
     }*/
     let bar: any = [];
-    for (let i = 1; i < this.InfYears.length - (this.noYear - 1); i++)
-    {
-      for (let j = 0; j < 12; j++)
-      {
+    let mur: any = [];
+    for (let i = 1; i < this.InfYears.length - (this.noYear - 1); i++) {
+      for (let j = 0; j < 12; j++) {
         if (j > 2 && j < 12) {
           let m = '';
-          if (j<9)
-            m = '0' + Number(j+1).toString();
-          else
-            m = Number(j+1).toString();
-            if (i == 1)
-              bar = {prescMonth: ((Number(this.startYear)+i)-1).toString() + m, prescItems: this.MonthPresc[j][i-1], prescAvgItem: this.MonthPresc[j][i]};
-            else
-              bar = {prescMonth: ((Number(this.startYear)+i)-1).toString() + m, prescItems: this.MonthPresc[j][i], prescAvgItem: this.MonthPresc[j][i+1]};
-        }
-        else {
-          let m = '0' + Number(j+1).toString();
+          if (j < 9) m = '0' + Number(j + 1).toString();
+          else m = Number(j + 1).toString();
           if (i == 1)
-            bar = {prescMonth: (Number(this.startYear)+i).toString() + m, prescItems: this.MonthPresc[j][i-1], prescAvgItem: this.MonthPresc[j][i]};
+            this.auth
+              .getAccessTokenSilently()
+              .pipe(take(1))
+              .subscribe((token) => {
+                bar = {
+                  prescMonth: Number(
+                    (Number(this.startYear) + i - 1).toString() + m
+                  ),
+                  prescItems: this.MonthPresc[j][i - 1],
+                  prescAvgItem: this.MonthPresc[j][i],
+                };
+                const headers = new HttpHeaders().set(
+                  'Authorization',
+                  `Bearer ${token}`
+                );
+                this.versionService
+                  .addPrescSummary(
+                    Number(this.route.snapshot.paramMap.get('id')),
+                    bar,
+                    headers
+                  )
+                  .subscribe((presc) => {
+                    console.log(presc);
+                  });
+              });
           else
-            bar = {prescMonth: (Number(this.startYear)+i).toString() + m, prescItems: this.MonthPresc[j][i], prescAvgItem: this.MonthPresc[j][i+1]};
+            this.auth
+              .getAccessTokenSilently()
+              .pipe(take(1))
+              .subscribe((token) => {
+                bar = {
+                  prescMonth: Number(
+                    (Number(this.startYear) + i - 1).toString() + m
+                  ),
+                  prescItems: this.MonthPresc[j][i],
+                  prescAvgItem: this.MonthPresc[j][i + 1],
+                };
+                const headers = new HttpHeaders().set(
+                  'Authorization',
+                  `Bearer ${token}`
+                );
+                this.versionService
+                  .addPrescSummary(
+                    Number(this.route.snapshot.paramMap.get('id')),
+                    bar,
+                    headers
+                  )
+                  .subscribe((presc) => {
+                    console.log(presc);
+                  });
+              });
+        } else {
+          let m = '0' + Number(j + 1).toString();
+          if (i == 1)
+            this.auth
+              .getAccessTokenSilently()
+              .pipe(take(1))
+              .subscribe((token) => {
+                bar = {
+                  prescMonth: Number(
+                    (Number(this.startYear) + i).toString() + m
+                  ),
+                  prescItems: this.MonthPresc[j][i - 1],
+                  prescAvgItem: this.MonthPresc[j][i],
+                };
+                const headers = new HttpHeaders().set(
+                  'Authorization',
+                  `Bearer ${token}`
+                );
+                this.versionService
+                  .addPrescSummary(
+                    Number(this.route.snapshot.paramMap.get('id')),
+                    bar,
+                    headers
+                  )
+                  .subscribe((presc) => {
+                    console.log(presc);
+                  });
+              });
+          else
+            this.auth
+              .getAccessTokenSilently()
+              .pipe(take(1))
+              .subscribe((token) => {
+                bar = {
+                  prescMonth: Number(
+                    (Number(this.startYear) + i).toString() + m
+                  ),
+                  prescItems: this.MonthPresc[j][i],
+                  prescAvgItem: this.MonthPresc[j][i + 1],
+                };
+                const headers = new HttpHeaders().set(
+                  'Authorization',
+                  `Bearer ${token}`
+                );
+                this.versionService
+                  .addPrescSummary(
+                    Number(this.route.snapshot.paramMap.get('id')),
+                    bar,
+                    headers
+                  )
+                  .subscribe((presc) => {
+                    console.log(presc);
+                  });
+              });
         }
-        this.auth
-      .getAccessTokenSilently()
-      .pipe(take(1))
-      .subscribe((token) => {
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        this.versionService.addPrescSummary(Number(this.route.snapshot.paramMap.get('id')), bar,headers).subscribe(presc => {
-          console.log(presc);
-        });
-      });
       }
+      this.auth
+        .getAccessTokenSilently()
+        .pipe(take(1))
+        .subscribe((token) => {
+          mur = {
+            murYear: Number(
+              (Number(this.startYear) + Number(i - 1)).toString()
+            ),
+            totalMur: this.mur[i - 1],
+          };
+          const headers = new HttpHeaders().set(
+            'Authorization',
+            `Bearer ${token}`
+          );
+          this.versionService
+            .addMur(
+              Number(this.route.snapshot.paramMap.get('id')),
+              mur,
+              headers
+            )
+            .subscribe((mur) => {
+              console.log(mur);
+            });
+        });
     }
   }
 

@@ -21,6 +21,34 @@ namespace API.Data
                 .FirstOrDefaultAsync(v => v.Id == Id);
         }
 
+        public async Task<FilesVersion> GetVersionPrescByIdAsync(int Id)
+        {
+            return await _context.FilesVersion
+                .Include(d => d.PrescriptionSummary)
+                .FirstOrDefaultAsync(v => v.Id == Id);
+        }
+
+        public async Task<FilesVersion> GetVersionMurByIdAsync(int Id)
+        {
+            return await _context.FilesVersion
+                .Include(d => d.Mur)
+                .FirstOrDefaultAsync(v => v.Id == Id);
+        }
+
+        public async Task<FilesVersion> GetVersionSalesByIdAsync(int Id)
+        {
+            return await _context.FilesVersion
+                .Include(d => d.SalesSummary)
+                .FirstOrDefaultAsync(v => v.Id == Id);
+        }
+
+        public async Task<FilesVersion> GetVersionExpenseByIdAsync(int Id)
+        {
+            return await _context.FilesVersion
+                .Include(d => d.ExpenseSummary)
+                .FirstOrDefaultAsync(v => v.Id == Id);
+        }
+
         public async Task<IEnumerable<FilesVersion>> GetFVersions()
         {
             return await _context.FilesVersion
