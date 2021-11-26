@@ -28,8 +28,11 @@ namespace API.Data
             .Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd)
             .ProjectTo<SchedulePaymentReportDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
         var query2 = _context.ScheduleOfPayments.AsQueryable();
-        query.Total_Others = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Total_Other) ?? 0;
-        query.Other_Fee_Medicine_Services = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Other_Fee_Medicine_Service) ?? 0;
+        var tot_others = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Total_Other) ?? 0;
+        if (tot_others != 0) query.Total_Others = 0.00;
+        var other_Fee_Medicine_Services = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Other_Fee_Medicine_Service) ?? 0;
+        if (other_Fee_Medicine_Services != 0)
+          query.Other_Fee_Medicine_Services = other_Fee_Medicine_Services;
         var Other_Fee_Appliance_Premise = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Other_Fee_Appliance_Premise) ?? 0;
         var Other_Fee_Stoma_Custom = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Other_Fee_Stoma_Custom) ?? 0;
         var Other_Fee_Appliance_Patient = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Other_Fee_Appliance_Patient) ?? 0;
