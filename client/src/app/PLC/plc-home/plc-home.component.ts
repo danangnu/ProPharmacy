@@ -3,6 +3,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { take } from 'rxjs/operators';
+import { User } from 'src/app/_models/user';
 import { UserReport } from 'src/app/_models/userReport';
 import { MembersService } from 'src/app/_services/members.service';
 import { UserReportService } from 'src/app/_services/user-report.service';

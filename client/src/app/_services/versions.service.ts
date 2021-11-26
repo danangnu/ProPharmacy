@@ -71,8 +71,8 @@ export class VersionsService {
       );
   }
 
-  addVersion(model: any, headers: HttpHeaders) {
-    return this.http.post<FileVersion>(this.baseUrl + 'userreport/add-version', model, {headers}).pipe(
+  addVersion(id: number, model: any, headers: HttpHeaders) {
+    return this.http.post<FileVersion>(this.baseUrl + 'userreport/add-version/' + id, model, {headers}).pipe(
       map((files: FileVersion) => {
         return files;
       })
