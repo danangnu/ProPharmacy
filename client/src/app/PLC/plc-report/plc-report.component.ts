@@ -14,7 +14,10 @@ import { take } from 'rxjs/operators';
 import { FileVersion } from 'src/app/_models/fileVersion';
 import { PrescriptionReport } from 'src/app/_models/prescriptionReport';
 import { SchedulePaymentReport } from 'src/app/_models/schedulePaymentReport';
+import { AccountService } from 'src/app/_services/account.service';
+import { ExpenseSummaryService } from 'src/app/_services/expense-summary.service';
 import { PrescriptionService } from 'src/app/_services/prescription.service';
+import { SalesSummaryService } from 'src/app/_services/sales-summary.service';
 import { SchedulePaymentService } from 'src/app/_services/schedule-payment.service';
 import { VersionsService } from 'src/app/_services/versions.service';
 
@@ -88,7 +91,10 @@ export class PlcReportComponent implements OnInit {
     private auth: AuthService,
     private prescriptionService: PrescriptionService,
     private versionService: VersionsService,
+    private salessumService: SalesSummaryService,
     private schedulePayService: SchedulePaymentService,
+    private expensesumService: ExpenseSummaryService,
+    private accountService: AccountService,
     private fb: FormBuilder,
     private route: ActivatedRoute
   ) {
@@ -96,12 +102,17 @@ export class PlcReportComponent implements OnInit {
     //this.advother[0] = this.schedulePaymentReports.Total_Others == null ? 0: this.schedulePaymentReports.Total_Others;
   }
   ngOnInit(): void {
+    this.loadVersionSetting();
     this.loadPrescrptionReports();
     this.loadScheduleReports(this.startYear, 0);
+    this.loadScheduleReports(Number(Number(this.startYear) + 1), 1);
+    this.loadSalesSummary(this.startYear, 0);
+    this.loadSalesSummary(Number(Number(this.startYear) + 1), 1);
+    this.loadExpenseSummary(this.startYear, 0);
+    this.loadExpenseSummary(Number(Number(this.startYear) + 1), 1);
     this.initializeForm();
     this.mur.push(400);
     this.mur.push(400);
-    this.initialValue();
     this.YearVal[0][0] = 'OTC Sales';
     this.YearVal[1][0] = 'NHS Sales';
     this.AvgYears.push('Month');
@@ -180,6 +191,7 @@ export class PlcReportComponent implements OnInit {
           ')'
       );
     }
+    this.initialValue();
   }
 
   initializeForm() {
@@ -201,10 +213,308 @@ export class PlcReportComponent implements OnInit {
   }
 
   initialValue() {
-    for (let i = 0; i < 4; i++) {
+    for (let i = 1; i < this.InfYears.length - (this.noYear - 1); i++) {
       for (let j = 0; j < 12; j++) {
-        if (i == 0 || i == 2) this.MonthPresc[j][i] = 9000;
-        if (i == 1 || i == 3) this.MonthPresc[j][i] = 8;
+        if (j > 2 && j < 12) {
+          let m = '';
+          //console.log(Number((Number(this.startYear) + i - 1).toString() + m));
+          if (j < 9) m = '0' + Number(j + 1).toString();
+          else m = Number(j + 1).toString();
+          if (i == 1) {
+            this.auth
+              .getAccessTokenSilently()
+              .pipe(take(1))
+              .subscribe((token) => {
+                const headers = new HttpHeaders().set(
+                  'Authorization',
+                  `Bearer ${token}`
+                );
+                this.prescriptionService
+                  .getSummary(
+                    Number((Number(this.startYear) + i - 1).toString() + m),
+                    Number(this.route.snapshot.paramMap.get('id')),
+                    headers
+                  )
+                  .subscribe((presc) => {
+                    if (j == 3) {
+                      if (presc != undefined) {
+                        this.MonthPresc[0][0] = presc.prescItems;
+                        this.MonthPresc[0][1] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[0][0] = 0;
+                        this.MonthPresc[0][1] = 0;
+                      }
+                    }
+                    if (j == 4) {
+                      if (presc != undefined) {
+                        this.MonthPresc[1][0] = presc.prescItems;
+                        this.MonthPresc[1][1] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[1][0] = 0;
+                        this.MonthPresc[1][1] = 0;
+                      }
+                    }
+                    if (j == 5) {
+                      if (presc != undefined) {
+                        this.MonthPresc[2][0] = presc.prescItems;
+                        this.MonthPresc[2][1] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[2][0] = 0;
+                        this.MonthPresc[2][1] = 0;
+                      }
+                    }
+                    if (j == 6) {
+                      if (presc != undefined) {
+                        this.MonthPresc[3][0] = presc.prescItems;
+                        this.MonthPresc[3][1] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[3][0] = 0;
+                        this.MonthPresc[3][1] = 0;
+                      }
+                    }
+                    if (j == 7) {
+                      if (presc != undefined) {
+                        this.MonthPresc[4][0] = presc.prescItems;
+                        this.MonthPresc[4][1] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[4][0] = 0;
+                        this.MonthPresc[4][1] = 0;
+                      }
+                    }
+                    if (j == 8) {
+                      if (presc != undefined) {
+                        this.MonthPresc[5][0] = presc.prescItems;
+                        this.MonthPresc[5][1] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[5][0] = 0;
+                        this.MonthPresc[5][1] = 0;
+                      }
+                    }
+                    if (j == 9) {
+                      if (presc != undefined) {
+                        this.MonthPresc[6][0] = presc.prescItems;
+                        this.MonthPresc[6][1] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[6][0] = 0;
+                        this.MonthPresc[6][1] = 0;
+                      }
+                    }
+                    if (j == 10) {
+                      if (presc != undefined) {
+                        this.MonthPresc[7][0] = presc.prescItems;
+                        this.MonthPresc[7][1] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[7][0] = 0;
+                        this.MonthPresc[7][1] = 0;
+                      }
+                    }
+                    if (j == 11) {
+                      if (presc != undefined) {
+                        this.MonthPresc[8][0] = presc.prescItems;
+                        this.MonthPresc[8][1] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[8][0] = 0;
+                        this.MonthPresc[8][1] = 0;
+                      }
+                    }
+                  });
+              });
+          } else {
+            this.auth
+              .getAccessTokenSilently()
+              .pipe(take(1))
+              .subscribe((token) => {
+                const headers = new HttpHeaders().set(
+                  'Authorization',
+                  `Bearer ${token}`
+                );
+                this.prescriptionService
+                  .getSummary(
+                    Number((Number(this.startYear) + i - 1).toString() + m),
+                    Number(this.route.snapshot.paramMap.get('id')),
+                    headers
+                  )
+                  .subscribe((presc) => {
+                    if (j == 3) {
+                      if (presc != undefined) {
+                        this.MonthPresc[0][2] = presc.prescItems;
+                        this.MonthPresc[0][3] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[0][2] = 0;
+                        this.MonthPresc[0][3] = 0;
+                      }
+                    }
+                    if (j == 4) {
+                      if (presc != undefined) {
+                        this.MonthPresc[1][2] = presc.prescItems;
+                        this.MonthPresc[1][3] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[1][2] = 0;
+                        this.MonthPresc[1][3] = 0;
+                      }
+                    }
+                    if (j == 5) {
+                      if (presc != undefined) {
+                        this.MonthPresc[2][2] = presc.prescItems;
+                        this.MonthPresc[2][3] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[2][2] = 0;
+                        this.MonthPresc[2][3] = 0;
+                      }
+                    }
+                    if (j == 6) {
+                      if (presc != undefined) {
+                        this.MonthPresc[3][2] = presc.prescItems;
+                        this.MonthPresc[3][3] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[3][2] = 0;
+                        this.MonthPresc[3][3] = 0;
+                      }
+                    }
+                    if (j == 7) {
+                      if (presc != undefined) {
+                        this.MonthPresc[4][2] = presc.prescItems;
+                        this.MonthPresc[4][3] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[4][2] = 0;
+                        this.MonthPresc[4][3] = 0;
+                      }
+                    }
+                    if (j == 8) {
+                      if (presc != undefined) {
+                        this.MonthPresc[5][2] = presc.prescItems;
+                        this.MonthPresc[5][3] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[5][2] = 0;
+                        this.MonthPresc[5][3] = 0;
+                      }
+                    }
+                    if (j == 9) {
+                      if (presc != undefined) {
+                        this.MonthPresc[6][2] = presc.prescItems;
+                        this.MonthPresc[6][3] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[6][2] = 0;
+                        this.MonthPresc[6][3] = 0;
+                      }
+                    }
+                    if (j == 10) {
+                      if (presc != undefined) {
+                        this.MonthPresc[7][2] = presc.prescItems;
+                        this.MonthPresc[7][3] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[7][2] = 0;
+                        this.MonthPresc[7][3] = 0;
+                      }
+                    }
+                    if (j == 11) {
+                      if (presc != undefined) {
+                        this.MonthPresc[8][2] = presc.prescItems;
+                        this.MonthPresc[8][3] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[8][2] = 0;
+                        this.MonthPresc[8][3] = 0;
+                      }
+                    }
+                  });
+              });
+          }
+        } else {
+          let m = '0' + Number(j + 1).toString();
+          if (i == 1) {
+            this.auth
+              .getAccessTokenSilently()
+              .pipe(take(1))
+              .subscribe((token) => {
+                const headers = new HttpHeaders().set(
+                  'Authorization',
+                  `Bearer ${token}`
+                );
+                this.prescriptionService
+                  .getSummary(
+                    Number((Number(this.startYear) + i).toString() + m),
+                    Number(this.route.snapshot.paramMap.get('id')),
+                    headers
+                  )
+                  .subscribe((presc) => {
+                    if (j == 0) {
+                      if (presc != undefined) {
+                        this.MonthPresc[9][0] = presc.prescItems;
+                        this.MonthPresc[9][1] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[9][0] = 0;
+                        this.MonthPresc[9][1] = 0;
+                      }
+                    }
+                    if (j == 1) {
+                      if (presc != undefined) {
+                        this.MonthPresc[10][0] = presc.prescItems;
+                        this.MonthPresc[10][1] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[10][0] = 0;
+                        this.MonthPresc[10][1] = 0;
+                      }
+                    }
+                    if (j == 2) {
+                      if (presc != undefined) {
+                        this.MonthPresc[11][0] = presc.prescItems;
+                        this.MonthPresc[11][1] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[11][0] = 0;
+                        this.MonthPresc[11][1] = 0;
+                      }
+                    }
+                  });
+              });
+          } else {
+            this.auth
+              .getAccessTokenSilently()
+              .pipe(take(1))
+              .subscribe((token) => {
+                const headers = new HttpHeaders().set(
+                  'Authorization',
+                  `Bearer ${token}`
+                );
+                this.prescriptionService
+                  .getSummary(
+                    Number((Number(this.startYear) + i).toString() + m),
+                    Number(this.route.snapshot.paramMap.get('id')),
+                    headers
+                  )
+                  .subscribe((presc) => {
+                    if (j == 0) {
+                      if (presc != undefined) {
+                        this.MonthPresc[9][2] = presc.prescItems;
+                        this.MonthPresc[9][3] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[9][2] = 0;
+                        this.MonthPresc[9][3] = 0;
+                      }
+                    }
+                    if (j == 1) {
+                      if (presc != undefined) {
+                        this.MonthPresc[10][2] = presc.prescItems;
+                        this.MonthPresc[10][3] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[10][2] = 0;
+                        this.MonthPresc[10][3] = 0;
+                      }
+                    }
+                    if (j == 2) {
+                      if (presc != undefined) {
+                        this.MonthPresc[11][2] = presc.prescItems;
+                        this.MonthPresc[11][3] = presc.prescAvgItem;
+                      } else {
+                        this.MonthPresc[11][2] = 0;
+                        this.MonthPresc[11][3] = 0;
+                      }
+                    }
+                  });
+              });
+          }
+        }
+        //if (i == 0 || i == 2) this.MonthPresc[j][i] = 9000;
+        //if (i == 1 || i == 3) this.MonthPresc[j][i] = 8;
       }
     }
     this.inflation.push(0.02);
@@ -304,6 +614,9 @@ export class PlcReportComponent implements OnInit {
           ')'
       );
     }
+    this.loadScheduleReports(this.startYear, 0);
+    this.loadScheduleReports(Number(Number(this.startYear) + 1), 1);
+    this.initialValue();
   }
 
   getTotal(idx: number): number {
@@ -1255,29 +1568,29 @@ export class PlcReportComponent implements OnInit {
     let exp: any = [];
     let verset: any = [];
     this.auth
-        .getAccessTokenSilently()
-        .pipe(take(1))
-        .subscribe((token) => {
-          verset = {
-            startYear: Number(this.startYear),
-            noYear: Number(this.noYear),
-            volumeDecrease: this.decrease,
-            inflationRate: this.rateinflation
-          };
-          const headers = new HttpHeaders().set(
-            'Authorization',
-            `Bearer ${token}`
-          );
-          this.versionService
-            .addVersionSetting(
-              Number(this.route.snapshot.paramMap.get('id')),
-              verset,
-              headers
-            )
-            .subscribe((verset) => {
-              console.log(verset);
-            });
-        });
+      .getAccessTokenSilently()
+      .pipe(take(1))
+      .subscribe((token) => {
+        verset = {
+          startYear: Number(this.startYear),
+          noYear: Number(this.noYear),
+          volumeDecrease: this.decrease,
+          inflationRate: this.rateinflation,
+        };
+        const headers = new HttpHeaders().set(
+          'Authorization',
+          `Bearer ${token}`
+        );
+        this.versionService
+          .addVersionSetting(
+            Number(this.route.snapshot.paramMap.get('id')),
+            verset,
+            headers
+          )
+          .subscribe((verset) => {
+            console.log(verset);
+          });
+      });
     for (let i = 1; i < this.InfYears.length - (this.noYear - 1); i++) {
       for (let j = 0; j < 12; j++) {
         if (j > 2 && j < 12) {
@@ -1400,7 +1713,7 @@ export class PlcReportComponent implements OnInit {
             murYear: Number(
               (Number(this.startYear) + Number(i - 1)).toString()
             ),
-            totalMur: this.mur[i - 1]
+            totalMur: this.mur[i - 1],
           };
           const headers = new HttpHeaders().set(
             'Authorization',
@@ -1425,7 +1738,7 @@ export class PlcReportComponent implements OnInit {
               (Number(this.startYear) + Number(i - 1)).toString()
             ),
             zeroRatedOTCSale: this.zeroOTCSale[i - 1],
-            vATExclusiveOTCSale: this.vatOTCSale[i - 1]
+            vATExclusiveOTCSale: this.vatOTCSale[i - 1],
           };
           const headers = new HttpHeaders().set(
             'Authorization',
@@ -1475,7 +1788,7 @@ export class PlcReportComponent implements OnInit {
             interest: Number(this.interest[i - 1]),
             otherExpense: Number(this.otherexpense[i - 1]),
             amortalisation: Number(this.amortalisation[i - 1]),
-            depreciation: Number(this.depreciation[i - 1])
+            depreciation: Number(this.depreciation[i - 1]),
           };
           const headers = new HttpHeaders().set(
             'Authorization',
@@ -1523,6 +1836,33 @@ export class PlcReportComponent implements OnInit {
       });
   }
 
+  loadSalesSummary(year: number, idx: number) {
+    this.auth
+      .getAccessTokenSilently()
+      .pipe(take(1))
+      .subscribe((token) => {
+        const headers = new HttpHeaders().set(
+          'Authorization',
+          `Bearer ${token}`
+        );
+        this.salessumService
+          .getReport(
+            year,
+            Number(this.route.snapshot.paramMap.get('id')),
+            headers
+          )
+          .subscribe((sched) => {
+            if (sched != undefined) {
+              this.zeroOTCSale[idx] = sched.zeroRatedOTCSale;
+              this.vatOTCSale[idx] = sched.vatExclusiveOTCSale;
+            } else {
+              this.zeroOTCSale[idx] = 0;
+              this.vatOTCSale[idx] = 0;
+            }
+          });
+      });
+  }
+
   loadScheduleReports(year: number, idx: number) {
     this.auth
       .getAccessTokenSilently()
@@ -1533,13 +1873,123 @@ export class PlcReportComponent implements OnInit {
           `Bearer ${token}`
         );
         this.schedulePayService.getReport(year, headers).subscribe((sched) => {
-          this.schedulePaymentReports = sched;
-          this.nhsother[idx] = sched.total_Others;
-          this.nms[idx] = sched.other_Fee_Medicine_Services;
-          this.advother[idx] = sched.adv_Others;
-          this.nhsenhancedserv[idx] = sched.enhanced_Services.toFixed(2);
-          this.nhsundries[idx] = sched.total_Charges;
+          if (sched != undefined) {
+            this.schedulePaymentReports = sched;
+            this.nhsother[idx] = sched.total_Others;
+            this.nms[idx] = sched.other_Fee_Medicine_Services;
+            this.advother[idx] = sched.adv_Others;
+            this.nhsenhancedserv[idx] = sched.enhanced_Services.toFixed(2);
+            this.nhsundries[idx] = sched.total_Charges;
+          } else {
+            this.nhsother[idx] = 0;
+            this.nms[idx] = 0;
+            this.advother[idx] = 0;
+            this.nhsenhancedserv[idx] = 9;
+            this.nhsundries[idx] = 0;
+          }
         });
+      });
+  }
+
+  loadExpenseSummary(year: number, idx: number) {
+    this.auth
+      .getAccessTokenSilently()
+      .pipe(take(1))
+      .subscribe((token) => {
+        const headers = new HttpHeaders().set(
+          'Authorization',
+          `Bearer ${token}`
+        );
+        this.expensesumService
+          .getReport(
+            year,
+            Number(this.route.snapshot.paramMap.get('id')),
+            headers
+          )
+          .subscribe((exp) => {
+            if (exp != undefined) {
+              this.directorsalary[idx] = exp.directorSalary;
+              this.employeesalary[idx] = exp.employeeSalary;
+              this.locumcost[idx] = exp.locumCost;
+              this.othercost[idx] = exp.otherCost;
+              this.rent[idx] = exp.rent;
+              this.rates[idx] = exp.rates;
+              this.utilities[idx] = exp.utilities;
+              this.telephone[idx] = exp.telephone;
+              this.repair[idx] = exp.repair;
+              this.communication[idx] = exp.communication;
+              this.leasing[idx] = exp.leasing;
+              this.insurance[idx] = exp.insurance;
+              this.proindemnity[idx] = exp.proIndemnity;
+              this.computerit[idx] = exp.computerIt;
+              this.recruitment[idx] = exp.recruitment;
+              this.registrationfee[idx] = exp.registrationFee;
+              this.marketing[idx] = exp.marketing;
+              this.travel[idx] = exp.travel;
+              this.entertainment[idx] = exp.entertainment;
+              this.transport[idx] = exp.transport;
+              this.accountancy[idx] = exp.accountancy;
+              this.banking[idx] = exp.banking;
+              this.interest[idx] = exp.interest;
+              this.otherexpense[idx] = exp.otherExpense;
+              this.amortalisation[idx] = exp.amortalisation;
+              this.depreciation[idx] = exp.depreciation;
+            } else {
+              this.directorsalary[idx] = 0;
+              this.employeesalary[idx] = 0;
+              this.locumcost[idx] = 0;
+              this.othercost[idx] = 0;
+              this.rent[idx] = 0;
+              this.rates[idx] = 0;
+              this.utilities[idx] = 0;
+              this.telephone[idx] = 0;
+              this.repair[idx] = 0;
+              this.communication[idx] = 0;
+              this.leasing[idx] = 0;
+              this.insurance[idx] = 0;
+              this.proindemnity[idx] = 0;
+              this.computerit[idx] = 0;
+              this.recruitment[idx] = 0;
+              this.registrationfee[idx] = 0;
+              this.marketing[idx] = 0;
+              this.travel[idx] = 0;
+              this.entertainment[idx] = 0;
+              this.transport[idx] = 0;
+              this.accountancy[idx] = 0;
+              this.banking[idx] = 0;
+              this.interest[idx] = 0;
+              this.otherexpense[idx] = 0;
+              this.amortalisation[idx] = 0;
+              this.depreciation[idx] = 0;
+            }
+          });
+      });
+  }
+
+  loadVersionSetting() {
+    this.auth
+      .getAccessTokenSilently()
+      .pipe(take(1))
+      .subscribe((token) => {
+        const headers = new HttpHeaders().set(
+          'Authorization',
+          `Bearer ${token}`
+        );
+        this.accountService
+          .getSetting(Number(this.route.snapshot.paramMap.get('id')), headers)
+          .subscribe((verset) => {
+            if (verset != undefined) {
+              this.startYear = verset.startYear;
+              this.noYear = verset.noYear;
+              this.decrease = verset.volumeDecrease;
+              this.rateinflation = verset.inflationRate;
+            } else {
+              this.startYear = new Date().getFullYear();
+              this.noYear = 5;
+              this.decrease = 0;
+              this.rateinflation = 2;
+            }
+          });
       });
   }
 }

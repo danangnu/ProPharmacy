@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
@@ -15,6 +16,14 @@ namespace API.Controllers
         public AccountController(DataContext context)
         {
             _context = context;
+        }
+
+        [HttpGet("verset/{id}")]
+        public async Task<VersionSetting> GetVersionSettingAsync(int id)
+        {
+            return await _context.VersionSetting
+                        .Where(v => v.FilesVersionId == id)
+                        .SingleOrDefaultAsync();
         }
 
         [HttpPost("register")]

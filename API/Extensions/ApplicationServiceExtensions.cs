@@ -16,6 +16,9 @@ namespace API.Extensions
             services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
             services.AddScoped<IDocRepository, DocRepository>();
             services.AddScoped<ISchedulePaymentRepository, SchedulePaymentRepository>();
+            services.AddScoped<IPrescriptionSummaryRepository, PrescriptionSummaryRepository>();
+            services.AddScoped<ISalesSummaryRepository, SalesSummaryRepository>();
+            services.AddScoped<IExpenseSummaryRepository, ExpenseSummaryRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(options =>
             {

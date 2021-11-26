@@ -29,18 +29,28 @@ namespace API.Data
             .ProjectTo<SchedulePaymentReportDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
         var query2 = _context.ScheduleOfPayments.AsQueryable();
         var tot_others = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Total_Other) ?? 0;
-        if (tot_others != 0) query.Total_Others = 0.00;
+        if (tot_others != 0) query.Total_Others = tot_others;
         var other_Fee_Medicine_Services = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Other_Fee_Medicine_Service) ?? 0;
         if (other_Fee_Medicine_Services != 0)
           query.Other_Fee_Medicine_Services = other_Fee_Medicine_Services;
         var Other_Fee_Appliance_Premise = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Other_Fee_Appliance_Premise) ?? 0;
         var Other_Fee_Stoma_Custom = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Other_Fee_Stoma_Custom) ?? 0;
         var Other_Fee_Appliance_Patient = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Other_Fee_Appliance_Patient) ?? 0;
-        query.Adv_Others = Other_Fee_Appliance_Premise + Other_Fee_Stoma_Custom + Other_Fee_Appliance_Patient;
+        if (Other_Fee_Appliance_Premise != 0)
+          query.Adv_Others = Other_Fee_Appliance_Premise;
+        if (Other_Fee_Stoma_Custom != 0)
+          query.Adv_Others += Other_Fee_Stoma_Custom;
+        if (Other_Fee_Appliance_Patient != 0)
+          query.Adv_Others += Other_Fee_Appliance_Patient;
         var Total_Authorised = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Total_Authorised) ?? 0;
         var Total_Authorised_LPP = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Total_Authorised_LPP) ?? 0;
-        query.Enhanced_Services = Total_Authorised + Total_Authorised_LPP;
-        query.Total_Charges = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Total_Charges) ?? 0;
+        if (Total_Authorised != 0)
+          query.Enhanced_Services = Total_Authorised;
+        if (Total_Authorised_LPP != 0)
+          query.Enhanced_Services += Total_Authorised_LPP;
+        var Total_Charges = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Total_Charges) ?? 0;
+        if (Total_Authorised_LPP != 0)
+          query.Total_Charges = Total_Charges;
 
         return query;
     }
