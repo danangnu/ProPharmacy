@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211125150846_LatestTables")]
+    [Migration("20211126080330_LatestTables")]
     partial class LatestTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,7 +96,7 @@ namespace API.Data.Migrations
                     b.Property<double>("Entertainment")
                         .HasColumnType("float");
 
-                    b.Property<int>("ExpMonth")
+                    b.Property<int>("ExpYear")
                         .HasColumnType("int");
 
                     b.Property<int>("FilesVersionId")
@@ -519,7 +519,7 @@ namespace API.Data.Migrations
                     b.Property<int>("FilesVersionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SalesMonth")
+                    b.Property<int>("SalesYear")
                         .HasColumnType("int");
 
                     b.Property<int>("VATExclusiveOTCSale")
@@ -605,8 +605,11 @@ namespace API.Data.Migrations
                     b.Property<string>("Discount_Percent")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Dispensing_Month")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Dispensing_Month")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Dispensing_Year")
+                        .HasColumnType("int");
 
                     b.Property<int>("DocsId")
                         .HasColumnType("int");
@@ -810,6 +813,35 @@ namespace API.Data.Migrations
                     b.ToTable("ScheduleOfPayments");
                 });
 
+            modelBuilder.Entity("API.Entities.VersionSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FilesVersionId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("InflationRate")
+                        .HasColumnType("float");
+
+                    b.Property<int>("NoYear")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StartYear")
+                        .HasColumnType("int");
+
+                    b.Property<double>("VolumeDecrease")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FilesVersionId");
+
+                    b.ToTable("VersionSetting");
+                });
+
             modelBuilder.Entity("API.Entities.Docs", b =>
                 {
                     b.HasOne("API.Entities.FilesVersion", "Version")
@@ -909,6 +941,17 @@ namespace API.Data.Migrations
                     b.Navigation("Document");
                 });
 
+            modelBuilder.Entity("API.Entities.VersionSetting", b =>
+                {
+                    b.HasOne("API.Entities.FilesVersion", "Version")
+                        .WithMany("VersionSetting")
+                        .HasForeignKey("FilesVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Version");
+                });
+
             modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
                     b.Navigation("VersionCreated");
@@ -934,6 +977,8 @@ namespace API.Data.Migrations
                     b.Navigation("PrescriptionSummary");
 
                     b.Navigation("SalesSummary");
+
+                    b.Navigation("VersionSetting");
                 });
 #pragma warning restore 612, 618
         }

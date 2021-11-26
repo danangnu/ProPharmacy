@@ -5,6 +5,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  NumberValueAccessor,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -25,7 +26,7 @@ import { VersionsService } from 'src/app/_services/versions.service';
 export class PlcReportComponent implements OnInit {
   fileVersion: FileVersion;
   prescriptionReport: PrescriptionReport[] = [];
-  schedulePaymentReports: SchedulePaymentReport[] = [];
+  schedulePaymentReports: SchedulePaymentReport;
   EntriesArray: FormArray;
   Entries2Array: FormArray;
   LabelsArray: FormArray;
@@ -92,10 +93,11 @@ export class PlcReportComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.startYear = new Date().getFullYear();
+    //this.advother[0] = this.schedulePaymentReports.Total_Others == null ? 0: this.schedulePaymentReports.Total_Others;
   }
   ngOnInit(): void {
     this.loadPrescrptionReports();
-    this.loadScheduleReports();
+    this.loadScheduleReports(this.startYear, 0);
     this.initializeForm();
     this.mur.push(400);
     this.mur.push(400);
@@ -1221,7 +1223,7 @@ export class PlcReportComponent implements OnInit {
     return total;
   }
 
-  saveExpense(idx) {
+  saveExpense() {
     /*let form: FormGroup = new FormGroup({});
     for (let i = 0; i < this.EntriesArray.length; i++) {
       form.addControl(
@@ -1249,6 +1251,33 @@ export class PlcReportComponent implements OnInit {
     }*/
     let bar: any = [];
     let mur: any = [];
+    let sales: any = [];
+    let exp: any = [];
+    let verset: any = [];
+    this.auth
+        .getAccessTokenSilently()
+        .pipe(take(1))
+        .subscribe((token) => {
+          verset = {
+            startYear: Number(this.startYear),
+            noYear: Number(this.noYear),
+            volumeDecrease: this.decrease,
+            inflationRate: this.rateinflation
+          };
+          const headers = new HttpHeaders().set(
+            'Authorization',
+            `Bearer ${token}`
+          );
+          this.versionService
+            .addVersionSetting(
+              Number(this.route.snapshot.paramMap.get('id')),
+              verset,
+              headers
+            )
+            .subscribe((verset) => {
+              console.log(verset);
+            });
+        });
     for (let i = 1; i < this.InfYears.length - (this.noYear - 1); i++) {
       for (let j = 0; j < 12; j++) {
         if (j > 2 && j < 12) {
@@ -1371,7 +1400,7 @@ export class PlcReportComponent implements OnInit {
             murYear: Number(
               (Number(this.startYear) + Number(i - 1)).toString()
             ),
-            totalMur: this.mur[i - 1],
+            totalMur: this.mur[i - 1]
           };
           const headers = new HttpHeaders().set(
             'Authorization',
@@ -1387,6 +1416,81 @@ export class PlcReportComponent implements OnInit {
               console.log(mur);
             });
         });
+      this.auth
+        .getAccessTokenSilently()
+        .pipe(take(1))
+        .subscribe((token) => {
+          sales = {
+            salesYear: Number(
+              (Number(this.startYear) + Number(i - 1)).toString()
+            ),
+            zeroRatedOTCSale: this.zeroOTCSale[i - 1],
+            vATExclusiveOTCSale: this.vatOTCSale[i - 1]
+          };
+          const headers = new HttpHeaders().set(
+            'Authorization',
+            `Bearer ${token}`
+          );
+          this.versionService
+            .addSaleSummary(
+              Number(this.route.snapshot.paramMap.get('id')),
+              sales,
+              headers
+            )
+            .subscribe((sale) => {
+              console.log(sale);
+            });
+        });
+
+      this.auth
+        .getAccessTokenSilently()
+        .pipe(take(1))
+        .subscribe((token) => {
+          exp = {
+            expYear: Number(
+              (Number(this.startYear) + Number(i - 1)).toString()
+            ),
+            directorSalary: Number(this.directorsalary[i - 1]),
+            employeeSalary: Number(this.employeesalary[i - 1]),
+            locumCost: Number(this.locumcost[i - 1]),
+            otherCost: Number(this.othercost[i - 1]),
+            rent: Number(this.rent[i - 1]),
+            rates: Number(this.rates[i - 1]),
+            utilities: Number(this.utilities[i - 1]),
+            telephone: Number(this.telephone[i - 1]),
+            repair: Number(this.repair[i - 1]),
+            communication: Number(this.communication[i - 1]),
+            leasing: Number(this.leasing[i - 1]),
+            insurance: Number(this.insurance[i - 1]),
+            proIndemnity: Number(this.proindemnity[i - 1]),
+            computerIt: Number(this.computerit[i - 1]),
+            recruitment: Number(this.recruitment[i - 1]),
+            registrationFee: Number(this.registrationfee[i - 1]),
+            marketing: Number(this.marketing[i - 1]),
+            travel: Number(this.travel[i - 1]),
+            entertainment: Number(this.entertainment[i - 1]),
+            transport: Number(this.transport[i - 1]),
+            accountancy: Number(this.accountancy[i - 1]),
+            banking: Number(this.banking[i - 1]),
+            interest: Number(this.interest[i - 1]),
+            otherExpense: Number(this.otherexpense[i - 1]),
+            amortalisation: Number(this.amortalisation[i - 1]),
+            depreciation: Number(this.depreciation[i - 1])
+          };
+          const headers = new HttpHeaders().set(
+            'Authorization',
+            `Bearer ${token}`
+          );
+          this.versionService
+            .addExpSummary(
+              Number(this.route.snapshot.paramMap.get('id')),
+              exp,
+              headers
+            )
+            .subscribe((exp) => {
+              console.log(exp);
+            });
+        });
     }
   }
 
@@ -1394,20 +1498,6 @@ export class PlcReportComponent implements OnInit {
     let headers: string[] = [];
     if (this.prescriptionReport) {
       this.prescriptionReport.forEach((value) => {
-        Object.keys(value).forEach((key) => {
-          if (!headers.find((header) => header == key)) {
-            headers.push(key);
-          }
-        });
-      });
-    }
-    return headers;
-  }
-
-  getSPHeaders() {
-    let headers: string[] = [];
-    if (this.schedulePaymentReports) {
-      this.schedulePaymentReports.forEach((value) => {
         Object.keys(value).forEach((key) => {
           if (!headers.find((header) => header == key)) {
             headers.push(key);
@@ -1433,7 +1523,7 @@ export class PlcReportComponent implements OnInit {
       });
   }
 
-  loadScheduleReports() {
+  loadScheduleReports(year: number, idx: number) {
     this.auth
       .getAccessTokenSilently()
       .pipe(take(1))
@@ -1442,14 +1532,13 @@ export class PlcReportComponent implements OnInit {
           'Authorization',
           `Bearer ${token}`
         );
-        this.schedulePayService.getReport(headers).subscribe((sched) => {
+        this.schedulePayService.getReport(year, headers).subscribe((sched) => {
           this.schedulePaymentReports = sched;
-          /*this.gross = sched
-            .map((a) => a.nhS_SalesSum)
-            .reduce(function (a, b) {
-              return a + b;
-            });*/
-          //this.Expense = +this.gross;
+          this.nhsother[idx] = sched.total_Others;
+          this.nms[idx] = sched.other_Fee_Medicine_Services;
+          this.advother[idx] = sched.adv_Others;
+          this.nhsenhancedserv[idx] = sched.enhanced_Services.toFixed(2);
+          this.nhsundries[idx] = sched.total_Charges;
         });
       });
   }

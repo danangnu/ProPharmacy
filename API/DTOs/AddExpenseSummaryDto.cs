@@ -2,7 +2,7 @@ namespace API.DTOs
 {
     public class AddExpenseSummaryDto
     {
-        public int ExpMonth { get; set; }
+        public int ExpYear { get; set; }
         public double DirectorSalary { get; set; }
         public double EmployeeSalary { get; set; }
         public double LocumCost { get; set; }

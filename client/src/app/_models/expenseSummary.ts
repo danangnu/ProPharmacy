@@ -1,0 +1,30 @@
+export interface ExpenseSummary {
+  id: number;
+  expYear: number;
+  directorSalary: number;
+  employeeSalary: number;
+  locumCost: number;
+  otherCost: number;
+  rent: number;
+  rates: number;
+  utilities: number;
+  telephone: number;
+  repair: number;
+  communication: number;
+  leasing: number;
+  insurance: number;
+  proIndemnity: number;
+  computerIt: number;
+  recruitment: number;
+  registrationFee: number;
+  marketing: number;
+  travel: number;
+  entertainment: number;
+  transport: number;
+  accountancy: number;
+  banking: number;
+  interest: number;
+  otherExpense: number;
+  amortalisation: number;
+  depreciation: number;
+}

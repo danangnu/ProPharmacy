@@ -13,6 +13,7 @@ namespace API.Interfaces
         Task<FilesVersion> GetVersionMurByIdAsync(int Id);
         Task<FilesVersion> GetVersionSalesByIdAsync(int Id);
         Task<FilesVersion> GetVersionExpenseByIdAsync(int Id);
+        Task<FilesVersion> GetVersionSettingByIdAsync(int Id);
         void DeleteVersion(FilesVersion filesVersion);
     }
 }

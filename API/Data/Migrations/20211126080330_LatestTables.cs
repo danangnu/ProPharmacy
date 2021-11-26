@@ -69,7 +69,7 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ExpMonth = table.Column<int>(type: "int", nullable: false),
+                    ExpYear = table.Column<int>(type: "int", nullable: false),
                     DirectorSalary = table.Column<double>(type: "float", nullable: false),
                     EmployeeSalary = table.Column<double>(type: "float", nullable: false),
                     LocumCost = table.Column<double>(type: "float", nullable: false),
@@ -158,7 +158,7 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SalesMonth = table.Column<int>(type: "int", nullable: false),
+                    SalesYear = table.Column<int>(type: "int", nullable: false),
                     ZeroRatedOTCSale = table.Column<int>(type: "int", nullable: false),
                     VATExclusiveOTCSale = table.Column<int>(type: "int", nullable: false),
                     FilesVersionId = table.Column<int>(type: "int", nullable: false)
@@ -168,6 +168,29 @@ namespace API.Data.Migrations
                     table.PrimaryKey("PK_SalesSummary", x => x.Id);
                     table.ForeignKey(
                         name: "FK_SalesSummary_FilesVersion_FilesVersionId",
+                        column: x => x.FilesVersionId,
+                        principalTable: "FilesVersion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VersionSetting",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StartYear = table.Column<int>(type: "int", nullable: false),
+                    NoYear = table.Column<int>(type: "int", nullable: false),
+                    VolumeDecrease = table.Column<double>(type: "float", nullable: false),
+                    InflationRate = table.Column<double>(type: "float", nullable: false),
+                    FilesVersionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VersionSetting", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_VersionSetting_FilesVersion_FilesVersionId",
                         column: x => x.FilesVersionId,
                         principalTable: "FilesVersion",
                         principalColumn: "Id",
@@ -301,7 +324,8 @@ namespace API.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OCS_Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Net_Payment_Made = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Dispensing_Month = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Dispensing_Year = table.Column<int>(type: "int", nullable: false),
+                    Dispensing_Month = table.Column<int>(type: "int", nullable: false),
                     Net_Payment = table.Column<double>(type: "float", nullable: false),
                     Total_Drug = table.Column<double>(type: "float", nullable: false),
                     Total_Fees = table.Column<double>(type: "float", nullable: false),
@@ -442,6 +466,11 @@ namespace API.Data.Migrations
                 name: "IX_ScheduleOfPayments_DocsId",
                 table: "ScheduleOfPayments",
                 column: "DocsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VersionSetting_FilesVersionId",
+                table: "VersionSetting",
+                column: "FilesVersionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -466,6 +495,9 @@ namespace API.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "ScheduleOfPayments");
+
+            migrationBuilder.DropTable(
+                name: "VersionSetting");
 
             migrationBuilder.DropTable(
                 name: "Documents");

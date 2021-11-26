@@ -17,7 +17,8 @@ namespace API.Data
         public DbSet<PriceListHistory> PriceListHistory { get; set; }
         public DbSet<PrescriptionSummary> PrescriptionSummary { get; set; }
         public DbSet<Mur> Mur { get; set; }
-         public DbSet<SalesSummary> SalesSummary { get; set; }
-          public DbSet<ExpenseSummary> ExpenseSummary { get; set; }
+        public DbSet<SalesSummary> SalesSummary { get; set; }
+        public DbSet<ExpenseSummary> ExpenseSummary { get; set; }
+        public DbSet<VersionSetting> VersionSetting { get; set; }
     }
 }

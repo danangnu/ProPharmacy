@@ -123,6 +123,21 @@ namespace API.Controllers
             return BadRequest("Cannot add new Expense Summary");
         }
 
+        [HttpPost("add-versionsetting/{id}")]
+        public async Task<ActionResult<VersionSettingDto>> AddVersionSetting(int id, AddVersionSettingDto addVersionSettingDto)
+        {
+            var version = await _versionRepository.GetVersionSettingByIdAsync(id);
+
+            var verset = _mapper.Map<VersionSetting>(addVersionSettingDto);
+            verset.FilesVersionId = version.Id;
+
+            version.VersionSetting.Add(verset);
+
+            if (await _versionRepository.SaveAllAsync()) return _mapper.Map<VersionSettingDto>(verset);
+
+            return BadRequest("Cannot add new Version Setting");
+        }
+
         [HttpPost("add-docs/{id}")]
         public async Task<ActionResult<DocsDto>> AddDocs(int id, IFormFile file)
         {
@@ -326,6 +341,7 @@ namespace API.Controllers
                 string[] words;
                 double sales = 0;
                 string dmonth = string.Empty;
+                string dyear = string.Empty;
                 string ocs_code = string.Empty;
                 DateTime net_pay = new DateTime();
                 double total_drug = 0;
@@ -450,6 +466,7 @@ namespace API.Controllers
                                 if (m < 10) 
                                     dmonth = res[res.Length - 1].TrimStart() + "0" + m.ToString();
                                 else dmonth = res[res.Length - 1].TrimStart() + m.ToString();
+                                dyear = dmonth.Substring(0, 4);
                             }
                             if (line.ToLower().StartsWith("total of drug and appliance costs"))
                             {
@@ -976,7 +993,8 @@ namespace API.Controllers
                 {
                     OCS_Code = ocs_code,
                     Net_Payment_Made = net_pay,
-                    Dispensing_Month = dmonth,
+                    Dispensing_Year = int.Parse(dyear),
+                    Dispensing_Month = int.Parse(dmonth),
                     Net_Payment = sales,
                     Total_Drug = total_drug,
                     Total_Fees = total_fees,

@@ -14,6 +14,7 @@ namespace API.Entities
         public ICollection<Mur> Mur { get; set; }
         public ICollection<SalesSummary> SalesSummary { get; set; }
         public ICollection<ExpenseSummary> ExpenseSummary { get; set; }
+        public ICollection<VersionSetting> VersionSetting { get; set; }
         public ICollection<Docs> Documents { get; set; }
     }
 }

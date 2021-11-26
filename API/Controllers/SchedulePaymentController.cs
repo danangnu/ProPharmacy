@@ -14,10 +14,10 @@ namespace API.Controllers
             _schedulePaymentRepository = schedulePaymentRepository;
         }
 
-        [HttpGet("report")]
-        public async Task<IEnumerable<SchedulePaymentReportDto>> GetScheduleReport()
+        [HttpGet("report/{year}")]
+        public async Task<SchedulePaymentReportDto> GetScheduleReport(int year)
         {
-            var sched = await _schedulePaymentRepository.GetScheduleReportAsync();
+            var sched = await _schedulePaymentRepository.GetScheduleReportAsync(year);
 
             return sched;
         }

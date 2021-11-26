@@ -49,6 +49,13 @@ namespace API.Data
                 .FirstOrDefaultAsync(v => v.Id == Id);
         }
 
+        public async Task<FilesVersion> GetVersionSettingByIdAsync(int Id)
+        {
+            return await _context.FilesVersion
+                .Include(d => d.VersionSetting)
+                .FirstOrDefaultAsync(v => v.Id == Id);
+        }
+
         public async Task<IEnumerable<FilesVersion>> GetFVersions()
         {
             return await _context.FilesVersion

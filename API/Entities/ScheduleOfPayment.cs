@@ -7,7 +7,8 @@ namespace API.Entities
         public int Id { get; set; }
         public string OCS_Code { get; set; }
         public DateTime Net_Payment_Made { get; set; }
-        public string Dispensing_Month { get; set; }
+        public int Dispensing_Year { get; set; }
+        public int Dispensing_Month { get; set; }
         public double Net_Payment { get; set; }
         public double Total_Drug { get; set; }
         public double Total_Fees { get; set; }
