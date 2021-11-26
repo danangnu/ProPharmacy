@@ -11,7 +11,7 @@
   <div
     class="form-inline mt-1"
     style="border-bottom: solid; border-bottom-color: lightgray; margin: 0px"
-    *ngFor="let file of files"
+    *ngFor="let file of userReport"
   >
     <div class="mb-3" style="vertical-align: middle">
       <img
@@ -22,7 +22,7 @@
     </div>
     <div class="info ml-3">
       <h5 class="name">
-        <a routerLink="/plc-report/{{ file.id }}">{{ file.versionName }}</a>
+        <a routerLink="/plc-main/{{ file.id }}">{{ file.reportName }}</a>
       </h5>
       <p style="font-size: 12px; vertical-align: text-bottom">
         {{ file.created | date: "MMMM dd, yyyy" }}
@@ -43,8 +43,6 @@
 
 <ng-template #template>
   <div class="modal-body">
-    <app-plc-version
-      (messageEvent)="receiveMessage($event)"
-    ></app-plc-version>
+    <app-plc-user (messageEvent)="receiveMessage($event)"></app-plc-user>
   </div>
 </ng-template>

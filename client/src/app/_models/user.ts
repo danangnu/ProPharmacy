@@ -1,8 +1,8 @@
-import { FileVersion } from './fileVersion';
+import { UserReport } from './userReport';
 
 export interface User {
-    id: number;
-    email: string;
-    name: string;
-    versionCreated: FileVersion[];
+  id: number;
+  email: string;
+  name: string;
+  reportCreated: UserReport[];
 }

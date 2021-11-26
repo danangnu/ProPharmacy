@@ -5,9 +5,10 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { FileVersion } from '../_models/fileVersion';
 import { User } from '../_models/user';
+import { UserReport } from '../_models/userReport';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MembersService {
   baseUrl = environment.backendUrl;
@@ -15,7 +16,7 @@ export class MembersService {
   memberCache = new Map();
   files: FileVersion;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getMember(email: string, headers: HttpHeaders) {
     const member = [...this.memberCache.values()]
@@ -25,18 +26,20 @@ export class MembersService {
     if (member) {
       return of(member);
     }
-    return this.http.get<User>(this.baseUrl + 'users/' + email, {headers});
+    return this.http.get<User>(this.baseUrl + 'users/' + email, { headers });
   }
 
-  addVersion(model: any, headers: HttpHeaders) {
-    return this.http.post<FileVersion>(this.baseUrl + 'users/add-version', model, {headers}).pipe(
-      map((files: FileVersion) => {
-        this.files = files;
-      })
-    );
+  addReport(model: any, headers: HttpHeaders) {
+    return this.http
+      .post<UserReport>(this.baseUrl + 'users/add-report', model, { headers })
+      .pipe(
+        map((files: UserReport) => {
+          return files;
+        })
+      );
   }
 
   deleteMessage(id: number, headers: HttpHeaders) {
-    return this.http.delete(this.baseUrl + 'versions/' + id, {headers});
+    return this.http.delete(this.baseUrl + 'versions/' + id, { headers });
   }
 }

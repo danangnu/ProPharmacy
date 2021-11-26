@@ -8,6 +8,6 @@ namespace API.DTOs
         public string Email { get; set; }
         public string Lastname { get; set; }
         public string Firstname { get; set; }
-        public ICollection<FilesVersionDto> VersionCreated { get; set; }
+        public ICollection<UserReportDto> ReportCreated { get; set; }
     }
 }

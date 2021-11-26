@@ -165,18 +165,18 @@ namespace API.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("UserReportId")
+                        .HasColumnType("int");
 
                     b.Property<string>("VersionName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("UserReportId");
 
                     b.ToTable("FilesVersion");
                 });
@@ -811,6 +811,29 @@ namespace API.Data.Migrations
                     b.ToTable("ScheduleOfPayments");
                 });
 
+            modelBuilder.Entity("API.Entities.UserReport", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReportName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("UserReport");
+                });
+
             modelBuilder.Entity("API.Entities.VersionSetting", b =>
                 {
                     b.Property<int>("Id")
@@ -864,13 +887,13 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.FilesVersion", b =>
                 {
-                    b.HasOne("API.Entities.AppUser", "Creator")
+                    b.HasOne("API.Entities.UserReport", "Report")
                         .WithMany("VersionCreated")
-                        .HasForeignKey("AppUserId")
+                        .HasForeignKey("UserReportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Creator");
+                    b.Navigation("Report");
                 });
 
             modelBuilder.Entity("API.Entities.Mur", b =>
@@ -939,6 +962,17 @@ namespace API.Data.Migrations
                     b.Navigation("Document");
                 });
 
+            modelBuilder.Entity("API.Entities.UserReport", b =>
+                {
+                    b.HasOne("API.Entities.AppUser", "Creator")
+                        .WithMany("ReportCreated")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+                });
+
             modelBuilder.Entity("API.Entities.VersionSetting", b =>
                 {
                     b.HasOne("API.Entities.FilesVersion", "Version")
@@ -952,7 +986,7 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
-                    b.Navigation("VersionCreated");
+                    b.Navigation("ReportCreated");
                 });
 
             modelBuilder.Entity("API.Entities.Docs", b =>
@@ -977,6 +1011,11 @@ namespace API.Data.Migrations
                     b.Navigation("SalesSummary");
 
                     b.Navigation("VersionSetting");
+                });
+
+            modelBuilder.Entity("API.Entities.UserReport", b =>
+                {
+                    b.Navigation("VersionCreated");
                 });
 #pragma warning restore 612, 618
         }

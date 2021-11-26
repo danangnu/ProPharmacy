@@ -38,7 +38,7 @@ namespace API.Data
         public async Task<AppUser> GetUserByEmailAsync(string email)
         {
             return await _context.Users
-                .Include(v => v.VersionCreated)
+                .Include(v => v.ReportCreated)
                 .SingleOrDefaultAsync(x => x.Email == email);
         }
 
@@ -50,7 +50,7 @@ namespace API.Data
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
             return await _context.Users
-                .Include(v => v.VersionCreated)
+                .Include(v => v.ReportCreated)
                 .ToListAsync();
         }
 

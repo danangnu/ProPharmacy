@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ExpenseSummary } from '../_models/expenseSummary';
+import { FileVersion } from '../_models/fileVersion';
 import { Mur } from '../_models/mur';
 import { PrescriptionSummary } from '../_models/prescriptionSummary';
 import { SalesSummary } from '../_models/salesSummary';
@@ -68,5 +69,13 @@ export class VersionsService {
           return verset;
         })
       );
+  }
+
+  addVersion(model: any, headers: HttpHeaders) {
+    return this.http.post<FileVersion>(this.baseUrl + 'userreport/add-version', model, {headers}).pipe(
+      map((files: FileVersion) => {
+        return files;
+      })
+    );
   }
 }

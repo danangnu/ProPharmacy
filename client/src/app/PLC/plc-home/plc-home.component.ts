@@ -1,38 +1,35 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { take } from 'rxjs/operators';
-import { FileVersion } from 'src/app/_models/fileVersion';
 import { UserReport } from 'src/app/_models/userReport';
 import { MembersService } from 'src/app/_services/members.service';
 import { UserReportService } from 'src/app/_services/user-report.service';
 
 @Component({
-  selector: 'app-plc-main',
-  templateUrl: './plc-main.component.html',
-  styleUrls: ['./plc-main.component.css'],
+  selector: 'app-plc-home',
+  templateUrl: './plc-home.component.html',
+  styleUrls: ['./plc-home.component.css'],
 })
-export class PlcMainComponent implements OnInit {
-  member: UserReport;
-  files: FileVersion[] = [];
+export class PlcHomeComponent implements OnInit {
+  member: User;
   bsModalRef: BsModalRef;
+  userReport: UserReport[] = [];
   message: string;
 
   constructor(
-    private userreportService: UserReportService,
-    private memberService: MembersService,
-    private auth: AuthService,
     private modalService: BsModalService,
-    private route: ActivatedRoute
+    private auth: AuthService,
+    private memberService: MembersService,
+    private userreportService: UserReportService
   ) {}
 
-  ngOnInit(): void {
-    this.loadMember();
+  ngOnInit() {
+    this.loadReport();
   }
 
-  loadMember() {
+  loadReport() {
     let email = '';
     this.auth
       .getAccessTokenSilently()
@@ -44,25 +41,23 @@ export class PlcMainComponent implements OnInit {
             'Authorization',
             `Bearer ${token}`
           );
-          this.userreportService
-            .getMember(Number(this.route.snapshot.paramMap.get('id')), headers)
-            .subscribe((response) => {
-              this.member = response;
-              const filev = [];
-              for (const version of this.member.filesVersion) {
-                filev.push({
-                  id: version?.id,
-                  versionName: version?.versionName,
-                  created: version?.created,
-                });
-              }
-              this.files = filev.slice().reverse();
-            });
+          this.memberService.getMember(email, headers).subscribe((response) => {
+            this.member = response;
+            const filev = [];
+            for (const report of this.member.reportCreated) {
+              filev.push({
+                id: report?.id,
+                reportName: report?.reportName,
+                created: report?.created,
+              });
+            }
+            this.userReport = filev.slice().reverse();
+          });
         });
       });
   }
 
-  removeItem(files: FileVersion) {
+  removeItem(files: UserReport) {
     this.auth
       .getAccessTokenSilently()
       .pipe(take(1))
@@ -71,12 +66,14 @@ export class PlcMainComponent implements OnInit {
           'Authorization',
           `Bearer ${token}`
         );
-        this.memberService.deleteMessage(files.id, headers).subscribe(() => {
-          this.files.splice(
-            this.files.findIndex((m) => m.id === files.id),
-            1
-          );
-        });
+        this.userreportService
+          .deleteMessage(files.id, headers)
+          .subscribe(() => {
+            this.userReport.splice(
+              this.userReport.findIndex((m) => m.id === files.id),
+              1
+            );
+          });
       });
   }
 

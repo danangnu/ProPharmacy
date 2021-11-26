@@ -22,6 +22,27 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserReport",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReportName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AppUserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserReport", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserReport_Users_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FilesVersion",
                 columns: table => new
                 {
@@ -29,15 +50,15 @@ namespace API.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     VersionName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AppUserId = table.Column<int>(type: "int", nullable: false)
+                    UserReportId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FilesVersion", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FilesVersion_Users_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "Users",
+                        name: "FK_FilesVersion_UserReport_UserReportId",
+                        column: x => x.UserReportId,
+                        principalTable: "UserReport",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -433,9 +454,9 @@ namespace API.Data.Migrations
                 column: "FilesVersionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FilesVersion_AppUserId",
+                name: "IX_FilesVersion_UserReportId",
                 table: "FilesVersion",
-                column: "AppUserId");
+                column: "UserReportId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Mur_FilesVersionId",
@@ -466,6 +487,11 @@ namespace API.Data.Migrations
                 name: "IX_ScheduleOfPayments_DocsId",
                 table: "ScheduleOfPayments",
                 column: "DocsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserReport_AppUserId",
+                table: "UserReport",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VersionSetting_FilesVersionId",
@@ -504,6 +530,9 @@ namespace API.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "FilesVersion");
+
+            migrationBuilder.DropTable(
+                name: "UserReport");
 
             migrationBuilder.DropTable(
                 name: "Users");

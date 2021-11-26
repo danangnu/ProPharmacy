@@ -10,6 +10,7 @@ namespace API.Data
         }
 
         public DbSet<AppUser> Users { get; set; }
+        public DbSet<UserReport> UserReport { get; set; }
         public DbSet<FilesVersion> FilesVersion { get; set; }
         public DbSet<Docs> Documents { get; set; }
         public DbSet<Prescriptions> Prescriptions { get; set; }

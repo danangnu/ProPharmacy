@@ -4,11 +4,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { MembersService } from 'src/app/_services/members.service';
+import { VersionsService } from 'src/app/_services/versions.service';
 
 @Component({
   selector: 'app-plc-version',
   templateUrl: './plc-version.component.html',
-  styleUrls: ['./plc-version.component.css']
+  styleUrls: ['./plc-version.component.css'],
 })
 export class PlcVersionComponent implements OnInit {
   @Output() messageEvent = new EventEmitter<string>();
@@ -16,10 +17,13 @@ export class PlcVersionComponent implements OnInit {
   validationErrors: string[] = [];
   message = 'Hello!';
 
-  constructor(private memberService: MembersService,
-              private router: Router,
-              private auth: AuthService,
-              private fb: FormBuilder) { }
+  constructor(
+    private memberService: MembersService,
+    private versionService: VersionsService,
+    private router: Router,
+    private auth: AuthService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.initializeForm();
@@ -28,25 +32,34 @@ export class PlcVersionComponent implements OnInit {
   initializeForm() {
     this.registerForm = this.fb.group({
       email: [''],
-      versionName: ['', Validators.required]
+      versionName: ['', Validators.required],
     });
   }
 
   async register() {
     let i = 0;
-    await this.auth.idTokenClaims$.subscribe(response => {
+    await this.auth.idTokenClaims$.subscribe((response) => {
       if (i === 0) {
         this.registerForm.patchValue({
-          email: response.email
+          email: response.email,
         });
-        this.auth.getAccessTokenSilently().subscribe(token => {
-          const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-          this.memberService.addVersion(this.registerForm.value, headers).subscribe(response => {
-            this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-              this.router.navigate(['/plc-main']));
-          }, error => {
-            this.validationErrors = error;
-          });
+        this.auth.getAccessTokenSilently().subscribe((token) => {
+          const headers = new HttpHeaders().set(
+            'Authorization',
+            `Bearer ${token}`
+          );
+          this.versionService
+            .addVersion(this.registerForm.value, headers)
+            .subscribe(
+              (response) => {
+                this.router
+                  .navigateByUrl('/', { skipLocationChange: true })
+                  .then(() => this.router.navigate(['/plc-main']));
+              },
+              (error) => {
+                this.validationErrors = error;
+              }
+            );
         });
       }
       i++;

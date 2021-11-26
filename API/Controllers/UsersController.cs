@@ -37,22 +37,22 @@ namespace API.Controllers
             return await _userRepository.GetMemberAsync(email);
         }
 
-        [HttpPost("add-version")]
-        public async Task<ActionResult<FilesVersionDto>> AddVersion(AddFilesVersionDto addFilesVersionDto)
+        [HttpPost("add-report")]
+        public async Task<ActionResult<UserReportDto>> AddVersion(AddUserReportDto addUserReportDto)
         {
-            var user = await _userRepository.GetUserByEmailAsync(addFilesVersionDto.Email);
+            var user = await _userRepository.GetUserByEmailAsync(addUserReportDto.Email);
 
-            var version = new FilesVersion
+            var userreport = new UserReport
             {
-                VersionName = addFilesVersionDto.VersionName,
+                ReportName = addUserReportDto.ReportName,
                 AppUserId = user.Id
             };
 
-            user.VersionCreated.Add(version);
+            user.ReportCreated.Add(userreport);
 
-            if (await _userRepository.SaveAllAsync()) return _mapper.Map<FilesVersionDto>(version);
+            if (await _userRepository.SaveAllAsync()) return _mapper.Map<UserReportDto>(userreport);
 
-            return BadRequest("Cannot add new version");
+            return BadRequest("Cannot add new report");
         }
 
         public ActionResult Private()
