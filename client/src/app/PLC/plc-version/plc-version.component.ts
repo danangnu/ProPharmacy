@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { MembersService } from 'src/app/_services/members.service';
 import { VersionsService } from 'src/app/_services/versions.service';
@@ -16,16 +16,23 @@ export class PlcVersionComponent implements OnInit {
   registerForm: FormGroup;
   validationErrors: string[] = [];
   message = 'Hello!';
+  childId: number;
 
   constructor(
-    private memberService: MembersService,
     private versionService: VersionsService,
     private router: Router,
+    private route: ActivatedRoute,
     private auth: AuthService,
     private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      // tslint:disable-next-line: no-string-literal
+      this.childId = Number(params.get('id'));
+      // tslint:disable-next-line: no-string-literal
+      console.log(params.get('id'));
+    });
     this.initializeForm();
   }
 
@@ -49,12 +56,12 @@ export class PlcVersionComponent implements OnInit {
             `Bearer ${token}`
           );
           this.versionService
-            .addVersion(this.registerForm.value, headers)
+            .addVersion(this.childId, this.registerForm.value, headers)
             .subscribe(
               (response) => {
                 this.router
                   .navigateByUrl('/', { skipLocationChange: true })
-                  .then(() => this.router.navigate(['/plc-main']));
+                  .then(() => this.router.navigate(['/plc-main/' + this.childId]));
               },
               (error) => {
                 this.validationErrors = error;

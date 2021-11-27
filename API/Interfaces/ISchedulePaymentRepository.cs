@@ -6,6 +6,6 @@ namespace API.Interfaces
 {
     public interface ISchedulePaymentRepository
     {
-        Task<SchedulePaymentReportDto> GetScheduleReportAsync(int year);
+        Task<SchedulePaymentReportDto> GetScheduleReportAsync(int year, int id);
     }
 }

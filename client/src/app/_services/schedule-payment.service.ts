@@ -12,8 +12,8 @@ export class SchedulePaymentService {
 
   constructor(private http: HttpClient) { }
 
-  getReport(year: number, headers: HttpHeaders) {
-    return this.http.get<SchedulePaymentReport>(this.baseUrl + 'schedulepayment/report/' + year, {headers}).pipe(
+  getReport(id: number, year: number, headers: HttpHeaders) {
+    return this.http.get<SchedulePaymentReport>(this.baseUrl + 'schedulepayment/report/' + year + '/' + id, {headers}).pipe(
       map((sched) => {
         return sched;
       })

@@ -25,9 +25,9 @@ namespace API.Controllers
     }
 
     [HttpGet("{id}")]
-        public async Task<ActionResult<UserReport>> GetUserReport(int id)
+        public async Task<ActionResult<UserReportDto>> GetUserReport(int id)
         {
-            return await _userReportRepository.GetUserReportByIdAsync(id);
+            return await _userReportRepository.GetUserReportByEmail(id);
         }
 
     [HttpPost("add-version/{id}")]

@@ -1872,7 +1872,7 @@ export class PlcReportComponent implements OnInit {
           'Authorization',
           `Bearer ${token}`
         );
-        this.schedulePayService.getReport(year, headers).subscribe((sched) => {
+        this.schedulePayService.getReport(Number(this.route.snapshot.paramMap.get('id')),year, headers).subscribe((sched) => {
           if (sched != undefined) {
             this.schedulePaymentReports = sched;
             this.nhsother[idx] = sched.total_Others;

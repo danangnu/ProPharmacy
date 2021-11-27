@@ -42,8 +42,8 @@ namespace API.Data
 
     public async Task<UserReport> GetUserReportByIdAsync(int Id)
     {
-      return await _context.UserReport
-              .Include(d => d.VersionCreated)
+      return await _context.UserReport 
+              .Include(u => u.VersionCreated)
               .FirstOrDefaultAsync(v => v.Id == Id);
     }
 

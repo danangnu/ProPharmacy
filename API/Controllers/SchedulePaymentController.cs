@@ -14,10 +14,10 @@ namespace API.Controllers
             _schedulePaymentRepository = schedulePaymentRepository;
         }
 
-        [HttpGet("report/{year}")]
-        public async Task<SchedulePaymentReportDto> GetScheduleReport(int year)
+        [HttpGet("report/{year}/{id}")]
+        public async Task<SchedulePaymentReportDto> GetScheduleReport(int year, int id)
         {
-            var sched = await _schedulePaymentRepository.GetScheduleReportAsync(year);
+            var sched = await _schedulePaymentRepository.GetScheduleReportAsync(year, id);
 
             return sched;
         }

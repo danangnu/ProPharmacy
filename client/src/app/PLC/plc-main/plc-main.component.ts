@@ -49,7 +49,7 @@ export class PlcMainComponent implements OnInit {
             .subscribe((response) => {
               this.member = response;
               const filev = [];
-              for (const version of this.member.filesVersion) {
+              for (const version of this.member.versionCreated) {
                 filev.push({
                   id: version?.id,
                   versionName: version?.versionName,
