@@ -22,7 +22,7 @@ namespace API.Data
 
     public async Task<SchedulePaymentReportDto> GetScheduleReportAsync(int year, int id)
     {
-        var doc = await _context.Documents.FindAsync(id);
+        var doc = await _context.Documents.Where(x => x.FilesVersionId == id && x.FileType == "application/pdf").SingleOrDefaultAsync();
         int yearStart = int.Parse(year + "04");
         int yearEnd = int.Parse((year + 1) + "03");
         var query = _context.ScheduleOfPayments.AsQueryable();

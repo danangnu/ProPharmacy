@@ -614,9 +614,9 @@ export class PlcReportComponent implements OnInit {
           ')'
       );
     }
-    this.loadScheduleReports(this.startYear, 0);
-    this.loadScheduleReports(Number(Number(this.startYear) + 1), 1);
-    this.initialValue();
+    // this.loadScheduleReports(this.startYear, 0);
+    // this.loadScheduleReports(Number(Number(this.startYear) + 1), 1);
+    // this.initialValue();
   }
 
   getTotal(idx: number): number {
@@ -1855,9 +1855,13 @@ export class PlcReportComponent implements OnInit {
             if (sched != undefined) {
               this.zeroOTCSale[idx] = sched.zeroRatedOTCSale;
               this.vatOTCSale[idx] = sched.vatExclusiveOTCSale;
+              this.cpZeroOTCSale(idx);
+              this.cpVatOTCSale(idx);
             } else {
               this.zeroOTCSale[idx] = 0;
               this.vatOTCSale[idx] = 0;
+              this.cpZeroOTCSale(idx);
+              this.cpVatOTCSale(idx);
             }
           });
       });
@@ -1872,22 +1876,38 @@ export class PlcReportComponent implements OnInit {
           'Authorization',
           `Bearer ${token}`
         );
-        this.schedulePayService.getReport(Number(this.route.snapshot.paramMap.get('id')),year, headers).subscribe((sched) => {
-          if (sched != undefined) {
-            this.schedulePaymentReports = sched;
-            this.nhsother[idx] = sched.total_Others;
-            this.nms[idx] = sched.other_Fee_Medicine_Services;
-            this.advother[idx] = sched.adv_Others;
-            this.nhsenhancedserv[idx] = sched.enhanced_Services.toFixed(2);
-            this.nhsundries[idx] = sched.total_Charges;
-          } else {
-            this.nhsother[idx] = 0;
-            this.nms[idx] = 0;
-            this.advother[idx] = 0;
-            this.nhsenhancedserv[idx] = 9;
-            this.nhsundries[idx] = 0;
-          }
-        });
+        this.schedulePayService
+          .getReport(
+            Number(this.route.snapshot.paramMap.get('id')),
+            year,
+            headers
+          )
+          .subscribe((sched) => {
+            if (sched != undefined) {
+              this.schedulePaymentReports = sched;
+              this.nhsother[idx] = sched.total_Others;
+              this.nms[idx] = sched.other_Fee_Medicine_Services;
+              this.advother[idx] = sched.adv_Others;
+              this.nhsenhancedserv[idx] = sched.enhanced_Services.toFixed(2);
+              this.nhsundries[idx] = sched.total_Charges;
+              this.cpNhsOther(idx);
+              this.cpNms(idx);
+              this.cpAdvOther(idx);
+              this.cpNHSenhancedServ(idx);
+              this.cpNHSundries(idx);
+            } else {
+              this.nhsother[idx] = 0;
+              this.nms[idx] = 0;
+              this.advother[idx] = 0;
+              this.nhsenhancedserv[idx] = 0;
+              this.nhsundries[idx] = 0;
+              this.cpNhsOther(idx);
+              this.cpNms(idx);
+              this.cpAdvOther(idx);
+              this.cpNHSenhancedServ(idx);
+              this.cpNHSundries(idx);
+            }
+          });
       });
   }
 
@@ -1934,6 +1954,32 @@ export class PlcReportComponent implements OnInit {
               this.otherexpense[idx] = exp.otherExpense;
               this.amortalisation[idx] = exp.amortalisation;
               this.depreciation[idx] = exp.depreciation;
+              this.cpDirectorSalary(idx);
+              this.cpEmployeeSalary(idx);
+              this.cpLocumCost(idx);
+              this.cpOtherCost(idx);
+              this.cpRent(idx);
+              this.cpRates(idx);
+              this.cpUtilities(idx);
+              this.cpTelephone(idx);
+              this.cpRepair(idx);
+              this.cpCommunication(idx);
+              this.cpLeasing(idx);
+              this.cpInsurance(idx);
+              this.cpProindemnity(idx);
+              this.cpComputerit(idx);
+              this.cpRecruitment(idx);
+              this.cpRegistrationfee(idx);
+              this.cpMarketing(idx);
+              this.cpTravel(idx);
+              this.cpEntertainment(idx);
+              this.cpTransport(idx);
+              this.cpAccountancy(idx);
+              this.cpBanking(idx);
+              this.cpInterest(idx);
+              this.cpOtherexpense(idx);
+              this.cpAmortalisation(idx);
+              this.cpDepreciation(idx);
             } else {
               this.directorsalary[idx] = 0;
               this.employeesalary[idx] = 0;
@@ -1961,6 +2007,32 @@ export class PlcReportComponent implements OnInit {
               this.otherexpense[idx] = 0;
               this.amortalisation[idx] = 0;
               this.depreciation[idx] = 0;
+              this.cpDirectorSalary(idx);
+              this.cpEmployeeSalary(idx);
+              this.cpLocumCost(idx);
+              this.cpOtherCost(idx);
+              this.cpRent(idx);
+              this.cpRates(idx);
+              this.cpUtilities(idx);
+              this.cpTelephone(idx);
+              this.cpRepair(idx);
+              this.cpCommunication(idx);
+              this.cpLeasing(idx);
+              this.cpInsurance(idx);
+              this.cpProindemnity(idx);
+              this.cpComputerit(idx);
+              this.cpRecruitment(idx);
+              this.cpRegistrationfee(idx);
+              this.cpMarketing(idx);
+              this.cpTravel(idx);
+              this.cpEntertainment(idx);
+              this.cpTransport(idx);
+              this.cpAccountancy(idx);
+              this.cpBanking(idx);
+              this.cpInterest(idx);
+              this.cpOtherexpense(idx);
+              this.cpAmortalisation(idx);
+              this.cpDepreciation(idx);
             }
           });
       });
