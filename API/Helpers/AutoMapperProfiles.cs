@@ -13,13 +13,17 @@ namespace API.Helpers
             CreateMap<FilesVersion, FilesVersionDto>();
             CreateMap<Docs, DocsDto>();
             CreateMap<PrescriptionSummary, PrescriptionSummaryDto>();
+            CreateMap<UpdatePrescriptionSummaryDto, PrescriptionSummary>();
             CreateMap<ScheduleOfPayment, SchedulePaymentReportDto>();
             CreateMap<Mur, MurDto>();
             CreateMap<SalesSummary, SalesSummaryDto>();
             CreateMap<AddSalesSummaryDto, SalesSummary>();
+            CreateMap<UpdateSalesSummaryDto, SalesSummary>();
             CreateMap<ExpenseSummary, ExpenseSummaryDto>();
             CreateMap<AddExpenseSummaryDto, ExpenseSummary>();
+            CreateMap<UpdateExpenseSummaryDto, ExpenseSummary>();
             CreateMap<VersionSetting, VersionSettingDto>();
+            CreateMap<UpdateVersionSettingDto, VersionSetting>();
             CreateMap<AddVersionSettingDto, VersionSetting>();
         }
     }

@@ -23,4 +23,18 @@ export class ExpenseSummaryService {
         })
       );
   }
+
+  updateExpenseSummary(
+    id: number,
+    expsum: ExpenseSummary,
+    headers: HttpHeaders
+  ) {
+    return this.http
+      .put(this.baseUrl + 'expensesummary/' + id, expsum, { headers })
+      .pipe(
+        map(() => {
+          return null;
+        })
+      );
+  }
 }

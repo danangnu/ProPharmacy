@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
+using API.Entities;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -27,6 +28,24 @@ namespace API.Data
                     .SingleOrDefaultAsync();
 
       return query;
+    }
+
+    public async Task<PrescriptionSummary> GetPrescriptionOriSummary(int year, int id)
+    {
+      var query = await _context.PrescriptionSummary
+                    .Where(u => u.PrescMonth == year && u.FilesVersionId == id)
+                    .SingleOrDefaultAsync();
+      return query;
+    }
+
+    public void Update(PrescriptionSummary prescriptionSummary)
+    {
+      _context.Entry(prescriptionSummary).State = EntityState.Modified;
+    }
+
+    public async Task<bool> SaveAllAsync()
+    {
+      return await _context.SaveChangesAsync() > 0;
     }
   }
 }

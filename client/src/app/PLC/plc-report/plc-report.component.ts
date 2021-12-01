@@ -86,6 +86,10 @@ export class PlcReportComponent implements OnInit {
   amortalisation: any[] = [];
   depreciation: any[] = [];
   inflation: number[] = [];
+  presctab: boolean;
+  versetab: boolean;
+  salestab: boolean;
+  expensetab: boolean;
 
   constructor(
     private auth: AuthService,
@@ -99,6 +103,10 @@ export class PlcReportComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.startYear = new Date().getFullYear();
+    this.presctab = false;
+    this.versetab = false;
+    this.salestab = false;
+    this.expensetab = false;
     //this.advother[0] = this.schedulePaymentReports.Total_Others == null ? 0: this.schedulePaymentReports.Total_Others;
   }
   ngOnInit(): void {
@@ -238,6 +246,7 @@ export class PlcReportComponent implements OnInit {
                   .subscribe((presc) => {
                     if (j == 3) {
                       if (presc != undefined) {
+                        this.presctab = true;
                         this.MonthPresc[0][0] = presc.prescItems;
                         this.MonthPresc[0][1] = presc.prescAvgItem;
                       } else {
@@ -337,6 +346,7 @@ export class PlcReportComponent implements OnInit {
                   .subscribe((presc) => {
                     if (j == 3) {
                       if (presc != undefined) {
+                        this.presctab = true;
                         this.MonthPresc[0][2] = presc.prescItems;
                         this.MonthPresc[0][3] = presc.prescAvgItem;
                       } else {
@@ -439,6 +449,7 @@ export class PlcReportComponent implements OnInit {
                   .subscribe((presc) => {
                     if (j == 0) {
                       if (presc != undefined) {
+                        this.presctab = true;
                         this.MonthPresc[9][0] = presc.prescItems;
                         this.MonthPresc[9][1] = presc.prescAvgItem;
                       } else {
@@ -484,6 +495,7 @@ export class PlcReportComponent implements OnInit {
                   .subscribe((presc) => {
                     if (j == 0) {
                       if (presc != undefined) {
+                        this.presctab = true;
                         this.MonthPresc[9][2] = presc.prescItems;
                         this.MonthPresc[9][3] = presc.prescAvgItem;
                       } else {
@@ -1537,31 +1549,6 @@ export class PlcReportComponent implements OnInit {
   }
 
   saveExpense() {
-    /*let form: FormGroup = new FormGroup({});
-    for (let i = 0; i < this.EntriesArray.length; i++) {
-      form.addControl(
-        this.LabelsArray.value[i],
-        new FormControl(this.EntriesArray.value[i], [
-          Validators.required,
-          Validators.pattern('^[0-9]*$'),
-        ])
-      );
-    }
-    if (idx == 1) {
-      this.Expense[idx] = this.EntriesArray.value.reduce(
-        (prev, next) => Number(prev) + Number(next),
-        0
-      );
-    }
-    if (idx == 2) {
-      this.Expense[idx] = this.Entries2Array.value.reduce(
-        (prev, next) => Number(prev) + Number(next),
-        0
-      );
-      for (let j = 1; j <= this.noYear; j++) {
-        this.Expense[idx + j] = this.Expense[2];
-      }
-    }*/
     let bar: any = [];
     let mur: any = [];
     let sales: any = [];
@@ -1581,15 +1568,25 @@ export class PlcReportComponent implements OnInit {
           'Authorization',
           `Bearer ${token}`
         );
-        this.versionService
-          .addVersionSetting(
-            Number(this.route.snapshot.paramMap.get('id')),
-            verset,
-            headers
-          )
-          .subscribe((verset) => {
-            console.log(verset);
-          });
+        if (this.versetab) {
+          this.versionService
+            .updateVersionSetting(
+              Number(this.route.snapshot.paramMap.get('id')),
+              verset,
+              headers
+            )
+            .subscribe(() => {});
+        } else {
+          this.versionService
+            .addVersionSetting(
+              Number(this.route.snapshot.paramMap.get('id')),
+              verset,
+              headers
+            )
+            .subscribe((verset) => {
+              console.log(verset);
+            });
+        }
       });
     for (let i = 1; i < this.InfYears.length - (this.noYear - 1); i++) {
       for (let j = 0; j < 12; j++) {
@@ -1606,22 +1603,32 @@ export class PlcReportComponent implements OnInit {
                   prescMonth: Number(
                     (Number(this.startYear) + i - 1).toString() + m
                   ),
-                  prescItems: this.MonthPresc[j][i - 1],
-                  prescAvgItem: this.MonthPresc[j][i],
+                  prescItems: this.MonthPresc[j - 3][i - 1],
+                  prescAvgItem: this.MonthPresc[j - 3][i],
                 };
                 const headers = new HttpHeaders().set(
                   'Authorization',
                   `Bearer ${token}`
                 );
-                this.versionService
-                  .addPrescSummary(
-                    Number(this.route.snapshot.paramMap.get('id')),
-                    bar,
-                    headers
-                  )
-                  .subscribe((presc) => {
-                    console.log(presc);
-                  });
+                if (this.presctab) {
+                  this.prescriptionService
+                    .updateSummary(
+                      Number(this.route.snapshot.paramMap.get('id')),
+                      bar,
+                      headers
+                    )
+                    .subscribe(() => {});
+                } else {
+                  this.versionService
+                    .addPrescSummary(
+                      Number(this.route.snapshot.paramMap.get('id')),
+                      bar,
+                      headers
+                    )
+                    .subscribe((presc) => {
+                      console.log(presc);
+                    });
+                }
               });
           else
             this.auth
@@ -1631,23 +1638,33 @@ export class PlcReportComponent implements OnInit {
                 bar = {
                   prescMonth: Number(
                     (Number(this.startYear) + i - 1).toString() + m
-                  ),
-                  prescItems: this.MonthPresc[j][i],
-                  prescAvgItem: this.MonthPresc[j][i + 1],
+                  ), // 202204 j = 3
+                  prescItems: this.MonthPresc[j - 3][i],
+                  prescAvgItem: this.MonthPresc[j - 3][i + 1],
                 };
                 const headers = new HttpHeaders().set(
                   'Authorization',
                   `Bearer ${token}`
                 );
-                this.versionService
-                  .addPrescSummary(
-                    Number(this.route.snapshot.paramMap.get('id')),
-                    bar,
-                    headers
-                  )
-                  .subscribe((presc) => {
-                    console.log(presc);
-                  });
+                if (this.presctab) {
+                  this.prescriptionService
+                    .updateSummary(
+                      Number(this.route.snapshot.paramMap.get('id')),
+                      bar,
+                      headers
+                    )
+                    .subscribe(() => {});
+                } else {
+                  this.versionService
+                    .addPrescSummary(
+                      Number(this.route.snapshot.paramMap.get('id')),
+                      bar,
+                      headers
+                    )
+                    .subscribe((presc) => {
+                      console.log(presc);
+                    });
+                }
               });
         } else {
           let m = '0' + Number(j + 1).toString();
@@ -1659,23 +1676,33 @@ export class PlcReportComponent implements OnInit {
                 bar = {
                   prescMonth: Number(
                     (Number(this.startYear) + i).toString() + m
-                  ),
-                  prescItems: this.MonthPresc[j][i - 1],
-                  prescAvgItem: this.MonthPresc[j][i],
+                  ), //202201  j = 0
+                  prescItems: this.MonthPresc[j + 9][i - 1],
+                  prescAvgItem: this.MonthPresc[j + 9][i],
                 };
                 const headers = new HttpHeaders().set(
                   'Authorization',
                   `Bearer ${token}`
                 );
-                this.versionService
-                  .addPrescSummary(
-                    Number(this.route.snapshot.paramMap.get('id')),
-                    bar,
-                    headers
-                  )
-                  .subscribe((presc) => {
-                    console.log(presc);
-                  });
+                if (this.presctab) {
+                  this.prescriptionService
+                    .updateSummary(
+                      Number(this.route.snapshot.paramMap.get('id')),
+                      bar,
+                      headers
+                    )
+                    .subscribe(() => {});
+                } else {
+                  this.versionService
+                    .addPrescSummary(
+                      Number(this.route.snapshot.paramMap.get('id')),
+                      bar,
+                      headers
+                    )
+                    .subscribe((presc) => {
+                      console.log(presc);
+                    });
+                }
               });
           else
             this.auth
@@ -1686,22 +1713,32 @@ export class PlcReportComponent implements OnInit {
                   prescMonth: Number(
                     (Number(this.startYear) + i).toString() + m
                   ),
-                  prescItems: this.MonthPresc[j][i],
-                  prescAvgItem: this.MonthPresc[j][i + 1],
+                  prescItems: this.MonthPresc[j + 9][i],
+                  prescAvgItem: this.MonthPresc[j + 9][i + 1],
                 };
                 const headers = new HttpHeaders().set(
                   'Authorization',
                   `Bearer ${token}`
                 );
-                this.versionService
-                  .addPrescSummary(
-                    Number(this.route.snapshot.paramMap.get('id')),
-                    bar,
-                    headers
-                  )
-                  .subscribe((presc) => {
-                    console.log(presc);
-                  });
+                if (this.presctab) {
+                  this.prescriptionService
+                    .updateSummary(
+                      Number(this.route.snapshot.paramMap.get('id')),
+                      bar,
+                      headers
+                    )
+                    .subscribe(() => {});
+                } else {
+                  this.versionService
+                    .addPrescSummary(
+                      Number(this.route.snapshot.paramMap.get('id')),
+                      bar,
+                      headers
+                    )
+                    .subscribe((presc) => {
+                      console.log(presc);
+                    });
+                }
               });
         }
       }
@@ -1744,15 +1781,27 @@ export class PlcReportComponent implements OnInit {
             'Authorization',
             `Bearer ${token}`
           );
-          this.versionService
-            .addSaleSummary(
-              Number(this.route.snapshot.paramMap.get('id')),
-              sales,
-              headers
-            )
-            .subscribe((sale) => {
-              console.log(sale);
-            });
+          if (this.salestab) {
+            this.salessumService
+              .updateSalesSummary(
+                Number(this.route.snapshot.paramMap.get('id')),
+                sales,
+                headers
+              )
+              .subscribe((sale) => {
+                console.log(sale);
+              });
+          } else {
+            this.versionService
+              .addSaleSummary(
+                Number(this.route.snapshot.paramMap.get('id')),
+                sales,
+                headers
+              )
+              .subscribe((sale) => {
+                console.log(sale);
+              });
+          }
         });
 
       this.auth
@@ -1794,7 +1843,17 @@ export class PlcReportComponent implements OnInit {
             'Authorization',
             `Bearer ${token}`
           );
-          this.versionService
+          if (this.expensetab) {
+            this.expensesumService
+            .updateExpenseSummary(
+              Number(this.route.snapshot.paramMap.get('id')),
+              exp,
+              headers
+            )
+            .subscribe(() => {
+            });
+          } else {
+            this.versionService
             .addExpSummary(
               Number(this.route.snapshot.paramMap.get('id')),
               exp,
@@ -1803,6 +1862,7 @@ export class PlcReportComponent implements OnInit {
             .subscribe((exp) => {
               console.log(exp);
             });
+          }
         });
     }
   }
@@ -1853,6 +1913,7 @@ export class PlcReportComponent implements OnInit {
           )
           .subscribe((sched) => {
             if (sched != undefined) {
+              this.salestab = true;
               this.zeroOTCSale[idx] = sched.zeroRatedOTCSale;
               this.vatOTCSale[idx] = sched.vatExclusiveOTCSale;
               this.cpZeroOTCSale(idx);
@@ -1928,6 +1989,7 @@ export class PlcReportComponent implements OnInit {
           )
           .subscribe((exp) => {
             if (exp != undefined) {
+              this.expensetab = true;
               this.directorsalary[idx] = exp.directorSalary;
               this.employeesalary[idx] = exp.employeeSalary;
               this.locumcost[idx] = exp.locumCost;
@@ -2051,6 +2113,7 @@ export class PlcReportComponent implements OnInit {
           .getSetting(Number(this.route.snapshot.paramMap.get('id')), headers)
           .subscribe((verset) => {
             if (verset != undefined) {
+              this.versetab = true;
               this.startYear = verset.startYear;
               this.noYear = verset.noYear;
               this.decrease = verset.volumeDecrease;

@@ -23,4 +23,14 @@ export class SalesSummaryService {
         })
       );
   }
+
+  updateSalesSummary(id: number, salesum: SalesSummary, headers: HttpHeaders) {
+    return this.http
+      .put(this.baseUrl + 'salessummary/' + id, salesum, { headers })
+      .pipe(
+        map(() => {
+          return null;
+        })
+      );
+  }
 }

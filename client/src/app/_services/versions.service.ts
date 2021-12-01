@@ -43,7 +43,9 @@ export class VersionsService {
 
   addSaleSummary(id: number, model: any, headers: HttpHeaders) {
     return this.http
-      .post<SalesSummary>(this.baseUrl + 'versions/add-salessum/' + id, model, { headers })
+      .post<SalesSummary>(this.baseUrl + 'versions/add-salessum/' + id, model, {
+        headers,
+      })
       .pipe(
         map((sale: SalesSummary) => {
           return sale;
@@ -53,7 +55,11 @@ export class VersionsService {
 
   addExpSummary(id: number, model: any, headers: HttpHeaders) {
     return this.http
-      .post<ExpenseSummary>(this.baseUrl + 'versions/add-expensesum/' + id, model, { headers })
+      .post<ExpenseSummary>(
+        this.baseUrl + 'versions/add-expensesum/' + id,
+        model,
+        { headers }
+      )
       .pipe(
         map((exp: ExpenseSummary) => {
           return exp;
@@ -63,7 +69,11 @@ export class VersionsService {
 
   addVersionSetting(id: number, model: any, headers: HttpHeaders) {
     return this.http
-      .post<VersionSetting>(this.baseUrl + 'versions/add-versionsetting/' + id, model, { headers })
+      .post<VersionSetting>(
+        this.baseUrl + 'versions/add-versionsetting/' + id,
+        model,
+        { headers }
+      )
       .pipe(
         map((verset: VersionSetting) => {
           return verset;
@@ -72,10 +82,28 @@ export class VersionsService {
   }
 
   addVersion(id: number, model: any, headers: HttpHeaders) {
-    return this.http.post<FileVersion>(this.baseUrl + 'userreport/add-version/' + id, model, {headers}).pipe(
-      map((files: FileVersion) => {
-        return files;
+    return this.http
+      .post<FileVersion>(this.baseUrl + 'userreport/add-version/' + id, model, {
+        headers,
       })
-    );
+      .pipe(
+        map((files: FileVersion) => {
+          return files;
+        })
+      );
+  }
+
+  updateVersionSetting(
+    id: number,
+    verset: VersionSetting,
+    headers: HttpHeaders
+  ) {
+    return this.http
+      .put(this.baseUrl + 'verset/' + id, verset, { headers })
+      .pipe(
+        map(() => {
+          return null;
+        })
+      );
   }
 }
