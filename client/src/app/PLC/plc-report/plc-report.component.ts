@@ -16,6 +16,7 @@ import { PrescriptionReport } from 'src/app/_models/prescriptionReport';
 import { SchedulePaymentReport } from 'src/app/_models/schedulePaymentReport';
 import { AccountService } from 'src/app/_services/account.service';
 import { ExpenseSummaryService } from 'src/app/_services/expense-summary.service';
+import { MurService } from 'src/app/_services/mur.service';
 import { PrescriptionService } from 'src/app/_services/prescription.service';
 import { SalesSummaryService } from 'src/app/_services/sales-summary.service';
 import { SchedulePaymentService } from 'src/app/_services/schedule-payment.service';
@@ -90,6 +91,7 @@ export class PlcReportComponent implements OnInit {
   versetab: boolean;
   salestab: boolean;
   expensetab: boolean;
+  murtab: boolean;
 
   constructor(
     private auth: AuthService,
@@ -99,6 +101,7 @@ export class PlcReportComponent implements OnInit {
     private schedulePayService: SchedulePaymentService,
     private expensesumService: ExpenseSummaryService,
     private accountService: AccountService,
+    private murService: MurService,
     private fb: FormBuilder,
     private route: ActivatedRoute
   ) {
@@ -107,7 +110,7 @@ export class PlcReportComponent implements OnInit {
     this.versetab = false;
     this.salestab = false;
     this.expensetab = false;
-    //this.advother[0] = this.schedulePaymentReports.Total_Others == null ? 0: this.schedulePaymentReports.Total_Others;
+    this.murtab = false;
   }
   ngOnInit(): void {
     this.loadVersionSetting();
@@ -118,6 +121,8 @@ export class PlcReportComponent implements OnInit {
     this.loadSalesSummary(Number(Number(this.startYear) + 1), 1);
     this.loadExpenseSummary(this.startYear, 0);
     this.loadExpenseSummary(Number(Number(this.startYear) + 1), 1);
+    this.loadMur(this.startYear, 0);
+    this.loadMur(Number(Number(this.startYear) + 1), 1);
     this.initializeForm();
     this.mur.push(400);
     this.mur.push(400);
@@ -1756,7 +1761,17 @@ export class PlcReportComponent implements OnInit {
             'Authorization',
             `Bearer ${token}`
           );
-          this.versionService
+          if (this.murtab) {
+            this.murService
+            .updateSummary(
+              Number(this.route.snapshot.paramMap.get('id')),
+              mur,
+              headers
+            )
+            .subscribe(() => {
+            });
+          } else {
+            this.versionService
             .addMur(
               Number(this.route.snapshot.paramMap.get('id')),
               mur,
@@ -1765,6 +1780,7 @@ export class PlcReportComponent implements OnInit {
             .subscribe((mur) => {
               console.log(mur);
             });
+          }
         });
       this.auth
         .getAccessTokenSilently()
@@ -1923,6 +1939,32 @@ export class PlcReportComponent implements OnInit {
               this.vatOTCSale[idx] = 0;
               this.cpZeroOTCSale(idx);
               this.cpVatOTCSale(idx);
+            }
+          });
+      });
+  }
+
+  loadMur(year: number, idx: number) {
+    this.auth
+      .getAccessTokenSilently()
+      .pipe(take(1))
+      .subscribe((token) => {
+        const headers = new HttpHeaders().set(
+          'Authorization',
+          `Bearer ${token}`
+        );
+        this.murService
+          .getSummary(
+            year,
+            Number(this.route.snapshot.paramMap.get('id')),
+            headers
+          )
+          .subscribe((mur) => {
+            if (mur != undefined) {
+              this.murtab = true;
+              this.mur[idx] = mur.totalMur;
+            } else {
+              this.mur[idx] = 400;
             }
           });
       });

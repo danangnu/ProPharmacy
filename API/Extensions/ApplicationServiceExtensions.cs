@@ -21,6 +21,7 @@ namespace API.Extensions
             services.AddScoped<IExpenseSummaryRepository, ExpenseSummaryRepository>();
             services.AddScoped<IUserReportRepository, UserReportRepository>();
             services.AddScoped<IVersionSettingRepository, VersionSettingRepository>();
+            services.AddScoped<IMurRepository, MurRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(options =>
             {

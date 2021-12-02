@@ -16,6 +16,7 @@ namespace API.Helpers
             CreateMap<UpdatePrescriptionSummaryDto, PrescriptionSummary>();
             CreateMap<ScheduleOfPayment, SchedulePaymentReportDto>();
             CreateMap<Mur, MurDto>();
+            CreateMap<UpdateMurDto, Mur>();
             CreateMap<SalesSummary, SalesSummaryDto>();
             CreateMap<AddSalesSummaryDto, SalesSummary>();
             CreateMap<UpdateSalesSummaryDto, SalesSummary>();
