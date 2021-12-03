@@ -721,7 +721,7 @@ namespace API.Controllers
                                 //presc_addfee_manual_priced = presc_addfee_manual_priced.Replace(".", ",");
                                 presc_addfee_manual_price = Math.Round(double.Parse(presc_addfee_manual_priced),2,MidpointRounding.AwayFromZero);
                             }
-                            if (line.ToLower().StartsWith("transitional Payment"))
+                            if (line.ToLower().StartsWith("transitional payment"))
                             {
                                 string[] res = line.Split(' ');
                                 var transitional_payment = res[res.Length - 1].TrimStart().Replace(",", "");
