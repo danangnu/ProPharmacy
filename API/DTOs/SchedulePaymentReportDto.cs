@@ -9,5 +9,6 @@ namespace API.DTOs
         public double Adv_Others { get; set; }
         public double Enhanced_Services { get; set; }
         public double Total_Charges { get; set; }
+        public double Transitional_Pay { get; set; }
     }
 }

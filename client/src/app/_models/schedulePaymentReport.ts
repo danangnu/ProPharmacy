@@ -7,4 +7,5 @@ export interface SchedulePaymentReport {
     adv_Others: number;
     enhanced_Services: number;
     total_Charges: number;
+    transitional_Pay: number;
 }

@@ -746,6 +746,14 @@ export class PlcReportComponent implements OnInit {
     }
   }
 
+  cpTransitionalPay(idx: number) {
+    if (idx == 1) {
+      for (var i = 1; i <= this.noYear; i++) {
+        this.transitionpay[idx + i] = this.transitionpay[idx];
+      }
+    }
+  }
+
   cpQualityPay(idx: number) {
     if (idx == 1) {
       for (var i = 1; i <= this.noYear; i++) {
@@ -1993,22 +2001,27 @@ export class PlcReportComponent implements OnInit {
               this.advother[idx] = sched.adv_Others;
               this.nhsenhancedserv[idx] = sched.enhanced_Services.toFixed(2);
               this.nhsundries[idx] = sched.total_Charges;
+              this.transitionpay[idx] = sched.transitional_Pay;
               this.cpNhsOther(idx);
               this.cpNms(idx);
               this.cpAdvOther(idx);
               this.cpNHSenhancedServ(idx);
               this.cpNHSundries(idx);
+              this.cpTransitionalPay(idx);
+              
             } else {
               this.nhsother[idx] = 0;
               this.nms[idx] = 0;
               this.advother[idx] = 0;
               this.nhsenhancedserv[idx] = 0;
               this.nhsundries[idx] = 0;
+              this.transitionpay[idx] = 0;
               this.cpNhsOther(idx);
               this.cpNms(idx);
               this.cpAdvOther(idx);
               this.cpNHSenhancedServ(idx);
               this.cpNHSundries(idx);
+              this.cpTransitionalPay(idx);
             }
           });
       });
