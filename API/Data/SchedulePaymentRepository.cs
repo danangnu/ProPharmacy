@@ -54,7 +54,7 @@ namespace API.Data
         if (Total_Authorised_LPP != 0)
           map.Enhanced_Services += Total_Authorised_LPP;
         var Total_Charges = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Total_Charges) ?? 0;
-        if (Total_Authorised_LPP != 0)
+        if (Total_Charges != 0)
           map.Total_Charges = Total_Charges;
         var Transitional_Pay = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Transitional_Pay) ?? 0;
         if (Transitional_Pay != 0)
