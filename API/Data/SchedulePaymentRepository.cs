@@ -28,35 +28,38 @@ namespace API.Data
         var query = _context.ScheduleOfPayments.AsQueryable();
         query = query.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).AsNoTracking();
         
-        if (doc != null) query = query.Where(q => q.DocsId == doc.Id);
+        if (doc != null) 
+          query = query.Where(q => q.DocsId == doc.Id);
+        else
+          return null;
 
         var map = await query.ProjectTo<SchedulePaymentReportDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
 
         var query2 = _context.ScheduleOfPayments.AsQueryable();
-        var tot_others = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Total_Other) ?? 0;
+        var tot_others = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd && u.DocsId == doc.Id).Sum(l => (double?) l.Total_Other) ?? 0;
         if (tot_others != 0) map.Total_Others = tot_others;
-        var other_Fee_Medicine_Services = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Other_Fee_Medicine_Service) ?? 0;
+        var other_Fee_Medicine_Services = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd && u.DocsId == doc.Id).Sum(l => (double?) l.Other_Fee_Medicine_Service) ?? 0;
         if (other_Fee_Medicine_Services != 0)
           map.Other_Fee_Medicine_Services = other_Fee_Medicine_Services;
-        var Other_Fee_Appliance_Premise = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Other_Fee_Appliance_Premise) ?? 0;
-        var Other_Fee_Stoma_Custom = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Other_Fee_Stoma_Custom) ?? 0;
-        var Other_Fee_Appliance_Patient = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Other_Fee_Appliance_Patient) ?? 0;
+        var Other_Fee_Appliance_Premise = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd && u.DocsId == doc.Id).Sum(l => (double?) l.Other_Fee_Appliance_Premise) ?? 0;
+        var Other_Fee_Stoma_Custom = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd && u.DocsId == doc.Id).Sum(l => (double?) l.Other_Fee_Stoma_Custom) ?? 0;
+        var Other_Fee_Appliance_Patient = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd && u.DocsId == doc.Id).Sum(l => (double?) l.Other_Fee_Appliance_Patient) ?? 0;
         if (Other_Fee_Appliance_Premise != 0)
           map.Adv_Others = Other_Fee_Appliance_Premise;
         if (Other_Fee_Stoma_Custom != 0)
           map.Adv_Others += Other_Fee_Stoma_Custom;
         if (Other_Fee_Appliance_Patient != 0)
           map.Adv_Others += Other_Fee_Appliance_Patient;
-        var Total_Authorised = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Total_Authorised) ?? 0;
-        var Total_Authorised_LPP = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Total_Authorised_LPP) ?? 0;
+        var Total_Authorised = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd && u.DocsId == doc.Id).Sum(l => (double?) l.Total_Authorised) ?? 0;
+        var Total_Authorised_LPP = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd && u.DocsId == doc.Id).Sum(l => (double?) l.Total_Authorised_LPP) ?? 0;
         if (Total_Authorised != 0)
           map.Enhanced_Services = Total_Authorised;
         if (Total_Authorised_LPP != 0)
           map.Enhanced_Services += Total_Authorised_LPP;
-        var Total_Charges = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Total_Charges) ?? 0;
+        var Total_Charges = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd && u.DocsId == doc.Id).Sum(l => (double?) l.Total_Charges) ?? 0;
         if (Total_Charges != 0)
           map.Total_Charges = Total_Charges;
-        var Transitional_Pay = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd).Sum(l => (double?) l.Transitional_Pay) ?? 0;
+        var Transitional_Pay = query2.Where(u => u.Dispensing_Month >= yearStart && u.Dispensing_Month <= yearEnd && u.DocsId == doc.Id).Sum(l => (double?) l.Transitional_Pay) ?? 0;
         if (Transitional_Pay != 0)
           map.Transitional_Pay = Transitional_Pay;
 
